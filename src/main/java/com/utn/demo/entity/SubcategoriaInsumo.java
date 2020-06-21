@@ -1,4 +1,4 @@
-package com.utn.demo.entidades;
+package com.utn.demo.entity;
 
 import java.util.List;
 
@@ -9,18 +9,25 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
-public class SubcategoriaPlato {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SubcategoriaInsumo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
 	private String nombre;
 	
-	@OneToMany(mappedBy = "subcategoriaPlato")
-	private List<Plato> platos;
+	@OneToMany(mappedBy = "subcategoriaInsumo")
+	private List<Insumo> insumo;
 	
 	@ManyToOne
-	private CategoriaPlato categoriaMaestra;
+	private CategoriaInsumo categoriaInsumoMaestra;
+	
 }

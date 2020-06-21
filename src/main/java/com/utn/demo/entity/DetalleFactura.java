@@ -1,4 +1,6 @@
-package com.utn.demo.entidades;
+package com.utn.demo.entity;
+
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,17 +8,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
-public class Estado {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DetalleFactura {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@OneToOne
+	private Factura factura;
+
+	@OneToOne
 	private Pedido pedido;
-	
-	private String estadoPedido; 
-	/* puede tomar los siguientes valores: 
-	   PENDIENTE, CONFIRMADO, DENEGADO, EN PREPARACION, COCINADO, EN DELIVERY, FACTURADO*/
 }

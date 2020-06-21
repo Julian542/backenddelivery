@@ -1,4 +1,4 @@
-package com.utn.demo.entidades;
+package com.utn.demo.entity;
 
 import java.util.*;
 
@@ -12,8 +12,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @MappedSuperclass
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
 	
 	/* Atributos */
