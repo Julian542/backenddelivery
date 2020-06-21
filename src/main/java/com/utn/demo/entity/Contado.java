@@ -1,6 +1,6 @@
 package com.utn.demo.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contado extends FormaPago{
+public class Contado extends FormaPago implements Serializable{
 
 	private double descuento;
 	

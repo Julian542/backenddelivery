@@ -1,6 +1,6 @@
 package com.utn.demo.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Insumo extends Articulo{
+public class Insumo extends Articulo implements Serializable{
 	
 	private String descripcion;
 	private double precioCompra;

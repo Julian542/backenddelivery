@@ -1,5 +1,6 @@
 package com.utn.demo.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetallePlato {
+public class DetallePlato implements Serializable{
 	/* esta clase representa un articulo de una receta, seria el detalle del maestro (plato)*/
 	
 	@Id

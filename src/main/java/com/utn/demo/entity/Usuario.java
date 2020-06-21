@@ -1,5 +1,6 @@
 package com.utn.demo.entity;
 
+import java.io.Serializable;
 import java.util.*;
 
 import javax.persistence.CascadeType;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public class Usuario implements Serializable{
 	
 	/* Atributos */
 	@Id
