@@ -3,10 +3,12 @@ package com.utn.demo.entidades;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@Entity
 public class Plato extends Articulo{
 	
 	private String nombre;
@@ -20,8 +22,8 @@ public class Plato extends Articulo{
 	private List<DetallePlato> receta;
 	
 	@ManyToOne
-	private CategoriaPlato categoria;
+	private CategoriaPlato categoriaPlato;
 	
 	@ManyToOne
-	private SubcategoriaPlato subcategoria;
+	private SubcategoriaPlato subcategoriaPlato;
 }
