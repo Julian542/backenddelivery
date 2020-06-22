@@ -3,11 +3,14 @@ package com.utn.demo.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +33,12 @@ public class DetallePedido implements Serializable{
 	
 	private int cantidad;
 	
-	private Articulo articulo; /* el articulo puede ser insumo (bebida) o plato*/
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "fk_posee_plato")
+	private Plato plato;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "fk_posee_insumo")
+	private Insumo insumo;
 	
 }

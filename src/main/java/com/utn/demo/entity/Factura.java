@@ -2,13 +2,16 @@ package com.utn.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,17 +33,27 @@ public class Factura implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
+	private String tipo;
+	
 	private double montoDescuento;
 	
 	private Configuracion empresa; /* datos de la empresa */
 	
 	private double total;
 	
-	private FormaPago formaPago;
+	/*private FormaPago formaPago;
+	
+	private Contado contado;
+	
+	private Tarjeta tarjeta;*/
+	
+	@OneToOne
+	@JoinColumn(name = "fk_posee_pedido")
+	private Pedido pedido;
 	
 	@ManyToOne
 	private Cliente facturaCliente;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private DetalleFactura detalleFactura; /* composicion */
+	@OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+	private List <DetalleFactura> detalleFactura; /* composicion */
 }

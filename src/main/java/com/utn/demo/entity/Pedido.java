@@ -36,7 +36,7 @@ public class Pedido implements Serializable{
 	private Factura factura;
 	
 	@OneToMany (mappedBy = "pedido",cascade = CascadeType.ALL)
-	List<DetallePedido> platos; /*platos o bebidas que componen este pedido*/
+	List<DetallePedido> detallePedido; /*platos o bebidas que componen este pedido*/
 	
 	private String tipoEnvio;
 	

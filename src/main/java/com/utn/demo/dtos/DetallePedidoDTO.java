@@ -15,5 +15,6 @@ public class DetallePedidoDTO {
 	private int cantidad;
 	private InsumoDTO insumo;
 	private PlatoDTO plato;
+	private long pedidoRelacionado;
 
 }

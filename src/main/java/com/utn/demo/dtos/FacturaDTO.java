@@ -10,14 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FacturaDTO {
-	
 	private long numeroFactura;
 	private Date fecha;
+	private String tipo;
 	private double montoDescuento;
 	private ConfiguracionDTO empresa;
 	private double total;
-	private ContadoDTO contado;
-	private TarjetaDTO tarjeta;
+	private PedidoDTO pedido;
 	private ClienteDTO facturaCliente;
-	private DetalleFacturaDTO detalleFactura;
 }

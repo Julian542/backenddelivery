@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class DetalleFacturaDTO {
 	
 	private long id;
-	private FacturaDTO factura;
+	private int cantidad;
 	private PedidoDTO pedido;
+	private long facturaRelacionada;
+	
 }
