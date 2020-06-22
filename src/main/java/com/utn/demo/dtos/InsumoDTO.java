@@ -12,5 +12,6 @@ public class InsumoDTO extends ArticuloDTO{
 	private boolean esIngrediente;
 	private UnidadMedidaDTO unidadMedida;
 	private String imagen;
+	private CategoriaInsumoDTO categoriaInsumo;
 	private SubcategoriaInsumoDTO subcategoriaInsumo;
 }

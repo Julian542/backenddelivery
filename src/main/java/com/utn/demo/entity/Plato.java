@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -14,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@DiscriminatorValue(value = "plato")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
