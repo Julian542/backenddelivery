@@ -11,7 +11,6 @@ public class DetalleFacturaDTO {
 	
 	private long id;
 	private int cantidad;
-	private PedidoDTO pedido;
 	private long facturaRelacionada;
 	
 }

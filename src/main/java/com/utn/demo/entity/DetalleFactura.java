@@ -28,10 +28,6 @@ public class DetalleFactura implements Serializable{
 
 	private int cantidad;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "fk_posee_pedido")
-	private Pedido pedido;
-	
 	@ManyToOne
 	private Factura factura;
 }
