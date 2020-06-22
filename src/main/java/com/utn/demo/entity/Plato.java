@@ -9,13 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue(value = "plato")
+@PrimaryKeyJoinColumn(name = "articuloId")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +29,7 @@ public class Plato extends Articulo implements Serializable{
 	private String descripcion;
 	private String imagen;
 	
-	@OneToOne (cascade = CascadeType.ALL)
+	@OneToMany (cascade = CascadeType.ALL)
 	private List<DetallePlato> receta;
 	
 	@ManyToOne

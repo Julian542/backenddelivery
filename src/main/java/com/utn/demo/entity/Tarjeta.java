@@ -5,13 +5,14 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue(value = "tarjeta")
+@PrimaryKeyJoinColumn(name = "formapagoId")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

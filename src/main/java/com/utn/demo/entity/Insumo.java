@@ -5,13 +5,14 @@ import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue(value = "insumo")
+@PrimaryKeyJoinColumn(name = "articuloId")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

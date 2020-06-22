@@ -22,9 +22,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "api_usuario")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@Table(name = "tabla_usuario")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,6 +41,7 @@ public class Usuario implements Serializable{
 	private String password;
 	private String imagen;
 	private int telefono;
+	private boolean esCliente; //este campo sirve para que si el frontend al consultarlo, es true, muestra pantalla cliente, caso contrario, muestra pantalla empleado
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Domicilio> domicilios;

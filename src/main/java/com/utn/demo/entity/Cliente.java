@@ -6,13 +6,14 @@ import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue(value = "cliente")
+@PrimaryKeyJoinColumn(name = "usuarioId")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

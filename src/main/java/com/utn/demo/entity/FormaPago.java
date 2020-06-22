@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "api_formapago")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminator", discriminatorType=DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

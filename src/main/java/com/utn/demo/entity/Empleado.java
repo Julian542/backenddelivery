@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue(value = "empleado")
+@PrimaryKeyJoinColumn(name = "usuarioId")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
