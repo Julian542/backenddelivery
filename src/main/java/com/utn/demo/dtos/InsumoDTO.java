@@ -1,7 +1,13 @@
 package com.utn.demo.dtos;
 
-public class InsumoDTO extends ArticuloDTO{
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class InsumoDTO extends ArticuloDTO{
 
 	private String descripcion;
 	private double precioCompra;

@@ -1,13 +1,5 @@
 package com.utn.demo.dtos;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.ManyToOne;
-
-import com.utn.demo.entity.Localidad;
-import com.utn.demo.entity.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

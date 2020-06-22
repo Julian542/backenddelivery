@@ -1,7 +1,12 @@
 package com.utn.demo.dtos;
 
-import com.utn.demo.entity.Articulo;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DetallePedidoDTO {
 	
 	private long id;
