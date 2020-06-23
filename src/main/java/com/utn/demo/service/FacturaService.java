@@ -8,11 +8,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.utn.demo.dtos.ClienteDTO;
 import com.utn.demo.dtos.DetalleFacturaDTO;
 import com.utn.demo.dtos.FacturaDTO;
+import com.utn.demo.entity.Cliente;
+import com.utn.demo.entity.Configuracion;
 import com.utn.demo.entity.DetalleFactura;
 import com.utn.demo.entity.Domicilio;
 import com.utn.demo.entity.Factura;
+import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Factura;
 import com.utn.demo.entity.Factura;
 import com.utn.demo.repository.FacturaRepository;
@@ -43,7 +47,15 @@ public class FacturaService {
 				unDto.setTipo(i.getTipo());
 				unDto.setMontoDescuento(i.getMontoDescuento());
 				unDto.setTotal(i.getTotal());
-
+				
+				Cliente cliente = i.getFacturaCliente();
+				ClienteDTO clienteDto = new ClienteDTO();
+				clienteDto.setId(cliente.getId());
+				clienteDto.setApellido(cliente.getApellido());
+				clienteDto.setDni(cliente.getDni());
+				unDto.setFacturaCliente(clienteDto);
+				
+				
 				dtos.add(unDto);
 			}
 			 return dtos;
@@ -83,6 +95,19 @@ public class FacturaService {
 		entity.setTipo(dto.getTipo());
 		entity.setMontoDescuento(dto.getMontoDescuento());
 		entity.setTotal(dto.getTotal());
+		//Creamos un cliente
+		Cliente clientenuevo = new Cliente();
+		clientenuevo.setId(dto.getFacturaCliente().getId());
+		entity.setFacturaCliente(clientenuevo);
+		//Configuracion
+		Configuracion config = new Configuracion();
+		config.setId(dto.getEmpresa().getId());
+		entity.setEmpresa(config);
+		//Pedido
+		Pedido p = new Pedido();
+		p.setNumeroPedido(dto.getPedido().getNumeroPedido());
+		entity.setPedido(p);
+		
 		
 		try {
 			
