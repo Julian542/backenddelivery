@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Insumo extends Articulo implements Serializable{
-	
+	private String nombre;
 	private String descripcion;
 	private double precioCompra;
 	private double precioVenta;

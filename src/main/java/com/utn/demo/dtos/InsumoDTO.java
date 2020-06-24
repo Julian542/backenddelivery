@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InsumoDTO extends ArticuloDTO{
-
+	private String nombre;
 	private String descripcion;
 	private double precioCompra;
 	private double precioVenta;
