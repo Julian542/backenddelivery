@@ -35,6 +35,9 @@ public class Pedido implements Serializable{
 	@OneToOne
 	private Factura factura;
 	
+	@OneToOne
+	private FormaPago formaPago;
+	
 	@OneToMany (mappedBy = "pedido",cascade = CascadeType.ALL)
 	List<DetallePedido> detallePedido; /*platos o bebidas que componen este pedido*/
 	
@@ -43,4 +46,7 @@ public class Pedido implements Serializable{
 	private String horaEstimada;
 	
 	private double subtotal; /* se calcula con el precio de cada plato*/
+
+	@ManyToOne
+	private Cocina cocina;
 }

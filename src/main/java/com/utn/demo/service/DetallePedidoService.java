@@ -8,9 +8,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.utn.demo.dtos.ClienteDTO;
 import com.utn.demo.dtos.DetallePedidoDTO;
+import com.utn.demo.dtos.InsumoDTO;
+import com.utn.demo.dtos.PlatoDTO;
+import com.utn.demo.entity.Cliente;
 import com.utn.demo.entity.DetallePedido;
+import com.utn.demo.entity.Insumo;
 import com.utn.demo.entity.Pedido;
+import com.utn.demo.entity.Plato;
 import com.utn.demo.repository.DetallePedidoRepository;
 import com.utn.demo.repository.PedidoRepository;
 
@@ -36,6 +42,17 @@ public class DetallePedidoService {
 				unDto.setCantidad(d.getCantidad());
 				unDto.setSubtotal(d.getSubtotal());
 				unDto.setPedidoRelacionado(d.getPedido().getNumeroPedido());
+				
+				Plato plato = d.getPlato();
+				PlatoDTO platoDto = new PlatoDTO();
+				platoDto.setId(plato.getId());
+				unDto.setPlato(platoDto);
+				
+				Insumo insumo = d.getInsumo();
+				InsumoDTO insumoDto = new InsumoDTO();
+				insumoDto.setId(insumo.getId());
+				unDto.setInsumo(insumoDto);
+				
 				dtos.add(unDto);
 			}
 			return dtos;
@@ -73,6 +90,17 @@ public class DetallePedidoService {
 			unDto.setCantidad(d.getCantidad());
 			unDto.setSubtotal(d.getSubtotal());
 			unDto.setPedidoRelacionado(d.getPedido().getNumeroPedido());
+			
+			Plato plato = d.getPlato();
+			PlatoDTO platoDto = new PlatoDTO();
+			platoDto.setId(plato.getId());
+			unDto.setPlato(platoDto);
+			
+			Insumo insumo = d.getInsumo();
+			InsumoDTO insumoDto = new InsumoDTO();
+			insumoDto.setId(insumo.getId());
+			unDto.setInsumo(insumoDto);
+			
 			return unDto;
 		}catch(Exception e) {
 			throw new Exception();
@@ -88,6 +116,16 @@ public class DetallePedidoService {
 		Optional<Pedido> Pedido = repositoryPedido.findById(dto.getPedidoRelacionado());
 		Pedido relacion = Pedido.get();
 		entity.setPedido(relacion);
+
+		// Creamos un plato
+		Plato platonuevo = new Plato();
+		platonuevo.setId(dto.getPlato().getId());
+		entity.setPlato(platonuevo);
+		
+		// Creamos un insumo
+		Insumo insumonuevo = new Insumo();
+		insumonuevo.setId(dto.getInsumo().getId());
+		entity.setInsumo(insumonuevo);
 		
 		try {
 			entity = repositoryDetallePedido.save(entity);

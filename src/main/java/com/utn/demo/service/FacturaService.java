@@ -9,13 +9,16 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.utn.demo.dtos.ClienteDTO;
+import com.utn.demo.dtos.ConfiguracionDTO;
 import com.utn.demo.dtos.DetalleFacturaDTO;
 import com.utn.demo.dtos.FacturaDTO;
+import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.entity.Cliente;
 import com.utn.demo.entity.Configuracion;
 import com.utn.demo.entity.DetalleFactura;
 import com.utn.demo.entity.Domicilio;
 import com.utn.demo.entity.Factura;
+import com.utn.demo.entity.FormaPago;
 import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Factura;
 import com.utn.demo.entity.Factura;
@@ -55,6 +58,25 @@ public class FacturaService {
 				clienteDto.setDni(cliente.getDni());
 				unDto.setFacturaCliente(clienteDto);
 				
+				Pedido pedido = i.getPedido();
+				PedidoDTO pedidoDto= new PedidoDTO();
+				pedidoDto.setNumeroPedido(pedido.getNumeroPedido());
+				unDto.setPedido(pedidoDto);
+				
+				Configuracion config = i.getEmpresa();
+				ConfiguracionDTO configDto = new ConfiguracionDTO();
+				configDto.setId(config.getId());
+				configDto.setCantidadCocineros(config.getCantidadCocineros());
+				configDto.setCuit(config.getCuit());
+				configDto.setEmailEmpresa(config.getEmailEmpresa());
+				configDto.setHorarioApertura(config.getHorarioApertura());
+				configDto.setHorarioCierre(config.getHorarioCierre());
+				configDto.setNombreEmpresa(config.getNombreEmpresa());
+				configDto.setNumeroFiscal(config.getNumeroFiscal());
+				configDto.setPaginaWeb(config.getPaginaWeb());
+				configDto.setSociedad(config.getSociedad());
+				configDto.setTelefono(config.getTelefono());
+				unDto.setEmpresa(configDto);
 				
 				dtos.add(unDto);
 			}
@@ -80,6 +102,33 @@ public class FacturaService {
 			unDto.setMontoDescuento(entidad.getMontoDescuento());
 			unDto.setTotal(entidad.getTotal());
 			
+			Cliente cliente = entidad.getFacturaCliente();
+			ClienteDTO clienteDto = new ClienteDTO();
+			clienteDto.setId(cliente.getId());
+			clienteDto.setApellido(cliente.getApellido());
+			clienteDto.setDni(cliente.getDni());
+			unDto.setFacturaCliente(clienteDto);
+			
+			Pedido pedido = entidad.getPedido();
+			PedidoDTO pedidoDto= new PedidoDTO();
+			pedidoDto.setNumeroPedido(pedido.getNumeroPedido());
+			unDto.setPedido(pedidoDto);
+			
+			Configuracion config = entidad.getEmpresa();
+			ConfiguracionDTO configDto = new ConfiguracionDTO();
+			configDto.setId(config.getId());
+			configDto.setCantidadCocineros(config.getCantidadCocineros());
+			configDto.setCuit(config.getCuit());
+			configDto.setEmailEmpresa(config.getEmailEmpresa());
+			configDto.setHorarioApertura(config.getHorarioApertura());
+			configDto.setHorarioCierre(config.getHorarioCierre());
+			configDto.setNombreEmpresa(config.getNombreEmpresa());
+			configDto.setNumeroFiscal(config.getNumeroFiscal());
+			configDto.setPaginaWeb(config.getPaginaWeb());
+			configDto.setSociedad(config.getSociedad());
+			configDto.setTelefono(config.getTelefono());
+			unDto.setEmpresa(configDto);
+			
 			return unDto;
 			
 		}catch(Exception e) {
@@ -95,14 +144,17 @@ public class FacturaService {
 		entity.setTipo(dto.getTipo());
 		entity.setMontoDescuento(dto.getMontoDescuento());
 		entity.setTotal(dto.getTotal());
+		
 		//Creamos un cliente
 		Cliente clientenuevo = new Cliente();
 		clientenuevo.setId(dto.getFacturaCliente().getId());
 		entity.setFacturaCliente(clientenuevo);
+		
 		//Configuracion
 		Configuracion config = new Configuracion();
 		config.setId(dto.getEmpresa().getId());
 		entity.setEmpresa(config);
+		
 		//Pedido
 		Pedido p = new Pedido();
 		p.setNumeroPedido(dto.getPedido().getNumeroPedido());

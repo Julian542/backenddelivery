@@ -15,8 +15,9 @@ public class PedidoDTO {
 	private EstadoDTO estado;
 	private ClienteDTO pedidoCliente;
 	private FacturaDTO factura;
-	List<DetallePedidoDTO> detallePedido;
 	private String tipoEnvio;	
 	private String horaEstimada;
+	private FormaPagoDTO formaPago;
 	private double subtotal;
+	private long cocinaRelacionada;
 }

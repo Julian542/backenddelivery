@@ -8,17 +8,30 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.utn.demo.dtos.ClienteDTO;
+import com.utn.demo.dtos.EstadoDTO;
+import com.utn.demo.dtos.FacturaDTO;
+import com.utn.demo.dtos.FormaPagoDTO;
 import com.utn.demo.dtos.PedidoDTO;
+import com.utn.demo.entity.Cliente;
+import com.utn.demo.entity.Cocina;
+import com.utn.demo.entity.Estado;
+import com.utn.demo.entity.Factura;
+import com.utn.demo.entity.FormaPago;
 import com.utn.demo.entity.Pedido;
+import com.utn.demo.repository.CocinaRepository;
+import com.utn.demo.repository.FacturaRepository;
 import com.utn.demo.repository.PedidoRepository;
 
 @Service
 public class PedidoService {
 
 	private PedidoRepository pedidoRepository;
+	protected final CocinaRepository repositoryCocina;
 
-	public PedidoService(PedidoRepository pedidoRepository){
+	public PedidoService(PedidoRepository pedidoRepository,CocinaRepository repositoryCocina){
 		this.pedidoRepository = pedidoRepository;
+		this.repositoryCocina = repositoryCocina;
 	}
 
 	@Transactional
@@ -36,6 +49,33 @@ public class PedidoService {
 				unDto.setNumeroPedido(i.getNumeroPedido());
 				unDto.setHoraEstimada(i.getHoraEstimada());
 				unDto.setSubtotal(i.getSubtotal());
+				unDto.setCocinaRelacionada(i.getCocina().getId());
+				
+				Estado estado = i.getEstado();
+				EstadoDTO estadoDto = new EstadoDTO();
+				estadoDto.setId(estado.getId());
+				estadoDto.setEstadoPedido(estado.getEstadoPedido());
+				unDto.setEstado(estadoDto);
+				
+				Cliente cliente = i.getPedidoCliente();
+				ClienteDTO clienteDto = new ClienteDTO();
+				clienteDto.setId(cliente.getId());
+				clienteDto.setApellido(cliente.getApellido());
+				clienteDto.setDni(cliente.getDni());
+				unDto.setPedidoCliente(clienteDto);
+				
+				Factura factura = i.getFactura();
+				FacturaDTO facturaDto = new FacturaDTO();
+				facturaDto.setNumeroFactura(factura.getNumeroFactura());
+				unDto.setFactura(facturaDto);
+				
+				FormaPago formaPago = i.getFormaPago();
+				FormaPagoDTO formaPagoDto = new FormaPagoDTO();
+				formaPagoDto.setId(formaPago.getId());
+				formaPagoDto.setMonto(formaPago.getMonto());
+				unDto.setFormaPago(formaPagoDto);
+				
+				
 
 				dtos.add(unDto);
 			}
@@ -58,6 +98,31 @@ public class PedidoService {
 			unDto.setNumeroPedido(entidad.getNumeroPedido());
 			unDto.setHoraEstimada(entidad.getHoraEstimada());
 			unDto.setSubtotal(entidad.getSubtotal());
+			unDto.setCocinaRelacionada(entidad.getCocina().getId());
+			
+			Estado estado = entidad.getEstado();
+			EstadoDTO estadoDto = new EstadoDTO();
+			estadoDto.setId(estado.getId());
+			estadoDto.setEstadoPedido(estado.getEstadoPedido());
+			unDto.setEstado(estadoDto);
+			
+			Cliente cliente = entidad.getPedidoCliente();
+			ClienteDTO clienteDto = new ClienteDTO();
+			clienteDto.setId(cliente.getId());
+			clienteDto.setApellido(cliente.getApellido());
+			clienteDto.setDni(cliente.getDni());
+			unDto.setPedidoCliente(clienteDto);
+			
+			Factura factura = entidad.getFactura();
+			FacturaDTO facturaDto = new FacturaDTO();
+			facturaDto.setNumeroFactura(factura.getNumeroFactura());
+			unDto.setFactura(facturaDto);
+			
+			FormaPago formaPago = entidad.getFormaPago();
+			FormaPagoDTO formaPagoDto = new FormaPagoDTO();
+			formaPagoDto.setId(formaPago.getId());
+			formaPagoDto.setMonto(formaPago.getMonto());
+			unDto.setFormaPago(formaPagoDto);
 			
 			return unDto;
 			
@@ -74,6 +139,30 @@ public class PedidoService {
 		entity.setHoraEstimada(dto.getHoraEstimada());
 		entity.setSubtotal(dto.getSubtotal());
 		
+		// Creamos un cliente
+		Cliente clientenuevo = new Cliente();
+		clientenuevo.setId(dto.getPedidoCliente().getId());
+		entity.setPedidoCliente(clientenuevo);
+
+		Optional<Cocina> cocina = repositoryCocina.findById(dto.getCocinaRelacionada());
+		Cocina relacion = cocina.get();
+		entity.setCocina(relacion);
+		
+		// Creamos un estado
+		Estado estadonuevo = new Estado();
+		estadonuevo.setId(dto.getEstado().getId());
+		entity.setEstado(estadonuevo);
+
+		// Creamos una factura
+		Factura facturanueva = new Factura();
+		facturanueva.setNumeroFactura(dto.getFactura().getNumeroFactura());
+		entity.setFactura(facturanueva);
+
+		// Creamos una formaPago
+		FormaPago formapagonueva = new FormaPago();
+		formapagonueva.setId(dto.getFormaPago().getId());
+		entity.setFormaPago(formapagonueva);
+
 		try {
 			
 			entity = pedidoRepository.save(entity);
@@ -96,7 +185,9 @@ public class PedidoService {
 			entidad.setHoraEstimada(dto.getHoraEstimada());
 			entidad.setSubtotal(dto.getSubtotal());
 			
-			
+			Optional<Cocina> cocina = repositoryCocina.findById(dto.getCocinaRelacionada());
+			Cocina relacion = cocina.get();
+			entidad.setCocina(relacion);
 			
 			pedidoRepository.save(entidad);
 			dto.setNumeroPedido(entidad.getNumeroPedido());

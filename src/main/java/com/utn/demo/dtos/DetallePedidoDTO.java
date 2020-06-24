@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class DetallePedidoDTO {
 	
 	private long id;
-	private PedidoDTO pedido;
 	private double subtotal;
 	private int cantidad;
 	private InsumoDTO insumo;
