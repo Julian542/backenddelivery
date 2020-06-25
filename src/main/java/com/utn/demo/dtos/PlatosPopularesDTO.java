@@ -1,7 +1,7 @@
 package com.utn.demo.dtos;
 
 import java.util.Date;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,5 @@ public class PlatosPopularesDTO {
 	
 	private long id;
 	private Date fecha;
-	private PlatoDTO plato;
-	private int cantidadVedida;
+	private List<PlatoDTO> plato;
 }

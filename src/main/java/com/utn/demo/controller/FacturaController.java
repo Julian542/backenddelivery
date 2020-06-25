@@ -20,7 +20,7 @@ import com.utn.demo.service.FacturaService;
 
 @RestController
 @CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.DELETE , RequestMethod.PUT, RequestMethod.POST})
-@RequestMapping(path = "")
+@RequestMapping(path = "api/v1/factura")
 public class FacturaController {
 
 	private FacturaService facturaService;
@@ -78,7 +78,7 @@ public class FacturaController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity post(@PathVariable long id){
+	public ResponseEntity delete(@PathVariable long id){
 		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(facturaService.delete(id));

@@ -20,7 +20,7 @@ import com.utn.demo.service.InsumoService;
 
 @RestController
 @CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.DELETE , RequestMethod.PUT, RequestMethod.POST})
-@RequestMapping(path = "")
+@RequestMapping(path = "api/v1/insumo")
 public class InsumoController {
 
 	private InsumoService insumoService;
@@ -78,7 +78,7 @@ public class InsumoController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity post(@PathVariable long id){
+	public ResponseEntity delete(@PathVariable long id){
 		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(insumoService.delete(id));

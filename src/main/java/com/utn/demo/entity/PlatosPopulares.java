@@ -3,15 +3,13 @@ package com.utn.demo.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,9 +27,6 @@ public class PlatosPopulares implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
-	@OneToOne
-	private Plato plato;
-	
-	private int cantidadVedida;
-
+	@ManyToMany
+	private List<Plato> platos;
 }

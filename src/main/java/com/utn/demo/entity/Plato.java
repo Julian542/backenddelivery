@@ -28,6 +28,7 @@ public class Plato extends Articulo implements Serializable{
 	private int tiempoPreparacion;
 	private String descripcion;
 	private String imagen;
+	private int cantidadVendida;
 	
 	@OneToMany (cascade = CascadeType.ALL)
 	private List<DetallePlato> receta;

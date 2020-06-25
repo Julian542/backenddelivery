@@ -20,7 +20,7 @@ import com.utn.demo.service.DetallePedidoService;
 
 @RestController
 @CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.DELETE , RequestMethod.PUT, RequestMethod.POST})
-@RequestMapping(path = "")
+@RequestMapping(path = "api/v1/detallePedido")
 public class DetallePedidoController {
 protected final DetallePedidoService detallePedidoService;
 	
@@ -103,7 +103,7 @@ protected final DetallePedidoService detallePedidoService;
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity post(@PathVariable long id){
+	public ResponseEntity delete(@PathVariable long id){
 		
 		try {
 			

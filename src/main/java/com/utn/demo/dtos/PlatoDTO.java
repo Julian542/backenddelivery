@@ -18,6 +18,7 @@ public class PlatoDTO extends ArticuloDTO {
 	private int tiempoPreparacion;
 	private String descripcion;
 	private String imagen;
+	private int cantidadVendida;
 	private List<DetallePlatoDTO> receta;
 	private CategoriaPlatoDTO categoriaPlato;
 	private SubcategoriaPlatoDTO subcategoriaPlato;
