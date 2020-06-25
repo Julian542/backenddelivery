@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.stereotype.Service;
+
 import com.utn.demo.dtos.ClienteDTO;
 import com.utn.demo.dtos.ConfiguracionDTO;
 import com.utn.demo.dtos.CocinaDTO;
@@ -16,6 +18,7 @@ import com.utn.demo.entity.Cocina;
 import com.utn.demo.entity.Pedido;
 import com.utn.demo.repository.CocinaRepository;
 
+@Service
 public class CocinaService {
 	private CocinaRepository cocinaRepository;
 

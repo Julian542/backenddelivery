@@ -20,7 +20,7 @@ import com.utn.demo.service.ContadoService;
 
 @RestController
 @CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.DELETE , RequestMethod.PUT, RequestMethod.POST})
-@RequestMapping(path = "")
+@RequestMapping(path = "api/v1/contado")
 public class ContadoController {
 	private ContadoService contadoService;
 
@@ -77,7 +77,7 @@ public class ContadoController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity post(@PathVariable long id){
+	public ResponseEntity delete(@PathVariable long id){
 		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(contadoService.delete(id));

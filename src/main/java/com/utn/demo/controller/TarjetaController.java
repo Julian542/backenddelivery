@@ -20,7 +20,7 @@ import com.utn.demo.service.TarjetaService;
 
 @RestController
 @CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.DELETE , RequestMethod.PUT, RequestMethod.POST})
-@RequestMapping(path = "")
+@RequestMapping(path = "api/v1/tarjeta")
 public class TarjetaController {
 
 	private TarjetaService tarjetaService;
@@ -78,7 +78,7 @@ public class TarjetaController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity post(@PathVariable long id){
+	public ResponseEntity delete(@PathVariable long id){
 		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(tarjetaService.delete(id));

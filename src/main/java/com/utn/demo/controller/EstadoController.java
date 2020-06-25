@@ -20,7 +20,7 @@ import com.utn.demo.service.EstadoService;
 
 @RestController
 @CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.DELETE , RequestMethod.PUT, RequestMethod.POST})
-@RequestMapping(path = "")
+@RequestMapping(path = "api/v1/estado")
 public class EstadoController {
 
 	private EstadoService estadoService;
@@ -78,7 +78,7 @@ public class EstadoController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity post(@PathVariable long id){
+	public ResponseEntity delete(@PathVariable long id){
 		
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(estadoService.delete(id));
