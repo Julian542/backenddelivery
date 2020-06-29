@@ -14,4 +14,4 @@
 ## Realizado con Lombok
 * Consultar pom.xml para visualizar la dependencia
 
-![diagrama](https://ibb.co/tcr3zMY) 
+![diagrama](https://i.ibb.co/q9QxCMm/buensabor.png) 
