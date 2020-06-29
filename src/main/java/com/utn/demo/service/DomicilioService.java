@@ -1,0 +1,162 @@
+package com.utn.demo.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import com.utn.demo.dtos.DomicilioDTO;
+import com.utn.demo.dtos.LocalidadDTO;
+import com.utn.demo.dtos.UsuarioDTO;
+import com.utn.demo.entity.Domicilio;
+import com.utn.demo.entity.Localidad;
+import com.utn.demo.entity.Usuario;
+import com.utn.demo.repository.DomicilioRepository;
+
+@Service
+public class DomicilioService {
+
+	protected final DomicilioRepository repo;
+
+	public DomicilioService(DomicilioRepository repo) {
+		this.repo = repo;
+	}
+
+	// traer domicilios de los usuarios
+	@Transactional
+	public List<DomicilioDTO> buscarporUsuario(int id) {
+		List<Domicilio> entidades = repo.buscarPorUsuario(id);
+		List<DomicilioDTO> dtos = new ArrayList<>();
+		for (Domicilio d : entidades) {
+			DomicilioDTO unDto = new DomicilioDTO();
+			unDto.setId(d.getId());
+			unDto.setDepartamento(d.getDepartamento());
+			unDto.setNumero(d.getNumero());
+			unDto.setPiso(d.getPiso());
+			unDto.setCalle(d.getCalle());
+			LocalidadDTO localidadto = new LocalidadDTO();
+			localidadto.setId(d.getLocalidad().getId());
+			localidadto.setNombre(d.getLocalidad().getNombre());
+			unDto.setLocalidad(localidadto);
+			UsuarioDTO user = new UsuarioDTO();
+			user.setId(d.getPropietario().getId());
+			user.setNombre(d.getPropietario().getNombre());
+			user.setApellido(d.getPropietario().getApellido());
+			unDto.setPropietario(user);
+			dtos.add(unDto);
+		}
+		return dtos;
+	}
+
+	// getAll
+	@Transactional
+	public List<DomicilioDTO> findAll() {
+		List<Domicilio> entidades = repo.findAll();
+		List<DomicilioDTO> dtos = new ArrayList<>();
+		for (Domicilio d : entidades) {
+			DomicilioDTO unDto = new DomicilioDTO();
+			unDto.setId(d.getId());
+			unDto.setDepartamento(d.getDepartamento());
+			unDto.setNumero(d.getNumero());
+			unDto.setPiso(d.getPiso());
+			unDto.setCalle(d.getCalle());
+			LocalidadDTO localidadto = new LocalidadDTO();
+			localidadto.setId(d.getLocalidad().getId());
+			localidadto.setNombre(d.getLocalidad().getNombre());
+			unDto.setLocalidad(localidadto);
+			UsuarioDTO user = new UsuarioDTO();
+			user.setId(d.getPropietario().getId());
+			user.setNombre(d.getPropietario().getNombre());
+			user.setApellido(d.getPropietario().getApellido());
+			unDto.setPropietario(user);
+			dtos.add(unDto);
+		}
+		return dtos;
+	}
+
+	// getOne
+	@Transactional
+	public DomicilioDTO findById(int id) {
+		Optional<Domicilio> entityOptional = repo.findById(id);
+		Domicilio d = entityOptional.get();
+		DomicilioDTO unDto = new DomicilioDTO();
+
+		unDto.setId(d.getId());
+		unDto.setDepartamento(d.getDepartamento());
+		unDto.setNumero(d.getNumero());
+		unDto.setPiso(d.getPiso());
+		unDto.setCalle(d.getCalle());
+		LocalidadDTO localidadto = new LocalidadDTO();
+		localidadto.setId(d.getLocalidad().getId());
+		localidadto.setNombre(d.getLocalidad().getNombre());
+		unDto.setLocalidad(localidadto);
+		UsuarioDTO user = new UsuarioDTO();
+		user.setId(d.getPropietario().getId());
+		user.setNombre(d.getPropietario().getNombre());
+		user.setApellido(d.getPropietario().getApellido());
+		unDto.setPropietario(user);
+
+		return unDto;
+	}
+
+	// save
+	@Transactional
+	public DomicilioDTO save(DomicilioDTO dto) { // PARA DAR DE ALTA UN DOMICILIO ENVIAR EL CAMPO ESCLIENTE BOOLEAN EN
+													// EL JSON
+		Domicilio dom = new Domicilio();
+
+		dom.setCalle(dto.getCalle());
+		dom.setDepartamento(dto.getDepartamento());
+		dom.setNumero(dto.getNumero());
+		dom.setPiso(dto.getPiso());
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(dto.getPropietario().getId());
+		dom.setPropietario(usuario);
+		
+		Localidad loc = new Localidad();
+		loc.setId(dto.getLocalidad().getId());
+		loc.setNombre(dto.getLocalidad().getNombre());
+		dom.setLocalidad(loc);
+
+		dom = repo.save(dom);
+		dto.setId(dom.getId());
+		return dto;
+	}
+
+	// update
+	@Transactional
+	public DomicilioDTO update(int id, DomicilioDTO dto) {
+		Optional<Domicilio> op = repo.findById(id);
+		Domicilio dom = op.get();
+
+		dom.setId(dto.getId());
+		dom.setCalle(dto.getCalle());
+		dom.setDepartamento(dto.getDepartamento());
+		dom.setNumero(dto.getNumero());
+		dom.setPiso(dto.getPiso());
+		Usuario usuario = new Usuario();
+		usuario.setId(dto.getPropietario().getId());
+		dom.setPropietario(usuario);
+		Localidad loc = new Localidad();
+		loc.setId(dto.getLocalidad().getId());
+		loc.setNombre(dto.getLocalidad().getNombre());
+		dom.setLocalidad(loc);
+
+		dom = repo.save(dom);
+		dto.setId(dom.getId());
+		return dto;
+	}
+
+	public boolean delete(int id) {
+		try {
+			repo.deleteDomicilioById(id);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
+}
