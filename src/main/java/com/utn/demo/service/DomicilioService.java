@@ -25,26 +25,32 @@ public class DomicilioService {
 		this.repo = repo;
 	}
 
-	// traer domicilios de los usuarios
 	@Transactional
 	public List<DomicilioDTO> buscarporUsuario(int id) {
 		List<Domicilio> entidades = repo.buscarPorUsuario(id);
 		List<DomicilioDTO> dtos = new ArrayList<>();
+		
 		for (Domicilio d : entidades) {
+			
 			DomicilioDTO unDto = new DomicilioDTO();
 			unDto.setId(d.getId());
 			unDto.setDepartamento(d.getDepartamento());
 			unDto.setNumero(d.getNumero());
 			unDto.setPiso(d.getPiso());
 			unDto.setCalle(d.getCalle());
+			unDto.setEliminado(d.isEliminado());
+			
 			LocalidadDTO localidadto = new LocalidadDTO();
 			localidadto.setId(d.getLocalidad().getId());
 			localidadto.setNombre(d.getLocalidad().getNombre());
+			localidadto.setEliminado(d.isEliminado());
 			unDto.setLocalidad(localidadto);
+			
 			UsuarioDTO user = new UsuarioDTO();
 			user.setId(d.getPropietario().getId());
 			user.setNombre(d.getPropietario().getNombre());
 			user.setApellido(d.getPropietario().getApellido());
+			user.setEliminado(d.isEliminado());
 			unDto.setPropietario(user);
 			dtos.add(unDto);
 		}
@@ -54,6 +60,7 @@ public class DomicilioService {
 	// getAll
 	@Transactional
 	public List<DomicilioDTO> findAll() {
+		
 		List<Domicilio> entidades = repo.findAll();
 		List<DomicilioDTO> dtos = new ArrayList<>();
 		for (Domicilio d : entidades) {
@@ -63,15 +70,20 @@ public class DomicilioService {
 			unDto.setNumero(d.getNumero());
 			unDto.setPiso(d.getPiso());
 			unDto.setCalle(d.getCalle());
+			unDto.setEliminado(d.isEliminado());
+			
 			LocalidadDTO localidadto = new LocalidadDTO();
 			localidadto.setId(d.getLocalidad().getId());
 			localidadto.setNombre(d.getLocalidad().getNombre());
+			unDto.setEliminado(d.isEliminado());
 			unDto.setLocalidad(localidadto);
+			
 			UsuarioDTO user = new UsuarioDTO();
 			user.setId(d.getPropietario().getId());
 			user.setNombre(d.getPropietario().getNombre());
 			user.setApellido(d.getPropietario().getApellido());
 			unDto.setPropietario(user);
+			
 			dtos.add(unDto);
 		}
 		return dtos;
@@ -89,14 +101,18 @@ public class DomicilioService {
 		unDto.setNumero(d.getNumero());
 		unDto.setPiso(d.getPiso());
 		unDto.setCalle(d.getCalle());
+		unDto.setEliminado(d.isEliminado());
+		
 		LocalidadDTO localidadto = new LocalidadDTO();
 		localidadto.setId(d.getLocalidad().getId());
 		localidadto.setNombre(d.getLocalidad().getNombre());
 		unDto.setLocalidad(localidadto);
+		
 		UsuarioDTO user = new UsuarioDTO();
 		user.setId(d.getPropietario().getId());
 		user.setNombre(d.getPropietario().getNombre());
 		user.setApellido(d.getPropietario().getApellido());
+		
 		unDto.setPropietario(user);
 
 		return unDto;
@@ -112,6 +128,7 @@ public class DomicilioService {
 		dom.setDepartamento(dto.getDepartamento());
 		dom.setNumero(dto.getNumero());
 		dom.setPiso(dto.getPiso());
+		dom.setEliminado(dto.isEliminado());
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(dto.getPropietario().getId());
@@ -138,9 +155,12 @@ public class DomicilioService {
 		dom.setDepartamento(dto.getDepartamento());
 		dom.setNumero(dto.getNumero());
 		dom.setPiso(dto.getPiso());
+		dom.setEliminado(dto.isEliminado());
+		
 		Usuario usuario = new Usuario();
 		usuario.setId(dto.getPropietario().getId());
 		dom.setPropietario(usuario);
+		
 		Localidad loc = new Localidad();
 		loc.setId(dto.getLocalidad().getId());
 		loc.setNombre(dto.getLocalidad().getNombre());

@@ -1,5 +1,7 @@
 package com.utn.demo.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +9,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.LocalidadDTO;
@@ -22,6 +25,21 @@ public class UsuarioService {
 
 	public UsuarioService(UsuarioRepository repositorio) {
 		this.repositorio = repositorio;
+	}
+	
+	@Transactional
+	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
+
+		File archivo = new File("static\\images\\"+file.getOriginalFilename());
+		if (archivo.exists()) {
+		    System.out.println("Ya existe esta imagen");
+		    return archivo.getAbsolutePath();
+		}
+		else {
+		    System.out.println("No existe esta imagen");
+		    file.transferTo(archivo);
+			return archivo.getAbsolutePath();
+		}
 	}
 
 	@Transactional
@@ -57,10 +75,12 @@ public class UsuarioService {
 				LocalidadDTO localidaddto = new LocalidadDTO();
 				localidaddto.setId(d.getLocalidad().getId());
 				localidaddto.setNombre(d.getLocalidad().getNombre());
+				localidaddto.setEliminado(d.getLocalidad().isEliminado());
 				//
 				dtodom.setLocalidad(localidaddto);
 				dtodom.setNumero(d.getNumero());
 				dtodom.setPiso(d.getPiso());
+				dtodom.setEliminado(d.isEliminado());
 				domiciliosdto.add(dtodom);
 			}
 			unDto.setDomicilios(domiciliosdto);
@@ -72,6 +92,7 @@ public class UsuarioService {
 			unDto.setPassword(e.getPassword());
 			unDto.setRol(e.getRol());
 			unDto.setTelefono(e.getTelefono());
+			unDto.setEliminado(e.isEliminado());
 			dtos.add(unDto);
 		}
 		return dtos;
@@ -96,10 +117,12 @@ public class UsuarioService {
 			LocalidadDTO localidaddto = new LocalidadDTO();
 			localidaddto.setId(d.getLocalidad().getId());
 			localidaddto.setNombre(d.getLocalidad().getNombre());
+			localidaddto.setEliminado(d.getLocalidad().isEliminado());
 			//
 			dtodom.setLocalidad(localidaddto);
 			dtodom.setNumero(d.getNumero());
 			dtodom.setPiso(d.getPiso());
+			dtodom.setEliminado(d.isEliminado());
 			domiciliosdto.add(dtodom);
 		}
 		unDto.setDomicilios(domiciliosdto);
@@ -111,6 +134,7 @@ public class UsuarioService {
 		unDto.setPassword(e.getPassword());
 		unDto.setRol(e.getRol());
 		unDto.setTelefono(e.getTelefono());
+		unDto.setEliminado(e.isEliminado());
 
 		return unDto;
 	}
@@ -124,6 +148,7 @@ public class UsuarioService {
 		unDto.setId(e.getId());
 		unDto.setApellido(e.getApellido());
 		unDto.setDni(e.getDni());
+		
 		List<DomicilioDTO> domiciliosdto = new ArrayList();
 		for (Domicilio d : e.getDomicilios()) {
 			DomicilioDTO dtodom = new DomicilioDTO();
@@ -134,12 +159,15 @@ public class UsuarioService {
 			LocalidadDTO localidaddto = new LocalidadDTO();
 			localidaddto.setId(d.getLocalidad().getId());
 			localidaddto.setNombre(d.getLocalidad().getNombre());
+			localidaddto.setEliminado(d.getLocalidad().isEliminado());
 			//
 			dtodom.setLocalidad(localidaddto);
 			dtodom.setNumero(d.getNumero());
 			dtodom.setPiso(d.getPiso());
+			dtodom.setEliminado(d.isEliminado());
 			domiciliosdto.add(dtodom);
 		}
+		
 		unDto.setDomicilios(domiciliosdto);
 		unDto.setEmail(e.getEmail());
 		unDto.setEsCliente(e.isEsCliente());
@@ -149,6 +177,7 @@ public class UsuarioService {
 		unDto.setPassword(e.getPassword());
 		unDto.setRol(e.getRol());
 		unDto.setTelefono(e.getTelefono());
+		unDto.setEliminado(e.isEliminado());
 
 		return unDto;
 	}
@@ -168,6 +197,7 @@ public class UsuarioService {
 		u.setPassword(dto.getPassword());
 		u.setRol(dto.getRol());
 		u.setTelefono(dto.getTelefono());
+		u.setEliminado(dto.isEliminado());
 		// termina proceso
 
 		u = repositorio.save(u);
@@ -191,6 +221,7 @@ public class UsuarioService {
 		u.setPassword(dto.getPassword());
 		u.setRol(dto.getRol());
 		u.setTelefono(dto.getTelefono());
+		u.setEliminado(dto.isEliminado());
 		u = repositorio.save(u);
 		dto.setId(u.getId());
 		return dto;

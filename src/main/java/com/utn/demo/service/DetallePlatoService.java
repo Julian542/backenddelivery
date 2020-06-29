@@ -44,6 +44,7 @@ public class DetallePlatoService {
 				insumo.setStockMaximo(entity.getInsumo().getStockMaximo());
 				insumo.setEsInsumo(entity.getInsumo().isEsInsumo());
 				insumo.setPrecioVenta(entity.getInsumo().getPrecioVenta());
+				insumo.setEliminado(entity.getInsumo().isEliminado());
 
 				dto.setIngrediente(insumo);
 
@@ -83,7 +84,9 @@ public class DetallePlatoService {
 				insumo.setStockMaximo(entity.getInsumo().getStockMaximo());
 				insumo.setEsInsumo(entity.getInsumo().isEsInsumo());
 				insumo.setPrecioVenta(entity.getInsumo().getPrecioVenta());
+				insumo.setEliminado(entity.getInsumo().isEliminado());
 				dto.setIngrediente(insumo);
+				
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

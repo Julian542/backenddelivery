@@ -1,10 +1,14 @@
 package com.utn.demo.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.utn.demo.dtos.DetallePlatoDTO;
 import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
@@ -25,6 +29,22 @@ public class PlatoService {
 	public PlatoService(PlatoRepository platoRepository) {
 		this.platoRepository = platoRepository;
 	}
+	
+	@Transactional
+	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
+
+		File archivo = new File("static\\images\\"+file.getOriginalFilename());
+		if (archivo.exists()) {
+		    System.out.println("Ya existe esta imagen");
+		    return archivo.getAbsolutePath();
+		}
+		else {
+		    System.out.println("No existe esta imagen");
+		    file.transferTo(archivo);
+			return archivo.getAbsolutePath();
+		}
+	}
+
 
 	@Transactional
 	public List<PlatoDTO> getAll() {
@@ -42,6 +62,7 @@ public class PlatoService {
 			dto.setPrecioCosto(entity.getPrecioCosto());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setCantidadVendida(entity.getCantidadVendida());
+			dto.setEliminado(entity.isEliminado());
 
 			try {
 				List<DetallePlatoDTO> platoDetalle = new ArrayList<>();
@@ -61,17 +82,20 @@ public class PlatoService {
 					insumo.setNombre(platoDetalleInternal.getInsumo().getNombre());
 					insumo.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
 					insumo.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
+					insumo.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
 
 					InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
 					insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
 					insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
 					insumoCategoria.setDescripcion(platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
+					insumoCategoria.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
 					insumo.setCategoria(insumoCategoria);
 
 					UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
 					unidadMedida.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
 					unidadMedida.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
 					unidadMedida.setAbreviatura(platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
+					unidadMedida.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
 					insumo.setUnidadMedida(unidadMedida);
 
 					platoDetalleDTO.setIngrediente(insumo);
@@ -88,6 +112,8 @@ public class PlatoService {
 				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
 				platoCategoria.setId(entity.getCategoria().getId());
 				platoCategoria.setNombre(entity.getCategoria().getNombre());
+				platoCategoria.setDescripcion(entity.getCategoria().getDescripcion());
+				platoCategoria.setEliminado(entity.getCategoria().isEliminado());
 				dto.setCategoria(platoCategoria);
 
 			} catch (Exception e) {
@@ -118,6 +144,7 @@ public class PlatoService {
 			dto.setPrecioCosto(entity.getPrecioCosto());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setCantidadVendida(entity.getCantidadVendida());
+			dto.setEliminado(entity.isEliminado());
 
 			try {
 				List<DetallePlatoDTO> platoDetalle = new ArrayList<>();
@@ -137,18 +164,22 @@ public class PlatoService {
 					insumo.setNombre(platoDetalleInternal.getInsumo().getNombre());
 					insumo.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
 					insumo.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
+					insumo.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
 
 					InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
 					insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
 					insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
 					insumoCategoria.setDescripcion(platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
+					insumoCategoria.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
 					insumo.setCategoria(insumoCategoria);
 
 					UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
 					unidadMedida.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
 					unidadMedida.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
 					unidadMedida.setAbreviatura(platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
+					unidadMedida.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
 
+					
 					insumo.setUnidadMedida(unidadMedida);
 
 					platoDetalleDTO.setIngrediente(insumo);
@@ -165,6 +196,7 @@ public class PlatoService {
 				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
 				platoCategoria.setId(entity.getCategoria().getId());
 				platoCategoria.setNombre(entity.getCategoria().getNombre());
+				platoCategoria.setDescripcion(entity.getCategoria().getDescripcion());
 				dto.setCategoria(platoCategoria);
 
 			} catch (Exception e) {
@@ -193,6 +225,7 @@ public class PlatoService {
 		plato.setPrecioCosto(platoDTO.getPrecioCosto());
 		plato.setImagen(platoDTO.getImagen());
 		plato.setCantidadVendida(platoDTO.getCantidadVendida());
+		plato.setEliminado(platoDTO.isEliminado());
 
 		try {
 
@@ -246,6 +279,7 @@ public class PlatoService {
 			plato.setPrecioCosto(platoDTO.getPrecioCosto());
 			plato.setImagen(platoDTO.getImagen());
 			plato.setCantidadVendida(platoDTO.getCantidadVendida());
+			plato.setEliminado(platoDTO.isEliminado());
 
 			try {
 				List<DetallePlato> platoDetalle = new ArrayList<>();
@@ -330,6 +364,7 @@ public class PlatoService {
 				platosDTO.setPrecioCosto(plato.getPrecioCosto());
 				platosDTO.setPrecioVenta(plato.getPrecioVenta());
 				platosDTO.setTiempoPreparacion(plato.getTiempoPreparacion());
+				platosDTO.setEliminado(plato.isEliminado());
 				platoDTOs.add(platosDTO);
 			}
 		} catch (Exception e) {

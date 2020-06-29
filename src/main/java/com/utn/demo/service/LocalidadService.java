@@ -29,6 +29,7 @@ public class LocalidadService {
 			LocalidadDTO unDto = new LocalidadDTO();
 			unDto.setId(l.getId());
 			unDto.setNombre(l.getNombre());
+			unDto.setEliminado(l.isEliminado());
 			dtos.add(unDto);
 		}
 		return dtos;
@@ -42,6 +43,7 @@ public class LocalidadService {
 		LocalidadDTO dto = new LocalidadDTO();
 		dto.setId(entidad.getId());
 		dto.setNombre(entidad.getNombre());
+		dto.setEliminado(entidad.isEliminado());
 		return dto;
 	}
 
@@ -50,6 +52,7 @@ public class LocalidadService {
 
 		Localidad entity = new Localidad();
 		entity.setNombre(dto.getNombre());
+		entity.setEliminado(dto.isEliminado());
 		entity = repository.save(entity);
 		dto.setId(entity.getId());
 		return dto;
@@ -61,6 +64,7 @@ public class LocalidadService {
 		Localidad entidad = entityOptional.get();
 		entidad.setId(dto.getId());
 		entidad.setNombre(dto.getNombre());
+		entidad.setEliminado(dto.isEliminado());
 		repository.save(entidad);
 		dto.setId(entidad.getId());
 		return dto;

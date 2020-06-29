@@ -36,6 +36,7 @@ public class FacturaService {
 			object.setSubtotal(object2.getSubtotal());
 			object.setMontoDescuento(object2.getMontoDescuento());
 			object.setTotal(object2.getTotal());
+			object.setEliminado(object2.isEliminado());
 			
 			try {
 
@@ -97,6 +98,7 @@ public class FacturaService {
 			object.setSubtotal(object2.getSubtotal());
 			object.setMontoDescuento(object2.getMontoDescuento());
 			object.setTotal(object2.getTotal());
+			object.setEliminado(object2.isEliminado());
 			
 			try {
 
@@ -155,6 +157,7 @@ public class FacturaService {
 		factura.setSubtotal(facturaDTO.getSubtotal());
 		factura.setMontoDescuento(facturaDTO.getMontoDescuento());
 		factura.setTotal(facturaDTO.getTotal());
+		factura.setEliminado(facturaDTO.isEliminado());
 		
 		try {
 
@@ -214,6 +217,7 @@ public class FacturaService {
 			factura.setSubtotal(facturaDTO.getSubtotal());
 			factura.setMontoDescuento(facturaDTO.getMontoDescuento());
 			factura.setTotal(facturaDTO.getTotal());
+			factura.setEliminado(facturaDTO.isEliminado());
 			
 			try {
 
