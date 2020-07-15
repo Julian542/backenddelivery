@@ -16,6 +16,7 @@ import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.EstadoDTO;
 import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
+import com.utn.demo.dtos.LocalidadDTO;
 import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.dtos.UnidadMedidaDTO;
@@ -365,9 +366,25 @@ public class PedidoService {
 
 			try {
 
-				DomicilioDTO domicilio = new DomicilioDTO();
-				domicilio.setId(dto2.getDomicilio().getId());
-				dto.setDomicilio(domicilio);
+				DomicilioDTO domicilioDTO = new DomicilioDTO();
+				domicilioDTO.setId(dto2.getDomicilio().getId());
+				domicilioDTO.setCalle(dto2.getDomicilio().getCalle());
+				domicilioDTO.setDepartamento(dto2.getDomicilio().getDepartamento());
+				
+				LocalidadDTO localidadDTO = new LocalidadDTO();
+				localidadDTO.setId(dto2.getDomicilio().getLocalidad().getId());
+				localidadDTO.setNombre(dto2.getDomicilio().getLocalidad().getNombre());
+				
+				domicilioDTO.setLocalidad(localidadDTO);
+				domicilioDTO.setNumero(dto2.getDomicilio().getNumero());
+				domicilioDTO.setPiso(dto2.getDomicilio().getPiso());
+				
+				UsuarioDTO usuarioDTO = new UsuarioDTO();
+				usuarioDTO.setId(dto2.getUsuario().getId());
+				usuarioDTO.setNombre(dto2.getUsuario().getNombre());
+				usuarioDTO.setApellido(dto2.getUsuario().getApellido());
+				domicilioDTO.setPropietario(usuarioDTO);
+				dto.setDomicilio(domicilioDTO);
 
 			} catch (Exception e) {
 
