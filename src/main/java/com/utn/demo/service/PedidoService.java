@@ -68,6 +68,18 @@ public class PedidoService {
 			}
 
 			try {
+
+				DomicilioDTO domicilioDTO = new DomicilioDTO();
+				domicilioDTO.setId(dto2.getDomicilio().getId());
+				dto.setDomicilio(domicilioDTO);
+
+			} catch (Exception e) {
+
+				System.out.println(e.getMessage());
+
+			}
+
+			try {
 				EstadoDTO estado = new EstadoDTO();
 				estado.setId(dto2.getEstado().getId());
 				estado.setNombre(dto2.getEstado().getNombre());
@@ -208,6 +220,18 @@ public class PedidoService {
 			}
 
 			try {
+
+				DomicilioDTO domicilioDTO = new DomicilioDTO();
+				domicilioDTO.setId(dto2.getDomicilio().getId());
+				dto.setDomicilio(domicilioDTO);
+
+			} catch (Exception e) {
+
+				System.out.println(e.getMessage());
+
+			}
+
+			try {
 				List<DetalleDTO> detalle = new ArrayList<>();
 				for (Detalle detalleInternal : dto2.getDetalle()) {
 					DetalleDTO detalleDTO = new DetalleDTO();
@@ -335,6 +359,18 @@ public class PedidoService {
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+			}
+
+			try {
+
+				Domicilio domicilio = new Domicilio();
+				domicilio.setId(pedido.getDomicilio().getId());
+				pedido.setDomicilio(domicilio);
+
+			} catch (Exception e) {
+
+				System.out.println(e.getMessage());
+
 			}
 
 			try {
@@ -470,6 +506,18 @@ public class PedidoService {
 			System.out.println(e.getMessage());
 		}
 
+		try {
+
+			Domicilio domicilio = new Domicilio();
+			domicilio.setId(pedido.getDomicilio().getId());
+			pedido.setDomicilio(domicilio);
+
+		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+
+		}
+
 		List<Detalle> detalle = new ArrayList<>();
 
 		try {
@@ -597,6 +645,15 @@ public class PedidoService {
 				Estado estado = new Estado();
 				estado.setId(pedidoDTO.getEstado().getId());
 				pedido.setEstado(estado);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
+				Domicilio domicilio = new Domicilio();
+				domicilio.setId(pedido.getDomicilio().getId());
+				pedido.setDomicilio(domicilio);
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

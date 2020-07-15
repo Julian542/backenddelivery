@@ -20,6 +20,7 @@ public class PedidoDTO {
 	private EstadoDTO estado;
 	private UsuarioDTO usuario;
 	private List<DetalleDTO> detalle = new ArrayList<>();
+	private DomicilioDTO domicilio;
 	private boolean eliminado;
 
 }

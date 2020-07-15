@@ -29,6 +29,7 @@ public class Domicilio implements Serializable {
 	@ManyToOne
 	private Usuario propietario;
 
+	@OneToOne
 	private Localidad localidad; /* Las Heras, Junin, Godoy Cruz */
 
 	private String calle;

@@ -45,6 +45,9 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "fk_usuario")
 	private Usuario usuario;
 	
+	@OneToOne
+	private Domicilio domicilio;
+	
 	@Column(name = "eliminado")
 	private boolean eliminado;
 }
