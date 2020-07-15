@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.DetallePlatoDTO;
+import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.EstadoDTO;
 import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
@@ -21,6 +22,7 @@ import com.utn.demo.dtos.UnidadMedidaDTO;
 import com.utn.demo.dtos.UsuarioDTO;
 import com.utn.demo.entity.Detalle;
 import com.utn.demo.entity.DetallePlato;
+import com.utn.demo.entity.Domicilio;
 import com.utn.demo.entity.Estado;
 import com.utn.demo.entity.Insumo;
 import com.utn.demo.entity.Pedido;
@@ -363,9 +365,9 @@ public class PedidoService {
 
 			try {
 
-				Domicilio domicilio = new Domicilio();
-				domicilio.setId(pedido.getDomicilio().getId());
-				pedido.setDomicilio(domicilio);
+				DomicilioDTO domicilio = new DomicilioDTO();
+				domicilio.setId(dto2.getDomicilio().getId());
+				dto.setDomicilio(domicilio);
 
 			} catch (Exception e) {
 
