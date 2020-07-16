@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlatoCategoriaDTO {
-
 	private int id;
 	private String nombre;
 	private String descripcion;
 	private boolean eliminado;
-
 }

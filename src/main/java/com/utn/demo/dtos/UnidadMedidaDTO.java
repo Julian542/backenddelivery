@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnidadMedidaDTO {
-
 	private int id;
 	private String nombre;
 	private String abreviatura;
 	private boolean eliminado;
-
 }

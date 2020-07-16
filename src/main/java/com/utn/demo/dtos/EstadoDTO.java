@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EstadoDTO {
-
 	private int id;
 	private String nombre;
 	private boolean eliminado;

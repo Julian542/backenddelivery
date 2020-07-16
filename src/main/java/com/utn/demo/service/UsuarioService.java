@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.LocalidadDTO;
 import com.utn.demo.dtos.UsuarioDTO;
@@ -26,25 +23,24 @@ public class UsuarioService {
 	public UsuarioService(UsuarioRepository repositorio) {
 		this.repositorio = repositorio;
 	}
-	
+
 	@Transactional
 	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
-
-		File archivo = new File("static\\images\\"+file.getOriginalFilename());
+		File archivo = new File("static\\images\\" + file.getOriginalFilename());
 		if (archivo.exists()) {
-		    System.out.println("Ya existe esta imagen");
-		    return archivo.getAbsolutePath();
-		}
-		else {
-		    System.out.println("No existe esta imagen");
-		    file.transferTo(archivo);
+			System.out.println("Ya existe esta imagen");
+			return archivo.getAbsolutePath();
+		} else {
+			System.out.println("No existe esta imagen");
+			file.transferTo(archivo);
 			return archivo.getAbsolutePath();
 		}
 	}
 
+	// este metodo existe para consultar la existencia de un usuario en la base de
+	// datos,
 	@Transactional
 	public String existeEmail(String email) {
-
 		String validacion = repositorio.existeEmail(email);
 		if (validacion != "0") {
 			return "true";
@@ -52,31 +48,69 @@ public class UsuarioService {
 			return "false";
 		}
 	}
-	// este metodo existe para consultar la existencia de un usuario en la base de
-	// datos,
 
-	// findAll
 	@Transactional
 	public List<UsuarioDTO> findAll() {
-		List<UsuarioDTO> dtos = new ArrayList<>();
+		List<UsuarioDTO> dtos = new ArrayList<UsuarioDTO>();
+		try {
+			for (Usuario e : repositorio.findAll()) {
+				UsuarioDTO unDto = new UsuarioDTO();
+				unDto.setId(e.getId());
+				unDto.setApellido(e.getApellido());
+				unDto.setDni(e.getDni());
+				List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
+				for (Domicilio d : e.getDomicilios()) {
+					DomicilioDTO dtodom = new DomicilioDTO();
+					dtodom.setCalle(d.getCalle());
+					dtodom.setDepartamento(d.getDepartamento());
+					dtodom.setId(d.getId());
+					LocalidadDTO localidaddto = new LocalidadDTO();
+					localidaddto.setId(d.getLocalidad().getId());
+					localidaddto.setNombre(d.getLocalidad().getNombre());
+					localidaddto.setEliminado(d.getLocalidad().isEliminado());
+					dtodom.setLocalidad(localidaddto);
+					dtodom.setNumero(d.getNumero());
+					dtodom.setPiso(d.getPiso());
+					dtodom.setEliminado(d.isEliminado());
+					domiciliosdto.add(dtodom);
+				}
+				unDto.setDomicilios(domiciliosdto);
+				unDto.setEmail(e.getEmail());
+				unDto.setEsCliente(e.isEsCliente());
+				unDto.setFechaNacimiento(e.getFechaNacimiento());
+				unDto.setImagen(e.getImagen());
+				unDto.setNombre(e.getNombre());
+				unDto.setPassword(e.getPassword());
+				unDto.setRol(e.getRol());
+				unDto.setTelefono(e.getTelefono());
+				unDto.setEliminado(e.isEliminado());
+				dtos.add(unDto);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return dtos;
+	}
 
-		for (Usuario e : repositorio.findAll()) {
-			UsuarioDTO unDto = new UsuarioDTO();
+	@Transactional
+	public UsuarioDTO findById(int id) {
+		UsuarioDTO unDto = new UsuarioDTO();
+		try {
+			Optional<Usuario> optionalentity = repositorio.findById(id);
+			Usuario e = optionalentity.get();
 			unDto.setId(e.getId());
 			unDto.setApellido(e.getApellido());
 			unDto.setDni(e.getDni());
-			List<DomicilioDTO> domiciliosdto = new ArrayList();
+			List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
 			for (Domicilio d : e.getDomicilios()) {
 				DomicilioDTO dtodom = new DomicilioDTO();
 				dtodom.setCalle(d.getCalle());
 				dtodom.setDepartamento(d.getDepartamento());
 				dtodom.setId(d.getId());
-				//
 				LocalidadDTO localidaddto = new LocalidadDTO();
 				localidaddto.setId(d.getLocalidad().getId());
 				localidaddto.setNombre(d.getLocalidad().getNombre());
 				localidaddto.setEliminado(d.getLocalidad().isEliminado());
-				//
 				dtodom.setLocalidad(localidaddto);
 				dtodom.setNumero(d.getNumero());
 				dtodom.setPiso(d.getPiso());
@@ -93,145 +127,107 @@ public class UsuarioService {
 			unDto.setRol(e.getRol());
 			unDto.setTelefono(e.getTelefono());
 			unDto.setEliminado(e.isEliminado());
-			dtos.add(unDto);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		return dtos;
-	}
-
-	@Transactional
-	public UsuarioDTO findById(int id) {
-
-		Optional<Usuario> optionalentity = repositorio.findById(id);
-		Usuario e = optionalentity.get();
-		UsuarioDTO unDto = new UsuarioDTO();
-		unDto.setId(e.getId());
-		unDto.setApellido(e.getApellido());
-		unDto.setDni(e.getDni());
-		List<DomicilioDTO> domiciliosdto = new ArrayList();
-		for (Domicilio d : e.getDomicilios()) {
-			DomicilioDTO dtodom = new DomicilioDTO();
-			dtodom.setCalle(d.getCalle());
-			dtodom.setDepartamento(d.getDepartamento());
-			dtodom.setId(d.getId());
-			//
-			LocalidadDTO localidaddto = new LocalidadDTO();
-			localidaddto.setId(d.getLocalidad().getId());
-			localidaddto.setNombre(d.getLocalidad().getNombre());
-			localidaddto.setEliminado(d.getLocalidad().isEliminado());
-			//
-			dtodom.setLocalidad(localidaddto);
-			dtodom.setNumero(d.getNumero());
-			dtodom.setPiso(d.getPiso());
-			dtodom.setEliminado(d.isEliminado());
-			domiciliosdto.add(dtodom);
-		}
-		unDto.setDomicilios(domiciliosdto);
-		unDto.setEmail(e.getEmail());
-		unDto.setEsCliente(e.isEsCliente());
-		unDto.setFechaNacimiento(e.getFechaNacimiento());
-		unDto.setImagen(e.getImagen());
-		unDto.setNombre(e.getNombre());
-		unDto.setPassword(e.getPassword());
-		unDto.setRol(e.getRol());
-		unDto.setTelefono(e.getTelefono());
-		unDto.setEliminado(e.isEliminado());
-
 		return unDto;
 	}
 
 	@Transactional
 	public UsuarioDTO buscarPorEmail(String email) {
-
-		Optional<Usuario> optionalentity = repositorio.buscarPorEmail(email);
-		Usuario e = optionalentity.get();
 		UsuarioDTO unDto = new UsuarioDTO();
-		unDto.setId(e.getId());
-		unDto.setApellido(e.getApellido());
-		unDto.setDni(e.getDni());
-		
-		List<DomicilioDTO> domiciliosdto = new ArrayList();
-		for (Domicilio d : e.getDomicilios()) {
-			DomicilioDTO dtodom = new DomicilioDTO();
-			dtodom.setCalle(d.getCalle());
-			dtodom.setDepartamento(d.getDepartamento());
-			dtodom.setId(d.getId());
-			//
-			LocalidadDTO localidaddto = new LocalidadDTO();
-			localidaddto.setId(d.getLocalidad().getId());
-			localidaddto.setNombre(d.getLocalidad().getNombre());
-			localidaddto.setEliminado(d.getLocalidad().isEliminado());
-			//
-			dtodom.setLocalidad(localidaddto);
-			dtodom.setNumero(d.getNumero());
-			dtodom.setPiso(d.getPiso());
-			dtodom.setEliminado(d.isEliminado());
-			domiciliosdto.add(dtodom);
+		try {
+			Optional<Usuario> optionalentity = repositorio.buscarPorEmail(email);
+			Usuario e = optionalentity.get();
+			unDto.setId(e.getId());
+			unDto.setApellido(e.getApellido());
+			unDto.setDni(e.getDni());
+			List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
+			for (Domicilio d : e.getDomicilios()) {
+				DomicilioDTO dtodom = new DomicilioDTO();
+				dtodom.setCalle(d.getCalle());
+				dtodom.setDepartamento(d.getDepartamento());
+				dtodom.setId(d.getId());
+				LocalidadDTO localidaddto = new LocalidadDTO();
+				localidaddto.setId(d.getLocalidad().getId());
+				localidaddto.setNombre(d.getLocalidad().getNombre());
+				localidaddto.setEliminado(d.getLocalidad().isEliminado());
+				dtodom.setLocalidad(localidaddto);
+				dtodom.setNumero(d.getNumero());
+				dtodom.setPiso(d.getPiso());
+				dtodom.setEliminado(d.isEliminado());
+				domiciliosdto.add(dtodom);
+			}
+			unDto.setDomicilios(domiciliosdto);
+			unDto.setEmail(e.getEmail());
+			unDto.setEsCliente(e.isEsCliente());
+			unDto.setFechaNacimiento(e.getFechaNacimiento());
+			unDto.setImagen(e.getImagen());
+			unDto.setNombre(e.getNombre());
+			unDto.setPassword(e.getPassword());
+			unDto.setRol(e.getRol());
+			unDto.setTelefono(e.getTelefono());
+			unDto.setEliminado(e.isEliminado());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		
-		unDto.setDomicilios(domiciliosdto);
-		unDto.setEmail(e.getEmail());
-		unDto.setEsCliente(e.isEsCliente());
-		unDto.setFechaNacimiento(e.getFechaNacimiento());
-		unDto.setImagen(e.getImagen());
-		unDto.setNombre(e.getNombre());
-		unDto.setPassword(e.getPassword());
-		unDto.setRol(e.getRol());
-		unDto.setTelefono(e.getTelefono());
-		unDto.setEliminado(e.isEliminado());
-
 		return unDto;
 	}
 
 	@Transactional
 	public UsuarioDTO save(UsuarioDTO dto) {
 		Usuario u = new Usuario();
-
-		// empieza proceso
-		u.setApellido(dto.getApellido());
-		u.setDni(dto.getDni());
-		u.setEmail(dto.getEmail());
-		u.setEsCliente(dto.isEsCliente());
-		u.setFechaNacimiento(dto.getFechaNacimiento());
-		u.setImagen(dto.getImagen());
-		u.setNombre(dto.getNombre());
-		u.setPassword(dto.getPassword());
-		u.setRol(dto.getRol());
-		u.setTelefono(dto.getTelefono());
-		u.setEliminado(dto.isEliminado());
-		// termina proceso
-
-		u = repositorio.save(u);
-		dto.setId(u.getId());
+		try {
+			u.setApellido(dto.getApellido());
+			u.setDni(dto.getDni());
+			u.setEmail(dto.getEmail());
+			u.setEsCliente(dto.isEsCliente());
+			u.setFechaNacimiento(dto.getFechaNacimiento());
+			u.setImagen(dto.getImagen());
+			u.setNombre(dto.getNombre());
+			u.setPassword(dto.getPassword());
+			u.setRol(dto.getRol());
+			u.setTelefono(dto.getTelefono());
+			u.setEliminado(dto.isEliminado());
+			u = repositorio.save(u);
+			dto.setId(u.getId());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return dto;
 	}
 
 	@Transactional
 	public UsuarioDTO update(int id, UsuarioDTO dto) {
-		Optional<Usuario> entitiOpcional = repositorio.findById(id);
-		Usuario u = entitiOpcional.get();
-
-		u.setId(dto.getId());
-		u.setApellido(dto.getApellido());
-		u.setDni(dto.getDni());
-		u.setEmail(dto.getEmail());
-		u.setEsCliente(dto.isEsCliente());
-		u.setFechaNacimiento(dto.getFechaNacimiento());
-		u.setImagen(dto.getImagen());
-		u.setNombre(dto.getNombre());
-		u.setPassword(dto.getPassword());
-		u.setRol(dto.getRol());
-		u.setTelefono(dto.getTelefono());
-		u.setEliminado(dto.isEliminado());
-		u = repositorio.save(u);
-		dto.setId(u.getId());
+		try {
+			Optional<Usuario> entitiOpcional = repositorio.findById(id);
+			Usuario u = entitiOpcional.get();
+			u.setId(dto.getId());
+			u.setApellido(dto.getApellido());
+			u.setDni(dto.getDni());
+			u.setEmail(dto.getEmail());
+			u.setEsCliente(dto.isEsCliente());
+			u.setFechaNacimiento(dto.getFechaNacimiento());
+			u.setImagen(dto.getImagen());
+			u.setNombre(dto.getNombre());
+			u.setPassword(dto.getPassword());
+			u.setRol(dto.getRol());
+			u.setTelefono(dto.getTelefono());
+			u.setEliminado(dto.isEliminado());
+			u = repositorio.save(u);
+			dto.setId(u.getId());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return dto;
 	}
 
+	@Transactional
 	public boolean delete(int id) {
 		try {
 			repositorio.deleteUsuarioById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

@@ -8,14 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DomicilioDTO {
-	
 	private int id;
-	private UsuarioDTO propietario;
-	private LocalidadDTO localidad;
-	private String calle;
 	private int numero;
+	private String calle;
 	private String departamento;
 	private String piso;
+	private UsuarioDTO propietario;
+	private LocalidadDTO localidad;
 	private boolean eliminado;
-
 }

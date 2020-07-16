@@ -1,10 +1,8 @@
 package com.utn.demo.dtos;
 
-import java.io.Serializable;
-import java.util.*;
-
-import com.utn.demo.entity.Pedido;
-
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,18 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FacturaDTO implements Serializable {
-
+public class FacturaDTO{
 	private int id;
-
-	private String tipoFactura;
+	private double subtotal;
+	private double montoDescuento;
+	private double total;
 	private Date fecha;
-	private float subtotal;
-	private float montoDescuento;
-	private float total;
-
+	private String tipoFactura;
+	private String tipoPago;
 	private UsuarioDTO usuario;
+	private PedidoDTO pedido;
 	private List<DetalleDTO> detalle = new ArrayList<>();
-	private Pedido pedido;
 	private boolean eliminado;
 }

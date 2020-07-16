@@ -40,9 +40,9 @@ public class Configuracion_EmpresaService {
 		}
 		return cDto;
 	}
-	
+
 	@Transactional
-	public Configuracion_EmpresaDTO save(Configuracion_EmpresaDTO dto) throws Exception{
+	public Configuracion_EmpresaDTO save(Configuracion_EmpresaDTO dto) throws Exception {
 		Configuracion_Empresa entity = new Configuracion_Empresa();
 		try {
 			entity.setHoraCierre(dto.getHorarioCierre());
@@ -58,7 +58,7 @@ public class Configuracion_EmpresaService {
 			entity = configuracion_EmpresaRepository.save(entity);
 			dto.setId(entity.getId());
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new Exception();
 		}
 		return dto;
@@ -87,11 +87,12 @@ public class Configuracion_EmpresaService {
 		return DTO;
 	}
 
+	@Transactional
 	public boolean delete(int id) {
 		try {
 			configuracion_EmpresaRepository.deleteConfiguracionById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

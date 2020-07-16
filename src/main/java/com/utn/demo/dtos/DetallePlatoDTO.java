@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DetallePlatoDTO {
-
 	private int id;
 	private int cantidad;
 	private InsumoDTO ingrediente;

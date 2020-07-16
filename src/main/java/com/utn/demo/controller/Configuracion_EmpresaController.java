@@ -30,7 +30,7 @@ public class Configuracion_EmpresaController {
 
 	@GetMapping("/")
 	@Transactional
-	public ResponseEntity getOne() {
+	public ResponseEntity<Object> getOne() {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(Configuracion_EmpresaService.getOne());
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class Configuracion_EmpresaController {
 
 	@PostMapping("/")
 	@Transactional
-	public ResponseEntity post(@RequestBody Configuracion_EmpresaDTO dto) {
+	public ResponseEntity<Object> post(@RequestBody Configuracion_EmpresaDTO dto) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(Configuracion_EmpresaService.save(dto));
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class Configuracion_EmpresaController {
 
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity put(@PathVariable int id, @RequestBody Configuracion_EmpresaDTO dto) {
+	public ResponseEntity<Object> put(@PathVariable int id, @RequestBody Configuracion_EmpresaDTO dto) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(Configuracion_EmpresaService.update(id, dto));
 		} catch (Exception e) {
@@ -62,12 +62,12 @@ public class Configuracion_EmpresaController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable int id) {
+	public ResponseEntity<String> delete(@PathVariable int id) {
 
 		boolean borrado = Configuracion_EmpresaService.delete(id);
-		if(borrado) {
+		if (borrado) {
 			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}
 	}

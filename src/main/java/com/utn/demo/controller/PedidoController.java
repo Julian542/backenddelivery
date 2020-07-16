@@ -1,7 +1,6 @@
 package com.utn.demo.controller;
 
 import javax.transaction.Transactional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.service.PedidoService;
 
@@ -32,97 +30,83 @@ public class PedidoController {
 
 	@GetMapping("/")
 	@Transactional
-	public ResponseEntity getAll() {
+	public ResponseEntity<Object> getAll() {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getAll());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
-
 		}
 	}
 
 	@GetMapping("/byUser/{id}")
 	@CrossOrigin(origins = "*")
-	public ResponseEntity getAllByUser(@PathVariable int id) {
-
+	public ResponseEntity<Object> getAllByUser(@PathVariable int id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getAllByUser(id));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
-
 		}
-
 	}
 
 	@GetMapping("/{id}")
 	@Transactional
-	public ResponseEntity getOne(@PathVariable int id) {
-
+	public ResponseEntity<Object> getOne(@PathVariable int id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getOne(id));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
-
 	}
 
 	@PostMapping("/")
 	@Transactional
-	public ResponseEntity post(@RequestBody PedidoDTO dto) {
-
+	public ResponseEntity<Object> post(@RequestBody PedidoDTO dto) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.save(dto));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
-
 		}
-
 	}
 
 	@PutMapping("/{id}")
 	@CrossOrigin(origins = "*")
-	public ResponseEntity update(@RequestBody PedidoDTO t, @PathVariable int id) {
-
+	public ResponseEntity<Object> update(@RequestBody PedidoDTO t, @PathVariable int id) {
 		PedidoDTO temp = pedidoService.update(t, id);
-
 		try {
-
 			if (temp.getId() != 0) {
 				return ResponseEntity.status(201).body(temp);
 			} else {
 				throw new Exception("Error");
 			}
-
 		} catch (Exception e) {
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"Error. Please try again later.\"}");
-
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
-
 	}
 
 	@PutMapping("changeStatus/{id}/{status}")
 	@CrossOrigin(origins = "*")
-	public ResponseEntity update(@RequestBody PedidoDTO t, @PathVariable("id") int id,
+	public ResponseEntity<Object> update(@RequestBody PedidoDTO t, @PathVariable("id") int id,
 			@PathVariable("status") int status) {
-
-		PedidoDTO temp = pedidoService.updateEstado(id, t, status);
-
-		return ResponseEntity.status(201).body(temp);
-
+		try {
+			PedidoDTO temp = pedidoService.updateEstado(id, t, status);
+			return ResponseEntity.status(201).body(temp);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable int id) {
-
+	public ResponseEntity<String> delete(@PathVariable int id) {
 		boolean borrado = pedidoService.delete(id);
-		if(borrado) {
+		if (borrado) {
 			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}
 	}

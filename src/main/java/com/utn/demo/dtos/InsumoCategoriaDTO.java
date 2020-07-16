@@ -8,11 +8,8 @@ import lombok.Data;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InsumoCategoriaDTO {
-
 	private int id;
-
 	private String nombre;
 	private String descripcion;
 	private boolean eliminado;
-
 }
