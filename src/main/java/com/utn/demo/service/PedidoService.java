@@ -57,7 +57,6 @@ public class PedidoService {
 				dto.setId(dto2.getId());
 				dto.setHoraEstimada(dto2.getHoraEstimada());
 				dto.setEnvioDelivery(dto2.isEnvioDelivery());
-				dto.setEliminado(dto.isEliminado());
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(dto2.getUsuario().getId());
 				dto.setUsuario(user);
@@ -67,14 +66,12 @@ public class PedidoService {
 				EstadoDTO estado = new EstadoDTO();
 				estado.setId(dto2.getEstado().getId());
 				estado.setNombre(dto2.getEstado().getNombre());
-				estado.setEliminado(dto.getEstado().isEliminado());
 				dto.setEstado(estado);
 				List<DetalleDTO> detalle = new ArrayList<>();
 				for (Detalle detalleInternal : dto2.getDetalle()) {
 					DetalleDTO detalleDTO = new DetalleDTO();
 					detalleDTO.setId(detalleInternal.getId());
 					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalleDTO.setEliminado(detalleInternal.isEliminado());
 					if (detalleInternal.getInsumo() != null) {
 						InsumoDTO insumo = new InsumoDTO();
 						insumo.setDescripcion(detalleInternal.getInsumo().getDescripcion());
@@ -86,12 +83,10 @@ public class PedidoService {
 						insumo.setNombre(detalleInternal.getInsumo().getNombre());
 						insumo.setPrecioCompra(detalleInternal.getInsumo().getPrecioCompra());
 						insumo.setPrecioVenta(detalleInternal.getInsumo().getPrecioVenta());
-						insumo.setEliminado(detalleInternal.getInsumo().isEliminado());
 						UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
 						unidadMedida.setId(detalleInternal.getInsumo().getUnidadMedida().getId());
 						unidadMedida.setNombre(detalleInternal.getInsumo().getUnidadMedida().getNombre());
 						unidadMedida.setAbreviatura(detalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-						unidadMedida.setEliminado(detalleInternal.getInsumo().getUnidadMedida().isEliminado());
 						insumo.setUnidadMedida(unidadMedida);
 						detalleDTO.setInsumo(insumo);
 					}
@@ -100,7 +95,6 @@ public class PedidoService {
 						plato.setId(detalleInternal.getPlato().getId());
 						plato.setNombre(detalleInternal.getPlato().getNombre());
 						plato.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
-						plato.setEliminado(detalleInternal.getPlato().isEliminado());
 						List<DetallePlatoDTO> detallesPlato = new ArrayList<>();
 						for (DetallePlato platoDetalleInternal : detalleInternal.getPlato().getDetalle()) {
 							DetallePlatoDTO temp = new DetallePlatoDTO();
@@ -116,13 +110,11 @@ public class PedidoService {
 							insumoDetalle.setNombre(platoDetalleInternal.getInsumo().getNombre());
 							insumoDetalle.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
 							insumoDetalle.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
-							insumoDetalle.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
 							InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
 							insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
 							insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
 							insumoCategoria
 									.setDescripcion(platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
-							insumoCategoria.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
 							insumoDetalle.setCategoria(insumoCategoria);
 							UnidadMedidaDTO unidadMedidaDetalle = new UnidadMedidaDTO();
 							unidadMedidaDetalle.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
@@ -130,8 +122,6 @@ public class PedidoService {
 									.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
 							unidadMedidaDetalle.setAbreviatura(
 									platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-							unidadMedidaDetalle
-									.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
 							insumoDetalle.setUnidadMedida(unidadMedidaDetalle);
 							temp.setIngrediente(insumoDetalle);
 							detallesPlato.add(temp);
@@ -261,14 +251,16 @@ public class PedidoService {
 			dto.setId(dto2.getId());
 			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
-			dto.setEliminado(dto2.isEliminado());
 			try {
-				UsuarioDTO user = new UsuarioDTO();
-				user.setId(dto2.getUsuario().getId());
-				dto.setUsuario(user);
-				EstadoDTO estado = new EstadoDTO();
-				estado.setId(dto2.getEstado().getId());
-				estado.setNombre(dto2.getEstado().getNombre());
+				UsuarioDTO usuarioDTO = new UsuarioDTO();
+				usuarioDTO.setId(dto2.getUsuario().getId());
+				usuarioDTO.setNombre(dto2.getUsuario().getNombre());
+				usuarioDTO.setApellido(dto2.getUsuario().getApellido());
+				EstadoDTO estadoDTO = new EstadoDTO();
+				estadoDTO.setId(dto2.getEstado().getId());
+				estadoDTO.setNombre(dto2.getEstado().getNombre());
+				estadoDTO.setNombre(dto2.getEstado().getNombre());
+				dto.setEstado(estadoDTO);
 				DomicilioDTO domicilioDTO = new DomicilioDTO();
 				domicilioDTO.setId(dto2.getDomicilio().getId());
 				domicilioDTO.setCalle(dto2.getDomicilio().getCalle());
@@ -279,10 +271,6 @@ public class PedidoService {
 				domicilioDTO.setLocalidad(localidadDTO);
 				domicilioDTO.setNumero(dto2.getDomicilio().getNumero());
 				domicilioDTO.setPiso(dto2.getDomicilio().getPiso());
-				UsuarioDTO usuarioDTO = new UsuarioDTO();
-				usuarioDTO.setId(dto2.getUsuario().getId());
-				usuarioDTO.setNombre(dto2.getUsuario().getNombre());
-				usuarioDTO.setApellido(dto2.getUsuario().getApellido());
 				domicilioDTO.setPropietario(usuarioDTO);
 				dto.setDomicilio(domicilioDTO);
 				List<DetalleDTO> detalle = new ArrayList<>();
@@ -290,7 +278,6 @@ public class PedidoService {
 					DetalleDTO detalleDTO = new DetalleDTO();
 					detalleDTO.setId(detalleInternal.getId());
 					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalleDTO.setEliminado(detalleInternal.isEliminado());
 					if (detalleInternal.getInsumo() != null) {
 						InsumoDTO insumo = new InsumoDTO();
 						insumo.setDescripcion(detalleInternal.getInsumo().getDescripcion());
@@ -302,12 +289,10 @@ public class PedidoService {
 						insumo.setNombre(detalleInternal.getInsumo().getNombre());
 						insumo.setPrecioCompra(detalleInternal.getInsumo().getPrecioCompra());
 						insumo.setPrecioVenta(detalleInternal.getInsumo().getPrecioVenta());
-						insumo.setEliminado(detalleInternal.getInsumo().isEliminado());
 						UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
 						unidadMedida.setId(detalleInternal.getInsumo().getUnidadMedida().getId());
 						unidadMedida.setNombre(detalleInternal.getInsumo().getUnidadMedida().getNombre());
 						unidadMedida.setAbreviatura(detalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-						unidadMedida.setEliminado(detalleInternal.getInsumo().getUnidadMedida().isEliminado());
 						insumo.setUnidadMedida(unidadMedida);
 						detalleDTO.setInsumo(insumo);
 					}
@@ -317,13 +302,11 @@ public class PedidoService {
 						plato.setNombre(detalleInternal.getPlato().getNombre());
 						plato.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
 						plato.setPrecioVenta(detalleInternal.getPlato().getPrecioVenta());
-						plato.setEliminado(detalleInternal.getPlato().isEliminado());
 						List<DetallePlatoDTO> detallesPlato = new ArrayList<>();
 						for (DetallePlato platoDetalleInternal : detalleInternal.getPlato().getDetalle()) {
 							DetallePlatoDTO temp = new DetallePlatoDTO();
 							temp.setId(platoDetalleInternal.getId());
 							temp.setCantidad(platoDetalleInternal.getCantidad());
-							temp.setEliminado(platoDetalleInternal.isEliminado());
 							InsumoDTO insumoDetalle = new InsumoDTO();
 							insumoDetalle.setDescripcion(platoDetalleInternal.getInsumo().getDescripcion());
 							insumoDetalle.setEsInsumo(platoDetalleInternal.getInsumo().isEsInsumo());
@@ -334,13 +317,11 @@ public class PedidoService {
 							insumoDetalle.setNombre(platoDetalleInternal.getInsumo().getNombre());
 							insumoDetalle.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
 							insumoDetalle.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
-							insumoDetalle.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
 							InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
 							insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
 							insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
 							insumoCategoria
 									.setDescripcion(platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
-							insumoCategoria.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
 							insumoDetalle.setCategoria(insumoCategoria);
 							UnidadMedidaDTO unidadMedidaDetalle = new UnidadMedidaDTO();
 							unidadMedidaDetalle.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
@@ -348,8 +329,6 @@ public class PedidoService {
 									.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
 							unidadMedidaDetalle.setAbreviatura(
 									platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-							unidadMedidaDetalle
-									.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
 							insumoDetalle.setUnidadMedida(unidadMedidaDetalle);
 							temp.setIngrediente(insumoDetalle);
 							detallesPlato.add(temp);
@@ -381,6 +360,7 @@ public class PedidoService {
 			pedido.setUsuario(user);
 			Estado estado = new Estado();
 			estado.setId(pedidoDTO.getEstado().getId());
+			estado.setNombre(pedidoDTO.getEstado().getNombre());
 			pedido.setEstado(estado);
 			Domicilio domicilio = new Domicilio();
 			domicilio.setId(pedido.getDomicilio().getId());
@@ -495,5 +475,31 @@ public class PedidoService {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	@Transactional
+	public List<PedidoDTO> getPedidos() {
+		List<PedidoDTO> result = new ArrayList<>();
+		try {
+			for (Pedido dto2 : pedidoRepository.findAll()) {
+				PedidoDTO dto = new PedidoDTO();
+				dto.setId(dto2.getId());
+				dto.setEnvioDelivery(dto2.isEnvioDelivery());
+				UsuarioDTO user = new UsuarioDTO();
+				user.setId(dto2.getUsuario().getId());
+				dto.setUsuario(user);
+				DomicilioDTO domicilioDTO = new DomicilioDTO();
+				domicilioDTO.setId(dto2.getDomicilio().getId());
+				dto.setDomicilio(domicilioDTO);
+				EstadoDTO estado = new EstadoDTO();
+				estado.setId(dto2.getEstado().getId());
+				estado.setNombre(dto2.getEstado().getNombre());
+				dto.setEstado(estado);
+				result.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
 	}
 }

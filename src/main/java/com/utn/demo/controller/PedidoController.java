@@ -110,4 +110,15 @@ public class PedidoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}
 	}
+
+	@GetMapping("/getPedidos")
+	@Transactional
+	public ResponseEntity<Object> getPedidos() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidos());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 }
