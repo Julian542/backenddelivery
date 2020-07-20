@@ -256,6 +256,7 @@ public class PedidoService {
 				usuarioDTO.setId(dto2.getUsuario().getId());
 				usuarioDTO.setNombre(dto2.getUsuario().getNombre());
 				usuarioDTO.setApellido(dto2.getUsuario().getApellido());
+				dto.setUsuario(usuarioDTO);
 				EstadoDTO estadoDTO = new EstadoDTO();
 				estadoDTO.setId(dto2.getEstado().getId());
 				estadoDTO.setNombre(dto2.getEstado().getNombre());
