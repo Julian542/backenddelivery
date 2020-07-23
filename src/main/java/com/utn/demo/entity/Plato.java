@@ -22,21 +22,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Plato {
+	@Column(name = "eliminado")
+	private boolean eliminado;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int cantidadVendida;
+
+	private String nombre;
+	private float precioVenta;
+	private float precioCosto;
 	private int tiempoPreparacion;
-	private double precioVenta;
-	private double precioCosto;
 	private String descripcion;
 	private String imagen;
-	private String nombre;
+	private int cantidadVendida;
+
 	@OneToOne
 	@JoinColumn(name = "fk_categoria")
 	private PlatoCategoria categoria;
+
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<DetallePlato> detalle = new ArrayList<>();
-	@Column(name = "eliminado")
-	private boolean eliminado;
+	private List<DetallePlato> detalle = new ArrayList<DetallePlato>();
+
 }

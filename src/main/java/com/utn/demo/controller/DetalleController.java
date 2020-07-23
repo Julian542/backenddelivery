@@ -1,6 +1,7 @@
 package com.utn.demo.controller;
 
 import javax.transaction.Transactional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.service.DetalleService;
 
@@ -36,6 +38,7 @@ public class DetalleController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
+
 		}
 	}
 
@@ -85,10 +88,10 @@ public class DetalleController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable int id) {
+	public ResponseEntity delete(@PathVariable int id) {
 		boolean borrado = detalleService.delete(id);
 		if (borrado) {
-			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
+			return ResponseEntity.status(HttpStatus.OK).body(borrado);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}

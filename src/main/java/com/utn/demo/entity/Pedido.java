@@ -1,6 +1,7 @@
 package com.utn.demo.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.Where;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,17 +28,27 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private boolean envioDelivery;
+
 	private String horaEstimada;
+
+	private boolean envioDelivery;
+	
+	@OneToOne
+	private Domicilio domicilioElegido;
+
+	@OneToOne(cascade = CascadeType.DETACH)
+	private Estado estado;
+	
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Detalle> detalle = new ArrayList<>();
+
 	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "fk_usuario")
 	private Usuario usuario;
-	@OneToOne(cascade = CascadeType.DETACH)
-	private Estado estado;
-	@OneToOne
-	private Domicilio domicilio;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Detalle> detalle = new ArrayList<>();
+	
 	@Column(name = "eliminado")
 	private boolean eliminado;
 }

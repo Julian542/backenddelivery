@@ -21,7 +21,9 @@ public class DetallePlato {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int cantidad;
+	private float cantidad;
+	@OneToOne
+	private Plato plato;
 	@OneToOne
 	@JoinColumn(name = "fk_insumo")
 	private Insumo insumo;

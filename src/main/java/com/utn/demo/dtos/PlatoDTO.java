@@ -1,6 +1,8 @@
 package com.utn.demo.dtos;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +11,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlatoDTO {
+
 	private int id;
-	private int tiempoPreparacion;
-	private int cantidadVendida;
-	private double precioVenta;
-	private double precioCosto;
+
 	private String nombre;
+	private float precioVenta;
+	private float precioCosto;
+	private int tiempoPreparacion;
 	private String descripcion;
 	private String imagen;
+	private int cantidadVendida;
+
+	private List<DetallePlatoDTO> detalle = new ArrayList<DetallePlatoDTO>();
 	private PlatoCategoriaDTO categoria;
-	private List<DetallePlatoDTO> detalle;
 	private boolean eliminado;
 }

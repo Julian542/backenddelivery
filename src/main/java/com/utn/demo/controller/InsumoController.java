@@ -59,6 +59,19 @@ public class InsumoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
+
+	}
+	
+	@GetMapping("/insumoporcategoria/{id}")
+	@Transactional
+	public ResponseEntity<Object> getAllporCategoria(@PathVariable int id) {
+
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(insumoService.getAllporCategoria(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
 	}
 
 	@PostMapping("/")
@@ -84,20 +97,20 @@ public class InsumoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable int id) {
+	public ResponseEntity delete(@PathVariable int id) {
 		boolean borrado = insumoService.delete(id);
 		if (borrado) {
-			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
+			return ResponseEntity.status(HttpStatus.OK).body(borrado);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}
 	}
 
-	@GetMapping("/stocks")
+	@GetMapping("/stocks/{id}")
 	@Transactional
-	public ResponseEntity<Object> getStocks() {
+	public ResponseEntity<Object> getStocks(@PathVariable int id) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(insumoService.getStocks());
+			return ResponseEntity.status(HttpStatus.OK).body(insumoService.getStocks(id));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");

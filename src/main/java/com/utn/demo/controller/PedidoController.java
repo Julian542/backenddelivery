@@ -102,10 +102,10 @@ public class PedidoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable int id) {
+	public ResponseEntity delete(@PathVariable int id) {
 		boolean borrado = pedidoService.delete(id);
 		if (borrado) {
-			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
+			return ResponseEntity.status(HttpStatus.OK).body(borrado);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}

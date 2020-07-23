@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DetallePlatoDTO {
 	private int id;
-	private int cantidad;
+	private float cantidad;
 	private InsumoDTO ingrediente;
 	private boolean eliminado;
+	private PlatoDTO plato;
 }

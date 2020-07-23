@@ -73,10 +73,10 @@ public class InsumoCategoriaController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable int id) {
+	public ResponseEntity delete(@PathVariable int id) {
 		boolean borrado = insumoCategoriaService.delete(id);
 		if (borrado) {
-			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
+			return ResponseEntity.status(HttpStatus.OK).body(borrado);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}

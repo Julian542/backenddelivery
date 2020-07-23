@@ -1,7 +1,9 @@
 package com.utn.demo.dtos;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsuarioDTO {
+
 	private int id;
 	private int dni;
 	private long telefono;
@@ -21,6 +24,6 @@ public class UsuarioDTO {
 	private String password;
 	private String imagen;
 	private String Rol;
-	private List<DomicilioDTO> domicilios;
+	private List<DomicilioDTO> domicilios = new ArrayList<DomicilioDTO>();
 	private boolean eliminado;
 }

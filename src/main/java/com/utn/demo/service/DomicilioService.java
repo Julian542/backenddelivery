@@ -3,8 +3,11 @@ package com.utn.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
+
 import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.LocalidadDTO;
 import com.utn.demo.dtos.UsuarioDTO;
@@ -28,6 +31,7 @@ public class DomicilioService {
 		List<DomicilioDTO> dtos = new ArrayList<>();
 		try {
 			for (Domicilio d : entidades) {
+
 				DomicilioDTO unDto = new DomicilioDTO();
 				unDto.setId(d.getId());
 				unDto.setDepartamento(d.getDepartamento());
@@ -35,11 +39,13 @@ public class DomicilioService {
 				unDto.setPiso(d.getPiso());
 				unDto.setCalle(d.getCalle());
 				unDto.setEliminado(d.isEliminado());
+
 				LocalidadDTO localidadto = new LocalidadDTO();
 				localidadto.setId(d.getLocalidad().getId());
 				localidadto.setNombre(d.getLocalidad().getNombre());
 				localidadto.setEliminado(d.isEliminado());
 				unDto.setLocalidad(localidadto);
+
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(d.getPropietario().getId());
 				user.setNombre(d.getPropietario().getNombre());
@@ -54,8 +60,10 @@ public class DomicilioService {
 		return dtos;
 	}
 
+	// getAll
 	@Transactional
 	public List<DomicilioDTO> findAll() {
+
 		List<Domicilio> entidades = repo.findAll();
 		List<DomicilioDTO> dtos = new ArrayList<>();
 		try {
@@ -67,16 +75,19 @@ public class DomicilioService {
 				unDto.setPiso(d.getPiso());
 				unDto.setCalle(d.getCalle());
 				unDto.setEliminado(d.isEliminado());
+
 				LocalidadDTO localidadto = new LocalidadDTO();
 				localidadto.setId(d.getLocalidad().getId());
 				localidadto.setNombre(d.getLocalidad().getNombre());
 				unDto.setEliminado(d.isEliminado());
 				unDto.setLocalidad(localidadto);
+
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(d.getPropietario().getId());
 				user.setNombre(d.getPropietario().getNombre());
 				user.setApellido(d.getPropietario().getApellido());
 				unDto.setPropietario(user);
+
 				dtos.add(unDto);
 			}
 		} catch (Exception e) {
@@ -85,26 +96,31 @@ public class DomicilioService {
 		return dtos;
 	}
 
+	// getOne
 	@Transactional
 	public DomicilioDTO findById(int id) {
+
+		Optional<Domicilio> entityOptional = repo.findById(id);
+		Domicilio d = entityOptional.get();
 		DomicilioDTO unDto = new DomicilioDTO();
 		try {
-			Optional<Domicilio> entityOptional = repo.findById(id);
-			Domicilio d = entityOptional.get();
 			unDto.setId(d.getId());
 			unDto.setDepartamento(d.getDepartamento());
 			unDto.setNumero(d.getNumero());
 			unDto.setPiso(d.getPiso());
 			unDto.setCalle(d.getCalle());
 			unDto.setEliminado(d.isEliminado());
+
 			LocalidadDTO localidadto = new LocalidadDTO();
 			localidadto.setId(d.getLocalidad().getId());
 			localidadto.setNombre(d.getLocalidad().getNombre());
 			unDto.setLocalidad(localidadto);
+
 			UsuarioDTO user = new UsuarioDTO();
 			user.setId(d.getPropietario().getId());
 			user.setNombre(d.getPropietario().getNombre());
 			user.setApellido(d.getPropietario().getApellido());
+
 			unDto.setPropietario(user);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -112,22 +128,27 @@ public class DomicilioService {
 		return unDto;
 	}
 
+	// save
 	@Transactional
-	public DomicilioDTO save(DomicilioDTO dto) {
-		try {
+	public DomicilioDTO save(DomicilioDTO dto) { // PARA DAR DE ALTA UN DOMICILIO ENVIAR EL CAMPO ESCLIENTE BOOLEAN EN
+		try { // EL JSON
 			Domicilio dom = new Domicilio();
+
 			dom.setCalle(dto.getCalle());
 			dom.setDepartamento(dto.getDepartamento());
 			dom.setNumero(dto.getNumero());
 			dom.setPiso(dto.getPiso());
 			dom.setEliminado(dto.isEliminado());
+
 			Usuario usuario = new Usuario();
 			usuario.setId(dto.getPropietario().getId());
 			dom.setPropietario(usuario);
+
 			Localidad loc = new Localidad();
 			loc.setId(dto.getLocalidad().getId());
 			loc.setNombre(dto.getLocalidad().getNombre());
 			dom.setLocalidad(loc);
+
 			dom = repo.save(dom);
 			dto.setId(dom.getId());
 		} catch (Exception e) {
@@ -136,24 +157,29 @@ public class DomicilioService {
 		return dto;
 	}
 
+	// update
 	@Transactional
 	public DomicilioDTO update(int id, DomicilioDTO dto) {
 		try {
 			Optional<Domicilio> op = repo.findById(id);
 			Domicilio dom = op.get();
+
 			dom.setId(dto.getId());
 			dom.setCalle(dto.getCalle());
 			dom.setDepartamento(dto.getDepartamento());
 			dom.setNumero(dto.getNumero());
 			dom.setPiso(dto.getPiso());
 			dom.setEliminado(dto.isEliminado());
+
 			Usuario usuario = new Usuario();
 			usuario.setId(dto.getPropietario().getId());
 			dom.setPropietario(usuario);
+
 			Localidad loc = new Localidad();
 			loc.setId(dto.getLocalidad().getId());
 			loc.setNombre(dto.getLocalidad().getNombre());
 			dom.setLocalidad(loc);
+
 			dom = repo.save(dom);
 			dto.setId(dom.getId());
 		} catch (Exception e) {
@@ -162,7 +188,6 @@ public class DomicilioService {
 		return dto;
 	}
 
-	@Transactional
 	public boolean delete(int id) {
 		try {
 			repo.deleteDomicilioById(id);
