@@ -20,4 +20,7 @@ public interface PlatoRepository extends JpaRepository<Plato, Integer> {
 	@Transactional
 	@Query("UPDATE Plato SET eliminado = true WHERE id=?1")
 	public int deletePlatoById(int id);
+
+	@Query("from Plato p where p.categoria.nombre like %?1%")
+	public List<Plato> platosCategoria(String categoria);
 }
