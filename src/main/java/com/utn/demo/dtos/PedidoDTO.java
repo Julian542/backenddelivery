@@ -21,7 +21,7 @@ public class PedidoDTO {
     private Date fecha;
 	private EstadoDTO estado;
 	private UsuarioDTO usuario;
-	private DomicilioDTO domicilioElegido;
+	private DomicilioDTO domicilio;
 	private List<DetalleDTO> detalle = new ArrayList<>();
 	private boolean eliminado;
 

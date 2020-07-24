@@ -127,21 +127,21 @@ public class PedidoService {
 
 			try {
 				DomicilioDTO dtodom = new DomicilioDTO();
-				dtodom.setCalle(dto2.getDomicilioElegido().getCalle());
-				dtodom.setDepartamento(dto2.getDomicilioElegido().getDepartamento());
-				dtodom.setId(dto2.getDomicilioElegido().getId());
+				dtodom.setCalle(dto2.getDomicilio().getCalle());
+				dtodom.setDepartamento(dto2.getDomicilio().getDepartamento());
+				dtodom.setId(dto2.getDomicilio().getId());
 				//
 				LocalidadDTO localidaddto = new LocalidadDTO();
-				localidaddto.setId(dto2.getDomicilioElegido().getLocalidad().getId());
-				localidaddto.setNombre(dto2.getDomicilioElegido().getLocalidad().getNombre());
-				localidaddto.setEliminado(dto2.getDomicilioElegido().getLocalidad().isEliminado());
+				localidaddto.setId(dto2.getDomicilio().getLocalidad().getId());
+				localidaddto.setNombre(dto2.getDomicilio().getLocalidad().getNombre());
+				localidaddto.setEliminado(dto2.getDomicilio().getLocalidad().isEliminado());
 				//
 				dtodom.setLocalidad(localidaddto);
-				dtodom.setNumero(dto2.getDomicilioElegido().getNumero());
-				dtodom.setPiso(dto2.getDomicilioElegido().getPiso());
-				dtodom.setEliminado(dto2.getDomicilioElegido().isEliminado());
+				dtodom.setNumero(dto2.getDomicilio().getNumero());
+				dtodom.setPiso(dto2.getDomicilio().getPiso());
+				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
 
-				dto.setDomicilioElegido(dtodom);
+				dto.setDomicilio(dtodom);
 			} catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -265,21 +265,21 @@ public class PedidoService {
 
 			try {
 				DomicilioDTO dtodom = new DomicilioDTO();
-				dtodom.setCalle(dto2.getDomicilioElegido().getCalle());
-				dtodom.setDepartamento(dto2.getDomicilioElegido().getDepartamento());
-				dtodom.setId(dto2.getDomicilioElegido().getId());
+				dtodom.setCalle(dto2.getDomicilio().getCalle());
+				dtodom.setDepartamento(dto2.getDomicilio().getDepartamento());
+				dtodom.setId(dto2.getDomicilio().getId());
 				//
 				LocalidadDTO localidaddto = new LocalidadDTO();
-				localidaddto.setId(dto2.getDomicilioElegido().getLocalidad().getId());
-				localidaddto.setNombre(dto2.getDomicilioElegido().getLocalidad().getNombre());
-				localidaddto.setEliminado(dto2.getDomicilioElegido().getLocalidad().isEliminado());
+				localidaddto.setId(dto2.getDomicilio().getLocalidad().getId());
+				localidaddto.setNombre(dto2.getDomicilio().getLocalidad().getNombre());
+				localidaddto.setEliminado(dto2.getDomicilio().getLocalidad().isEliminado());
 				//
 				dtodom.setLocalidad(localidaddto);
-				dtodom.setNumero(dto2.getDomicilioElegido().getNumero());
-				dtodom.setPiso(dto2.getDomicilioElegido().getPiso());
-				dtodom.setEliminado(dto2.getDomicilioElegido().isEliminado());
+				dtodom.setNumero(dto2.getDomicilio().getNumero());
+				dtodom.setPiso(dto2.getDomicilio().getPiso());
+				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
 
-				dto.setDomicilioElegido(dtodom);
+				dto.setDomicilio(dtodom);
 			} catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -403,21 +403,21 @@ public class PedidoService {
 			
 			try {
 				DomicilioDTO dtodom = new DomicilioDTO();
-				dtodom.setCalle(dto2.getDomicilioElegido().getCalle());
-				dtodom.setDepartamento(dto2.getDomicilioElegido().getDepartamento());
-				dtodom.setId(dto2.getDomicilioElegido().getId());
+				dtodom.setCalle(dto2.getDomicilio().getCalle());
+				dtodom.setDepartamento(dto2.getDomicilio().getDepartamento());
+				dtodom.setId(dto2.getDomicilio().getId());
 				//
 				LocalidadDTO localidaddto = new LocalidadDTO();
-				localidaddto.setId(dto2.getDomicilioElegido().getLocalidad().getId());
-				localidaddto.setNombre(dto2.getDomicilioElegido().getLocalidad().getNombre());
-				localidaddto.setEliminado(dto2.getDomicilioElegido().getLocalidad().isEliminado());
+				localidaddto.setId(dto2.getDomicilio().getLocalidad().getId());
+				localidaddto.setNombre(dto2.getDomicilio().getLocalidad().getNombre());
+				localidaddto.setEliminado(dto2.getDomicilio().getLocalidad().isEliminado());
 				//
 				dtodom.setLocalidad(localidaddto);
-				dtodom.setNumero(dto2.getDomicilioElegido().getNumero());
-				dtodom.setPiso(dto2.getDomicilioElegido().getPiso());
-				dtodom.setEliminado(dto2.getDomicilioElegido().isEliminado());
+				dtodom.setNumero(dto2.getDomicilio().getNumero());
+				dtodom.setPiso(dto2.getDomicilio().getPiso());
+				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
 
-				dto.setDomicilioElegido(dtodom);
+				dto.setDomicilio(dtodom);
 			} catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -521,8 +521,8 @@ public class PedidoService {
 		try {
 
 			Domicilio domicilio = new Domicilio();
-			domicilio.setId(pedidoDTO.getDomicilioElegido().getId());
-			pedido.setDomicilioElegido(domicilio);
+			domicilio.setId(pedidoDTO.getDomicilio().getId());
+			pedido.setDomicilio(domicilio);
 
 		} catch (Exception e) {
 
@@ -667,8 +667,8 @@ public class PedidoService {
 			try {
 
 				Domicilio domicilio = new Domicilio();
-				domicilio.setId(pedidoDTO.getDomicilioElegido().getId());
-				pedido.setDomicilioElegido(domicilio);
+				domicilio.setId(pedidoDTO.getDomicilio().getId());
+				pedido.setDomicilio(domicilio);
 
 			} catch (Exception e) {
 
@@ -746,8 +746,8 @@ public class PedidoService {
 				user.setId(dto2.getUsuario().getId());
 				dto.setUsuario(user);
 				DomicilioDTO domicilioDTO = new DomicilioDTO();
-				domicilioDTO.setId(dto2.getDomicilioElegido().getId());
-				dto.setDomicilioElegido(domicilioDTO);
+				domicilioDTO.setId(dto2.getDomicilio().getId());
+				dto.setDomicilio(domicilioDTO);
 				EstadoDTO estado = new EstadoDTO();
 				estado.setId(dto2.getEstado().getId());
 				estado.setNombre(dto2.getEstado().getNombre());

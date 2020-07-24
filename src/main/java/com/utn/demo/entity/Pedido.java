@@ -34,7 +34,7 @@ public class Pedido {
 	private boolean envioDelivery;
 	
 	@OneToOne
-	private Domicilio domicilioElegido;
+	private Domicilio domicilio;
 
 	@OneToOne(cascade = CascadeType.DETACH)
 	private Estado estado;
