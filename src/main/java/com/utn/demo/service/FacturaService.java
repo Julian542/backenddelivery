@@ -226,69 +226,123 @@ public class FacturaService {
 
 	@Transactional
 	public List<PlatoDTO> getPlatosPopulares(String fechaDesde, String fechaHasta) throws Exception {
-		List<PlatoDTO> platoDTOs = new ArrayList<PlatoDTO>();
+		List<PlatoDTO> finalPlatos = new ArrayList<PlatoDTO>();
 		try {
-			System.out.println(fechaDesde);
-			System.out.println(fechaHasta);
 			List<Factura> facturas = facturaRepository.getFacturasByDate(fechaDesde, fechaHasta);
+			List<PlatoDTO> platoDTOs = new ArrayList<PlatoDTO>();
 			for (Factura factura : facturas) {
 				for (Detalle detalleInternal : factura.getDetalle()) {
 					PlatoDTO platoDTO = new PlatoDTO();
 					platoDTO.setId(detalleInternal.getPlato().getId());
-					if(platoDTO.getId() != 6) {
-						platoDTO.setCantidadVendida(detalleInternal.getPlato().getCantidadVendida());
-						platoDTO.setDescripcion(detalleInternal.getPlato().getDescripcion());
-						platoDTO.setImagen(detalleInternal.getPlato().getImagen());
-						platoDTO.setNombre(detalleInternal.getPlato().getNombre());
-						platoDTO.setPrecioCosto(detalleInternal.getPlato().getPrecioCosto());
-						platoDTO.setPrecioVenta(detalleInternal.getPlato().getPrecioVenta());
-						platoDTO.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
-						platoDTO.setEliminado(detalleInternal.getPlato().isEliminado());
-						List<DetallePlatoDTO> platoDetalle = new ArrayList<>();
-						for (DetallePlato platoDetalleInternal : detalleInternal.getPlato().getDetalle()) {
-							DetallePlatoDTO platoDetalleDTO = new DetallePlatoDTO();
-							platoDetalleDTO.setId(platoDetalleInternal.getId());
-							platoDetalleDTO.setCantidad(platoDetalleInternal.getCantidad());
-							InsumoDTO insumo = new InsumoDTO();
-							insumo.setDescripcion(platoDetalleInternal.getInsumo().getDescripcion());
-							insumo.setEsInsumo(platoDetalleInternal.getInsumo().isEsInsumo());
-							insumo.setId(platoDetalleInternal.getInsumo().getId());
-							insumo.setStockActual(platoDetalleInternal.getInsumo().getStockActual());
-							insumo.setStockMaximo(platoDetalleInternal.getInsumo().getStockMaximo());
-							insumo.setStockMinimo(platoDetalleInternal.getInsumo().getStockMinimo());
-							insumo.setNombre(platoDetalleInternal.getInsumo().getNombre());
-							insumo.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
-							insumo.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
-							insumo.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
-							InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
-							insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
-							insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
-							insumoCategoria.setDescripcion(platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
-							insumoCategoria.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
-							insumo.setCategoria(insumoCategoria);
-							UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
-							unidadMedida.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
-							unidadMedida.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
-							unidadMedida.setAbreviatura(platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-							unidadMedida.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
-							insumo.setUnidadMedida(unidadMedida);
-							platoDetalleDTO.setIngrediente(insumo);
-							platoDetalle.add(platoDetalleDTO);
+					if (platoDTO.getId() != 6) {
+						for (int i = 0; i < detalleInternal.getCantidad(); i++) {
+							platoDTO.setCantidadVendida(detalleInternal.getPlato().getCantidadVendida());
+							platoDTO.setDescripcion(detalleInternal.getPlato().getDescripcion());
+							platoDTO.setImagen(detalleInternal.getPlato().getImagen());
+							platoDTO.setNombre(detalleInternal.getPlato().getNombre());
+							platoDTO.setPrecioCosto(detalleInternal.getPlato().getPrecioCosto());
+							platoDTO.setPrecioVenta(detalleInternal.getPlato().getPrecioVenta());
+							platoDTO.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
+							platoDTO.setEliminado(detalleInternal.getPlato().isEliminado());
+							List<DetallePlatoDTO> platoDetalle = new ArrayList<>();
+							for (DetallePlato platoDetalleInternal : detalleInternal.getPlato().getDetalle()) {
+								DetallePlatoDTO platoDetalleDTO = new DetallePlatoDTO();
+								platoDetalleDTO.setId(platoDetalleInternal.getId());
+								platoDetalleDTO.setCantidad(platoDetalleInternal.getCantidad());
+								InsumoDTO insumo = new InsumoDTO();
+								insumo.setDescripcion(platoDetalleInternal.getInsumo().getDescripcion());
+								insumo.setEsInsumo(platoDetalleInternal.getInsumo().isEsInsumo());
+								insumo.setId(platoDetalleInternal.getInsumo().getId());
+								insumo.setStockActual(platoDetalleInternal.getInsumo().getStockActual());
+								insumo.setStockMaximo(platoDetalleInternal.getInsumo().getStockMaximo());
+								insumo.setStockMinimo(platoDetalleInternal.getInsumo().getStockMinimo());
+								insumo.setNombre(platoDetalleInternal.getInsumo().getNombre());
+								insumo.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
+								insumo.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
+								insumo.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
+								InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
+								insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
+								insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
+								insumoCategoria.setDescripcion(
+										platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
+								insumoCategoria
+										.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
+								insumo.setCategoria(insumoCategoria);
+								UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
+								unidadMedida.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
+								unidadMedida.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
+								unidadMedida.setAbreviatura(
+										platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
+								unidadMedida
+										.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
+								insumo.setUnidadMedida(unidadMedida);
+								platoDetalleDTO.setIngrediente(insumo);
+								platoDetalle.add(platoDetalleDTO);
+							}
+							platoDTO.setDetalle(platoDetalle);
+							PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
+							platoCategoria.setId(detalleInternal.getPlato().getCategoria().getId());
+							platoCategoria.setNombre(detalleInternal.getPlato().getCategoria().getNombre());
+							platoCategoria.setDescripcion(detalleInternal.getPlato().getCategoria().getDescripcion());
+							platoCategoria.setEliminado(detalleInternal.getPlato().getCategoria().isEliminado());
+							platoDTO.setCategoria(platoCategoria);
+							platoDTOs.add(platoDTO);
 						}
-						platoDTO.setDetalle(platoDetalle);
-						PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
-						platoCategoria.setId(detalleInternal.getPlato().getCategoria().getId());
-						platoCategoria.setNombre(detalleInternal.getPlato().getCategoria().getNombre());
-						platoCategoria.setDescripcion(detalleInternal.getPlato().getCategoria().getDescripcion());
-						platoCategoria.setEliminado(detalleInternal.getPlato().getCategoria().isEliminado());
-						platoDTO.setCategoria(platoCategoria);
-						platoDTOs.add(platoDTO);
 					}
 				}
 			}
-		} catch (Exception e) {
+			// Hace 1 solo arreglo con 1 Registro por Id
+			List<PlatoDTO> platoDTs = new ArrayList<PlatoDTO>();
+			List<Integer> cantidadList = new ArrayList<Integer>();
+			for (PlatoDTO platitoDTO : platoDTOs) {
+				if (!platoDTs.contains(platitoDTO)) {
+					platoDTs.add(platitoDTO);
+				}
+			}
+			// Le setea la cantidad total de dicho Id en un Arreglo de Integer
+			for (PlatoDTO PlatoDTO1 : platoDTs) {
+				int cantidad = 0;
+				for (PlatoDTO PlatoDTO2 : platoDTOs) {
+					if (PlatoDTO1.getId() == PlatoDTO2.getId()) {
+						++cantidad;
+					}
+				}
+				cantidadList.add(cantidad);
+			}
+			// Metodo Burbuja
+			int i, j, aux;
+			PlatoDTO auxDTO;
+			for (i = 0; i < cantidadList.size() - 1; i++) {
+				for (j = 0; j < cantidadList.size() - i - 1; j++) {
+					if (cantidadList.get(j + 1) < cantidadList.get(j)) {
+						aux = cantidadList.get(j + 1);
+						auxDTO = platoDTs.get(j + 1);
+						cantidadList.set(j + 1, cantidadList.get(j));
+						platoDTs.set(j + 1, platoDTs.get(j));
+						cantidadList.set(j, aux);
+						platoDTs.set(j, auxDTO);
+					}
+				}
+			}
+			// Invierte el Array
+			PlatoDTO auxI;
+			for (int ind = 0; ind < platoDTs.size() / 2; ind++) {
+				auxI = platoDTs.get(ind);
+				platoDTs.set(ind, platoDTs.get(platoDTs.size() - 1 - ind));
+				platoDTs.set(platoDTs.size() - 1 - ind, auxI);
+			}
+			// Los 5 mas populares
+			for (int k = 0; k < platoDTs.size(); k++) {
+				finalPlatos.add(platoDTs.get(k));
+				if (k == 4) {
+					break;
+				}
+			}
+		} catch (
+
+		Exception e) {
 			throw new Exception();
 		}
-		return platoDTOs;
+		return finalPlatos;
 	}
 }
