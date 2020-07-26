@@ -63,7 +63,7 @@ public class UsuarioService {
 	public List<UsuarioDTO> findAll() {
 		List<UsuarioDTO> dtos = new ArrayList<>();
 
-		for (Usuario e : repositorioUsuario.findAll()) {
+		for (Usuario e : repositorioUsuario.findAllMod()) {
 			UsuarioDTO unDto = new UsuarioDTO();
 			unDto.setId(e.getId());
 			unDto.setApellido(e.getApellido());
@@ -104,8 +104,7 @@ public class UsuarioService {
 	@Transactional
 	public UsuarioDTO findById(int id) {
 
-		Optional<Usuario> optionalentity = repositorioUsuario.findById(id);
-		Usuario e = optionalentity.get();
+		Usuario e = repositorioUsuario.findByIdMod(id);
 		UsuarioDTO unDto = new UsuarioDTO();
 		unDto.setId(e.getId());
 		unDto.setApellido(e.getApellido());

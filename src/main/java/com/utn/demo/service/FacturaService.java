@@ -38,7 +38,7 @@ public class FacturaService {
 	public List<FacturaDTO> getAll() {
 		List<FacturaDTO> result = new ArrayList<>();
 		try {
-			for (Factura object2 : facturaRepository.findAll()) {
+			for (Factura object2 : facturaRepository.findAllMod()) {
 				FacturaDTO object = new FacturaDTO();
 				object.setId(object2.getId());
 				object.setTipoFactura(object2.getTipoFactura());
@@ -72,10 +72,9 @@ public class FacturaService {
 
 	@Transactional
 	public FacturaDTO getOne(int id) {
-		Optional<Factura> aOptional = facturaRepository.findById(id);
 		FacturaDTO object = new FacturaDTO();
 		try {
-			Factura object2 = aOptional.get();
+			Factura object2 = facturaRepository.findByIdMod(id);
 			object.setId(object2.getId());
 			object.setTipoFactura(object2.getTipoFactura());
 			object.setTipoPago(object2.getTipoPago());

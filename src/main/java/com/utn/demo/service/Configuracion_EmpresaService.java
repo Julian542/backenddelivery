@@ -19,7 +19,7 @@ public class Configuracion_EmpresaService {
 
 	@Transactional
 	public Configuracion_EmpresaDTO getOne() throws Exception {
-		List<Configuracion_Empresa> entity = configuracion_EmpresaRepository.findAll();
+		List<Configuracion_Empresa> entity = configuracion_EmpresaRepository.findAllMod();
 		Configuracion_EmpresaDTO cDto = new Configuracion_EmpresaDTO();
 		try {
 			for (Configuracion_Empresa i : entity) {
@@ -66,9 +66,9 @@ public class Configuracion_EmpresaService {
 
 	@Transactional
 	public Configuracion_EmpresaDTO update(int id, Configuracion_EmpresaDTO DTO) throws Exception {
-		Optional<Configuracion_Empresa> entityOptional = configuracion_EmpresaRepository.findById(id);
+
 		try {
-			Configuracion_Empresa entity = entityOptional.get();
+			Configuracion_Empresa entity = configuracion_EmpresaRepository.findByIdMod(id);
 			entity.setId(DTO.getId());
 			entity.setHoraCierre(DTO.getHorarioCierre());
 			entity.setHoraApertura(DTO.getHorarioApertura());

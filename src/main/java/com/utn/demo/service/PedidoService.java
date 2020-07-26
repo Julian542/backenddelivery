@@ -55,7 +55,7 @@ public class PedidoService {
 
 		List<PedidoDTO> result = new ArrayList<>();
 
-		for (Pedido dto2 : pedidoRepository.findAll()) {
+		for (Pedido dto2 : pedidoRepository.findAllMod()) {
 			PedidoDTO dto = new PedidoDTO();
 			dto.setId(dto2.getId());
 			dto.setHoraEstimada(dto2.getHoraEstimada());
@@ -348,12 +348,12 @@ public class PedidoService {
 	@Transactional
 	public PedidoDTO getOne(int id) {
 
-		Optional<Pedido> aOptional = pedidoRepository.findById(id);
+
 		PedidoDTO dto = new PedidoDTO();
 
 		try {
 
-			Pedido dto2 = aOptional.get();
+			Pedido dto2 = pedidoRepository.findByIdMod(id);
 			dto.setId(dto2.getId());
 			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());

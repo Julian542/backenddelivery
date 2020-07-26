@@ -115,7 +115,7 @@ public class PlatoService {
 
 		List<PlatoDTO> result = new ArrayList<>();
 
-		for (Plato entity : platoRepository.findAll()) {
+		for (Plato entity : platoRepository.findAllMod()) {
 
 			PlatoDTO dto = new PlatoDTO();
 			dto.setId(entity.getId());
@@ -189,12 +189,11 @@ public class PlatoService {
 	@Transactional
 	public PlatoDTO getOne(int id) {
 
-		Optional<Plato> aOptional = platoRepository.findById(id);
 		PlatoDTO dto = new PlatoDTO();
 
 		try {
 
-			Plato entity = aOptional.get();
+			Plato entity = platoRepository.findByIdMod(id);
 			dto.setId(entity.getId());
 			dto.setNombre(entity.getNombre());
 			dto.setTiempoPreparacion(entity.getTiempoPreparacion());

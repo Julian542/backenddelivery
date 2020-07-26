@@ -27,7 +27,7 @@ public class DetallePlatoService {
 
 		List<DetallePlatoDTO> result = new ArrayList<>();
 
-		for (DetallePlato entity : platoDetalleRepository.findAll()) {
+		for (DetallePlato entity : platoDetalleRepository.findAllMod()) {
 
 			DetallePlatoDTO dto = new DetallePlatoDTO();
 			dto.setId(entity.getId());
@@ -71,12 +71,11 @@ public class DetallePlatoService {
 	@Transactional
 	public DetallePlatoDTO getOne(int id) {
 
-		Optional<DetallePlato> aOptional = platoDetalleRepository.findById(id);
 		DetallePlatoDTO dto = new DetallePlatoDTO();
 
 		try {
 
-			DetallePlato entity = aOptional.get();
+			DetallePlato entity = platoDetalleRepository.findByIdMod(id);
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
 			dto.setEliminado(entity.isEliminado());

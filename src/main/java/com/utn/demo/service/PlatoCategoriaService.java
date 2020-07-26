@@ -22,7 +22,7 @@ public class PlatoCategoriaService {
 	public List<PlatoCategoriaDTO> getAll() {
 		List<PlatoCategoriaDTO> result = new ArrayList<>();
 		try {
-			for (PlatoCategoria object2 : platoCategoriaRepository.findAll()) {
+			for (PlatoCategoria object2 : platoCategoriaRepository.findAllMod()) {
 				PlatoCategoriaDTO object = new PlatoCategoriaDTO();
 				object.setId(object2.getId());
 				object.setNombre(object2.getNombre());
@@ -38,10 +38,9 @@ public class PlatoCategoriaService {
 
 	@Transactional
 	public PlatoCategoriaDTO getOne(int id) {
-		Optional<PlatoCategoria> aOptional = platoCategoriaRepository.findById(id);
 		PlatoCategoriaDTO object = new PlatoCategoriaDTO();
 		try {
-			PlatoCategoria object2 = aOptional.get();
+			PlatoCategoria object2 = platoCategoriaRepository.findByIdMod(id);
 			object.setId(object2.getId());
 			object.setNombre(object2.getNombre());
 			object.setDescripcion(object2.getDescripcion());

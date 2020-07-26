@@ -27,7 +27,7 @@ public class InsumoService {
 
 		List<InsumoDTO> result = new ArrayList<>();
 
-		for (Insumo entity : insumoRepository.findAll()) {
+		for (Insumo entity : insumoRepository.findAllMod()) {
 
 			InsumoDTO dto = new InsumoDTO();
 			dto.setId(entity.getId());
@@ -176,12 +176,11 @@ public class InsumoService {
 
 	public InsumoDTO getOne(int id) {
 
-		Optional<Insumo> aOptional = insumoRepository.findById(id);
 		InsumoDTO dto = new InsumoDTO();
 
 		try {
 
-			Insumo entity = aOptional.get();
+			Insumo entity = insumoRepository.findByIdMod(id);
 			dto.setId(entity.getId());
 			dto.setNombre(entity.getNombre());
 			dto.setDescripcion(entity.getDescripcion());

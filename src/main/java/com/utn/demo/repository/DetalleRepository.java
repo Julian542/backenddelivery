@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import javax.transaction.Transactional;
 import com.utn.demo.entity.Detalle;
+import com.utn.demo.entity.DetallePlato;
 
 public interface DetalleRepository extends JpaRepository<Detalle, Integer> {
 	
@@ -15,6 +16,14 @@ public interface DetalleRepository extends JpaRepository<Detalle, Integer> {
 	public int deleteDetalleById(int id);
 	
 	@Transactional
-	@Query("from Detalle where pedido_id like ?1")
+	@Query("from Detalle where pedido_id like ?1 AND eliminado like false")
 	public List<Detalle> buscarPorPedido(int id);
+	
+	@Transactional
+	@Query(value = "SELECT * FROM Detalle WHERE id=?1 AND eliminado = false",nativeQuery=true)
+	public Detalle findByIdMod(int id);
+	
+	@Transactional
+	@Query(value = "SELECT * FROM Detalle WHERE eliminado = false",nativeQuery=true)
+	public List<Detalle> findAllMod();
 }

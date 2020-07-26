@@ -25,7 +25,7 @@ public class UnidadMedidaService {
 	public List<UnidadMedidaDTO> getAll() {
 		List<UnidadMedidaDTO> result = new ArrayList<>();
 		try {
-			for (UnidadMedida object2 : unidadMedidaRepository.findAll()) {
+			for (UnidadMedida object2 : unidadMedidaRepository.findAllMod()) {
 				UnidadMedidaDTO object = new UnidadMedidaDTO();
 				object.setId(object2.getId());
 				object.setNombre(object2.getNombre());
@@ -45,8 +45,7 @@ public class UnidadMedidaService {
 	public UnidadMedidaDTO getOne(int id) {
 		UnidadMedidaDTO object = new UnidadMedidaDTO();
 		try {
-			Optional<UnidadMedida> aOptional = unidadMedidaRepository.findById(id);
-			UnidadMedida object2 = aOptional.get();
+			UnidadMedida object2 = unidadMedidaRepository.findByIdMod(id);
 			object.setId(object2.getId());
 			object.setNombre(object2.getNombre());
 			object.setAbreviatura(object2.getAbreviatura());

@@ -27,7 +27,7 @@ public class DetalleService {
 
 		List<DetalleDTO> result = new ArrayList<>();
 
-		for (Detalle entity : detalleRepository.findAll()) {
+		for (Detalle entity : detalleRepository.findAllMod()) {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
@@ -76,12 +76,11 @@ public class DetalleService {
 	@Transactional
 	public DetalleDTO getOne(int id) {
 
-		Optional<Detalle> aOptional = detalleRepository.findById(id);
 		DetalleDTO dto = new DetalleDTO();
 
 		try {
 
-			Detalle entity = aOptional.get();
+			Detalle entity = detalleRepository.findByIdMod(id);
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
 			dto.setEliminado(entity.isEliminado());

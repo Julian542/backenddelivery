@@ -22,7 +22,7 @@ public class LocalidadService {
 	public List<LocalidadDTO> findAll() {
 		List<LocalidadDTO> dtos = new ArrayList<>();
 		try {
-			List<Localidad> entidades = repository.findAll();
+			List<Localidad> entidades = repository.findAllMod();
 			for (Localidad l : entidades) {
 				LocalidadDTO unDto = new LocalidadDTO();
 				unDto.setId(l.getId());
@@ -40,8 +40,7 @@ public class LocalidadService {
 	public LocalidadDTO findById(int id) {
 		LocalidadDTO dto = new LocalidadDTO();
 		try {
-			Optional<Localidad> entityOptional = repository.findById(id);
-			Localidad entidad = entityOptional.get();
+			Localidad entidad = repository.findByIdMod(id);
 			dto.setId(entidad.getId());
 			dto.setNombre(entidad.getNombre());
 			dto.setEliminado(entidad.isEliminado());

@@ -64,7 +64,7 @@ public class DomicilioService {
 	@Transactional
 	public List<DomicilioDTO> findAll() {
 
-		List<Domicilio> entidades = repo.findAll();
+		List<Domicilio> entidades = repo.findAllMod();
 		List<DomicilioDTO> dtos = new ArrayList<>();
 		try {
 			for (Domicilio d : entidades) {
@@ -100,8 +100,7 @@ public class DomicilioService {
 	@Transactional
 	public DomicilioDTO findById(int id) {
 
-		Optional<Domicilio> entityOptional = repo.findById(id);
-		Domicilio d = entityOptional.get();
+		Domicilio d = repo.findByIdMod(id);
 		DomicilioDTO unDto = new DomicilioDTO();
 		try {
 			unDto.setId(d.getId());

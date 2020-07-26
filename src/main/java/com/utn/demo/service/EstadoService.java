@@ -22,7 +22,7 @@ public class EstadoService {
 	public List<EstadoDTO> getAll() {
 		List<EstadoDTO> result = new ArrayList<>();
 		try {
-			for (Estado object2 : estadoRepository.findAll()) {
+			for (Estado object2 : estadoRepository.findAllMod()) {
 				EstadoDTO object = new EstadoDTO();
 				object.setId(object2.getId());
 				object.setNombre(object2.getNombre());
@@ -37,10 +37,10 @@ public class EstadoService {
 
 	@Transactional
 	public EstadoDTO getOne(int id) {
-		Optional<Estado> aOptional = estadoRepository.findById(id);
+
 		EstadoDTO object = new EstadoDTO();
 		try {
-			Estado object2 = aOptional.get();
+			Estado object2 = estadoRepository.findByIdMod(id);
 			object.setId(object2.getId());
 			object.setNombre(object2.getNombre());
 			object.setEliminado(object2.isEliminado());
@@ -66,10 +66,10 @@ public class EstadoService {
 
 	@Transactional
 	public EstadoDTO update(int id, EstadoDTO estadoDTO) {
-		Optional<Estado> optional = estadoRepository.findById(id);
+
 		Estado estado = new Estado();
 		try {
-			estado = optional.get();
+			estado = estadoRepository.findByIdMod(id);
 			estado.setNombre(estadoDTO.getNombre());
 			estado.setEliminado(estadoDTO.isEliminado());
 			estadoRepository.save(estado);

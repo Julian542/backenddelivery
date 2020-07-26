@@ -22,7 +22,7 @@ public class InsumoCategoriaService {
 	public List<InsumoCategoriaDTO> getAll() {
 		List<InsumoCategoriaDTO> result = new ArrayList<>();
 		try {
-			for (InsumoCategoria entity : insumoCategoriaRepository.findAll()) {
+			for (InsumoCategoria entity : insumoCategoriaRepository.findAllMod()) {
 				InsumoCategoriaDTO dto = new InsumoCategoriaDTO();
 				dto.setId(entity.getId());
 				dto.setNombre(entity.getNombre());
@@ -38,10 +38,9 @@ public class InsumoCategoriaService {
 
 	@Transactional
 	public InsumoCategoriaDTO getOne(int id) {
-		Optional<InsumoCategoria> aOptional = insumoCategoriaRepository.findById(id);
 		InsumoCategoriaDTO dto = new InsumoCategoriaDTO();
 		try {
-			InsumoCategoria entity = aOptional.get();
+			InsumoCategoria entity = insumoCategoriaRepository.findByIdMod(id);
 			dto.setId(entity.getId());
 			dto.setNombre(entity.getNombre());
 			dto.setDescripcion(entity.getDescripcion());
