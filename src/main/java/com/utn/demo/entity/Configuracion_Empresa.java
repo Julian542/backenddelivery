@@ -1,13 +1,10 @@
 package com.utn.demo.entity;
-
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.hibernate.annotations.Where;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +27,7 @@ public class Configuracion_Empresa {
 	private String email;
 	private String sociedad;
 	private String paginaWeb;
-	@Temporal(TemporalType.DATE)
 	private Date horaApertura;
-	@Temporal(TemporalType.DATE)
 	private Date horaCierre;
 	@Column(name = "eliminado")
 	private boolean eliminado;

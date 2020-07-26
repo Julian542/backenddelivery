@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.hibernate.annotations.Where;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +31,6 @@ public class Factura {
 	private double total;
 	private String tipoFactura;
 	private String tipoPago;
-	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "fk_usuario")

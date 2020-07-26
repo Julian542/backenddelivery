@@ -108,15 +108,4 @@ public class PlatoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}
 	}
-
-	@GetMapping("/platosPopulares")
-	@Transactional
-	public ResponseEntity<Object> getPlatosPopulares(@PathVariable Date fechaDesde, @PathVariable Date fechaHasta) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(platoService.getPlatosPopulares(fechaDesde, fechaHasta));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
 }

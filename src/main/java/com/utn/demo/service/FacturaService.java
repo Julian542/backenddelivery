@@ -184,15 +184,18 @@ public class FacturaService {
 	}
 
 	@Transactional
-	public RecaudacionesDTO getRecaudaciones(Date fechaDesde, Date fechaHasta) {
+	public RecaudacionesDTO getRecaudaciones(String fechaDesde, String fechaHasta) {
 		RecaudacionesDTO recaudacionesDTO = new RecaudacionesDTO();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			List<Factura> facturas = facturaRepository.getFacturasByDate(fechaDesde, fechaHasta);
 			double Total = new Double(0.0f);
 			double Ganancias = new Double(0.0f);
 			double Gastos = new Double(0.0f);
-			recaudacionesDTO.setFechaDesde(fechaDesde);
-			recaudacionesDTO.setFechaHasta(fechaHasta);
+			Date fecha = formato.parse(fechaDesde);
+			recaudacionesDTO.setFechaDesde(fecha);
+			fecha = formato.parse(fechaHasta);
+			recaudacionesDTO.setFechaHasta(fecha);
 			for (Factura factura : facturas) {
 				Pedido pedido = factura.getPedido();
 				for (Detalle detalle : factura.getPedido().getDetalle()) {
@@ -213,5 +216,25 @@ public class FacturaService {
 			System.out.println(e.getMessage());
 		}
 		return recaudacionesDTO;
+	}
+	
+	@Transactional
+	public List<PlatoDTO> getPlatosPopulares(String fechaDesde, String fechaHasta) throws Exception {
+		List<PlatoDTO> platoDTOs = new ArrayList<PlatoDTO>();
+		try {
+			System.out.println(fechaDesde);
+			System.out.println(fechaHasta);
+			List<Factura> facturas = facturaRepository.getFacturasByDate(fechaDesde, fechaHasta);
+			for (Factura factura : facturas) {
+				for (Detalle detalleInternal : factura.getDetalle()) {
+					PlatoDTO platoDTO = new PlatoDTO();
+					platoDTO.setId(detalleInternal.getPlato().getId());
+					platoDTOs.add(platoDTO);
+				}
+			}
+		} catch (Exception e) {
+			throw new Exception();
+		}
+		return platoDTOs;
 	}
 }

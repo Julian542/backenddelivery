@@ -353,42 +353,4 @@ public class PlatoService {
 			return false;
 		}
 	}
-
-	@Transactional
-	public List<PlatoDTO> getPlatosPopulares(Date fechaDesde, Date fechaHasta) throws Exception{
-		List<PlatoDTO> platoDTOs = new ArrayList<>();
-		try {
-			List<Plato> platos = platoRepository.platosPopulares(fechaDesde, fechaHasta);
-			for (Plato plato : platos) {
-				PlatoDTO platosDTO = new PlatoDTO();
-				platosDTO.setCantidadVendida(plato.getCantidadVendida());
-				
-				PlatoCategoriaDTO platoCategoriaDTO = new PlatoCategoriaDTO();
-				platoCategoriaDTO.setId(plato.getCategoria().getId());
-				
-				platosDTO.setCategoria(platoCategoriaDTO);
-				platosDTO.setDescripcion(plato.getDescripcion());
-				
-				List<DetallePlatoDTO> detallePlatoDTOs = new ArrayList<>();
-				for (DetallePlato detallePlato : plato.getDetalle()) {
-					DetallePlatoDTO detallePlatoDTO = new DetallePlatoDTO();
-					detallePlatoDTO.setId(detallePlato.getId());
-					detallePlatoDTOs.add(detallePlatoDTO);
-				}
-				
-				platosDTO.setDetalle(detallePlatoDTOs);
-				platosDTO.setId(plato.getId());
-				platosDTO.setImagen(plato.getImagen());
-				platosDTO.setNombre(plato.getNombre());
-				platosDTO.setPrecioCosto(plato.getPrecioCosto());
-				platosDTO.setPrecioVenta(plato.getPrecioVenta());
-				platosDTO.setTiempoPreparacion(plato.getTiempoPreparacion());
-				platosDTO.setEliminado(plato.isEliminado());
-				platoDTOs.add(platosDTO);
-			}
-		} catch (Exception e) {
-			throw new Exception();
-		}
-		return platoDTOs;
-	}
 }

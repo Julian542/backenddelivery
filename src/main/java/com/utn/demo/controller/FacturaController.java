@@ -83,11 +83,22 @@ public class FacturaController {
 		}
 	}
 
-	@GetMapping("/recaudaciones")
+	@GetMapping("/recaudaciones/{fechaDesde}/{fechaHasta}")
 	@Transactional
-	public ResponseEntity<Object> getRecaudaciones(@PathVariable Date fechaDesde, @PathVariable Date fechaHasta) {
+	public ResponseEntity<Object> getRecaudaciones(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getRecaudaciones(fechaDesde, fechaHasta));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@GetMapping("/platosPopulares/{fechaDesde}/{fechaHasta}")
+	@Transactional
+	public ResponseEntity<Object> getPlatosPopulares(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getPlatosPopulares(fechaDesde, fechaHasta));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");

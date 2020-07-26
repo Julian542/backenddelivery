@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.hibernate.annotations.Where;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,7 +37,6 @@ public class Pedido {
 	@OneToOne(cascade = CascadeType.DETACH)
 	private Estado estado;
 	
-	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
 	@OneToMany(cascade = CascadeType.ALL)

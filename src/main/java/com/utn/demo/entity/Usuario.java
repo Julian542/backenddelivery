@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.hibernate.annotations.Where;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +32,6 @@ public class Usuario {
 	private String password;
 	private String imagen;
 	private String Rol;
-	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	@OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL)
 	private List<Domicilio> domicilios;
