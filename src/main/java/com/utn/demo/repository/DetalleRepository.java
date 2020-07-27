@@ -16,7 +16,7 @@ public interface DetalleRepository extends JpaRepository<Detalle, Integer> {
 	public int deleteDetalleById(int id);
 	
 	@Transactional
-	@Query("from Detalle where pedido_id like ?1 AND eliminado like false")
+	@Query("from Detalle where pedido_id like ?1 AND eliminado = false")
 	public List<Detalle> buscarPorPedido(int id);
 	
 	@Transactional
