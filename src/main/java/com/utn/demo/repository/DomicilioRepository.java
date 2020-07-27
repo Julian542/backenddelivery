@@ -13,7 +13,7 @@ import com.utn.demo.entity.Domicilio;
 @Repository
 public interface DomicilioRepository extends JpaRepository<Domicilio, Integer> {
 
-	@Query("from Domicilio s where s.propietario.id like ?1 and s.eliminado like false")
+	@Query("from Domicilio s where s.propietario.id like ?1 and s.eliminado = false")
 	List<Domicilio> buscarPorUsuario(int id);
 
 	@Modifying
