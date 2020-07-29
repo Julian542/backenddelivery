@@ -43,7 +43,7 @@ public class InsumoController {
 	@Transactional
 	public ResponseEntity<Object> getAllNoInsumos(@PathVariable boolean esInsumo) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(insumoService.getAll());
+			return ResponseEntity.status(HttpStatus.OK).body(insumoService.getAllNoInsumos(esInsumo));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
