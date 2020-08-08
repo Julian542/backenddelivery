@@ -142,7 +142,7 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public UsuarioDTO buscarPorEmail(String email) {
+	public UsuarioDTO buscarPorCorreo(String email) {
 
 		Optional<Usuario> optionalentity = repositorioUsuario.buscarPorEmail(email);
 		Usuario e = optionalentity.get();

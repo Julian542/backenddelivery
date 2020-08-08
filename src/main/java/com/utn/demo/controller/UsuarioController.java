@@ -78,9 +78,9 @@ public class UsuarioController {
 
 	@GetMapping("/searchbyemail/{email}")
 	@Transactional
-	public ResponseEntity<String> buscarPorEmail(@PathVariable String email) {
+	public ResponseEntity<Object> buscarPorEmail(@PathVariable String email) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(servicio.existeEmail(email));
+			return ResponseEntity.status(HttpStatus.OK).body(servicio.buscarPorCorreo(email));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
