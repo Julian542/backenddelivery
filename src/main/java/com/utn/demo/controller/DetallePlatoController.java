@@ -50,6 +50,17 @@ public class DetallePlatoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/porPlato/{id}")
+	@Transactional
+	public ResponseEntity<Object> getAllPorPlato(@PathVariable int id) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(detallePlatoService.getAllPorPlato(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@PostMapping("/")
 	@Transactional

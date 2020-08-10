@@ -86,6 +86,18 @@ public class DetalleController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/buscarPorPlato/{id}/{id2}")
+	@Transactional
+	public ResponseEntity<Object> buscarPorPlato(@PathVariable int id,@PathVariable int id2) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(detalleService.buscarPorPlato(id,id2));
+		} catch (Exception e) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity delete(@PathVariable int id) {

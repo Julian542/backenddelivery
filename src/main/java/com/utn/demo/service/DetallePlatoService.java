@@ -67,6 +67,52 @@ public class DetallePlatoService {
 		return result;
 
 	}
+	
+	@Transactional
+	public List<DetallePlatoDTO> getAllPorPlato(int id) {
+
+		List<DetallePlatoDTO> result = new ArrayList<>();
+
+		for (DetallePlato entity : platoDetalleRepository.findAllPorPlato(id)) {
+
+			DetallePlatoDTO dto = new DetallePlatoDTO();
+			dto.setId(entity.getId());
+			dto.setCantidad(entity.getCantidad());
+			dto.setEliminado(entity.isEliminado());
+
+			try {
+				InsumoDTO insumo = new InsumoDTO();
+				insumo.setId(entity.getInsumo().getId());
+				insumo.setNombre(entity.getInsumo().getNombre());
+				insumo.setDescripcion(entity.getInsumo().getDescripcion());
+				insumo.setPrecioCompra(entity.getInsumo().getPrecioCompra());
+				insumo.setStockActual(entity.getInsumo().getStockActual());
+				insumo.setStockMinimo(entity.getInsumo().getStockMinimo());
+				insumo.setStockMaximo(entity.getInsumo().getStockMaximo());
+				insumo.setEsInsumo(entity.getInsumo().isEsInsumo());
+				insumo.setPrecioVenta(entity.getInsumo().getPrecioVenta());
+				insumo.setEliminado(entity.getInsumo().isEliminado());
+
+				UnidadMedidaDTO um = new UnidadMedidaDTO();
+				um.setId(entity.getInsumo().getUnidadMedida().getId());
+				um.setNombre(entity.getInsumo().getUnidadMedida().getNombre());
+				um.setAbreviatura(entity.getInsumo().getUnidadMedida().getAbreviatura());
+				um.setEliminado(entity.getInsumo().getUnidadMedida().isEliminado());
+
+				insumo.setUnidadMedida(um);
+				
+				dto.setIngrediente(insumo);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			result.add(dto);
+		}
+
+		return result;
+
+	}
 
 	@Transactional
 	public DetallePlatoDTO getOne(int id) {

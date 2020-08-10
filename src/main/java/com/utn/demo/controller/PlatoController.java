@@ -65,6 +65,17 @@ public class PlatoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/platoPorCategoria/{id}")
+	@Transactional
+	public ResponseEntity<Object> getPorCategoria(@PathVariable int id) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(platoService.getPlatoPorCategoria(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@GetMapping("/{id}")
 	@Transactional

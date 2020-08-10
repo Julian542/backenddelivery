@@ -64,38 +64,6 @@ public class PlatoService {
 			dto.setCantidadVendida(entity.getCantidadVendida());
 			dto.setEliminado(entity.isEliminado());
 			try {
-				List<DetallePlatoDTO> platoDetalle = new ArrayList<>();
-				for (DetallePlato platoDetalleInternal : entity.getDetalle()) {
-					DetallePlatoDTO platoDetalleDTO = new DetallePlatoDTO();
-					platoDetalleDTO.setId(platoDetalleInternal.getId());
-					platoDetalleDTO.setCantidad(platoDetalleInternal.getCantidad());
-					InsumoDTO insumo = new InsumoDTO();
-					insumo.setDescripcion(platoDetalleInternal.getInsumo().getDescripcion());
-					insumo.setEsInsumo(platoDetalleInternal.getInsumo().isEsInsumo());
-					insumo.setId(platoDetalleInternal.getInsumo().getId());
-					insumo.setStockActual(platoDetalleInternal.getInsumo().getStockActual());
-					insumo.setStockMaximo(platoDetalleInternal.getInsumo().getStockMaximo());
-					insumo.setStockMinimo(platoDetalleInternal.getInsumo().getStockMinimo());
-					insumo.setNombre(platoDetalleInternal.getInsumo().getNombre());
-					insumo.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
-					insumo.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
-					insumo.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
-					InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
-					insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
-					insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
-					insumoCategoria.setDescripcion(platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
-					insumoCategoria.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
-					insumo.setCategoria(insumoCategoria);
-					UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
-					unidadMedida.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
-					unidadMedida.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
-					unidadMedida.setAbreviatura(platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-					unidadMedida.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
-					insumo.setUnidadMedida(unidadMedida);
-					platoDetalleDTO.setIngrediente(insumo);
-					platoDetalle.add(platoDetalleDTO);
-				}
-				dto.setDetalle(platoDetalle);
 				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
 				platoCategoria.setId(entity.getCategoria().getId());
 				platoCategoria.setNombre(entity.getCategoria().getNombre());
@@ -110,6 +78,82 @@ public class PlatoService {
 		return result;
 	}
 
+	@Transactional
+	public List<PlatoDTO> getPlatoPorCategoria(int id) {
+
+		List<PlatoDTO> result = new ArrayList<>();
+
+		for (Plato entity : platoRepository.findPlatoPorCategoria(id)) {
+
+			PlatoDTO dto = new PlatoDTO();
+			dto.setId(entity.getId());
+			dto.setNombre(entity.getNombre());
+			dto.setTiempoPreparacion(entity.getTiempoPreparacion());
+			dto.setImagen(entity.getImagen());
+			dto.setDescripcion(entity.getDescripcion());
+			dto.setPrecioCosto(entity.getPrecioCosto());
+			dto.setPrecioVenta(entity.getPrecioVenta());
+			dto.setCantidadVendida(entity.getCantidadVendida());
+			dto.setEliminado(entity.isEliminado());
+
+			List<DetallePlatoDTO> ingredientes = new ArrayList<DetallePlatoDTO>();
+			for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(entity.getId())) {
+				try {
+					DetallePlatoDTO ingrediente = new DetallePlatoDTO();
+					InsumoDTO insumo = new InsumoDTO();
+
+					insumo.setId(entity2.getInsumo().getId());
+					insumo.setNombre(entity2.getInsumo().getNombre());
+					insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+					insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+					insumo.setStockActual(entity2.getInsumo().getStockActual());
+					insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+					insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+					insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+					insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+					insumo.setEliminado(entity2.getInsumo().isEliminado());
+
+					UnidadMedidaDTO um = new UnidadMedidaDTO();
+					um.setId(entity2.getInsumo().getUnidadMedida().getId());
+					um.setNombre(entity2.getInsumo().getUnidadMedida().getNombre());
+					um.setAbreviatura(entity2.getInsumo().getUnidadMedida().getAbreviatura());
+					um.setEliminado(entity2.getInsumo().getUnidadMedida().isEliminado());
+
+					insumo.setUnidadMedida(um);
+					
+					ingrediente.setIngrediente(insumo);
+					ingrediente.setCantidad(entity2.getCantidad());
+					ingrediente.setId(entity2.getId());
+					ingrediente.setEliminado(entity2.isEliminado());
+
+					ingredientes.add(ingrediente);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+
+			dto.setDetalle(ingredientes);
+			
+
+			try {
+				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
+				platoCategoria.setId(entity.getCategoria().getId());
+				platoCategoria.setNombre(entity.getCategoria().getNombre());
+				platoCategoria.setDescripcion(entity.getCategoria().getDescripcion());
+				platoCategoria.setEliminado(entity.getCategoria().isEliminado());
+				dto.setCategoria(platoCategoria);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			result.add(dto);
+		}
+
+		return result;
+
+	}
+	
 	@Transactional
 	public List<PlatoDTO> getAll() {
 

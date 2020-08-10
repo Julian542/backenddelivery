@@ -150,58 +150,6 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 			}
 
-			try {
-				List<DetalleDTO> detalle = new ArrayList<>();
-				for (Detalle detalleInternal : dto2.getDetalle()) {
-					DetalleDTO detalleDTO = new DetalleDTO();
-					detalleDTO.setId(detalleInternal.getId());
-					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalleDTO.setEliminado(detalleInternal.isEliminado());
-
-					if (detalleInternal.getInsumo() != null) {
-
-						InsumoDTO insumo = new InsumoDTO();
-						insumo.setDescripcion(detalleInternal.getInsumo().getDescripcion());
-						insumo.setEsInsumo(detalleInternal.getInsumo().isEsInsumo());
-						insumo.setId(detalleInternal.getInsumo().getId());
-						insumo.setStockActual(detalleInternal.getInsumo().getStockActual());
-						insumo.setStockMaximo(detalleInternal.getInsumo().getStockMaximo());
-						insumo.setStockMinimo(detalleInternal.getInsumo().getStockMinimo());
-						insumo.setNombre(detalleInternal.getInsumo().getNombre());
-						insumo.setPrecioCompra(detalleInternal.getInsumo().getPrecioCompra());
-						insumo.setPrecioVenta(detalleInternal.getInsumo().getPrecioVenta());
-						insumo.setEliminado(detalleInternal.getInsumo().isEliminado());
-
-						UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
-						unidadMedida.setId(detalleInternal.getInsumo().getUnidadMedida().getId());
-						unidadMedida.setNombre(detalleInternal.getInsumo().getUnidadMedida().getNombre());
-						unidadMedida.setAbreviatura(detalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-						unidadMedida.setEliminado(detalleInternal.getInsumo().getUnidadMedida().isEliminado());
-						insumo.setUnidadMedida(unidadMedida);
-						detalleDTO.setInsumo(insumo);
-
-					}
-
-					if (detalleInternal.getPlato() != null) {
-
-						PlatoDTO plato = new PlatoDTO();
-						plato.setId(detalleInternal.getPlato().getId());
-						plato.setNombre(detalleInternal.getPlato().getNombre());
-						plato.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
-						plato.setEliminado(detalleInternal.getPlato().isEliminado());
-
-
-						detalleDTO.setPlato(plato);
-
-					}
-
-					detalle.add(detalleDTO);
-				}
-				dto.setDetalle(detalle);
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
 
 			result.add(dto);
 		}
@@ -274,68 +222,6 @@ public class PedidoService {
 
 				dto.setDomicilio(dtodom);
 			} catch(Exception e) {
-				System.out.println(e.getMessage());
-			}
-			
-			try {
-				EstadoDTO estado = new EstadoDTO();
-				estado.setId(dto2.getEstado().getId());
-				estado.setNombre(dto2.getEstado().getNombre());
-				estado.setEliminado(dto2.getEstado().isEliminado());
-				dto.setEstado(estado);
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-
-			try {
-				List<DetalleDTO> detalle = new ArrayList<>();
-				for (Detalle detalleInternal : dto2.getDetalle()) {
-					DetalleDTO detalleDTO = new DetalleDTO();
-					detalleDTO.setId(detalleInternal.getId());
-					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalleDTO.setEliminado(detalleInternal.isEliminado());
-
-					if (detalleInternal.getInsumo() != null) {
-
-						InsumoDTO insumo = new InsumoDTO();
-						insumo.setDescripcion(detalleInternal.getInsumo().getDescripcion());
-						insumo.setEsInsumo(detalleInternal.getInsumo().isEsInsumo());
-						insumo.setId(detalleInternal.getInsumo().getId());
-						insumo.setStockActual(detalleInternal.getInsumo().getStockActual());
-						insumo.setStockMaximo(detalleInternal.getInsumo().getStockMaximo());
-						insumo.setStockMinimo(detalleInternal.getInsumo().getStockMinimo());
-						insumo.setNombre(detalleInternal.getInsumo().getNombre());
-						insumo.setPrecioCompra(detalleInternal.getInsumo().getPrecioCompra());
-						insumo.setPrecioVenta(detalleInternal.getInsumo().getPrecioVenta());
-						insumo.setEliminado(detalleInternal.getInsumo().isEliminado());
-						UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
-						unidadMedida.setId(detalleInternal.getInsumo().getUnidadMedida().getId());
-						unidadMedida.setNombre(detalleInternal.getInsumo().getUnidadMedida().getNombre());
-						unidadMedida.setAbreviatura(detalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-						unidadMedida.setEliminado(detalleInternal.getInsumo().getUnidadMedida().isEliminado());
-						insumo.setUnidadMedida(unidadMedida);
-						detalleDTO.setInsumo(insumo);
-
-					}
-
-					if (detalleInternal.getPlato() != null) {
-
-						PlatoDTO plato = new PlatoDTO();
-						plato.setId(detalleInternal.getPlato().getId());
-						plato.setNombre(detalleInternal.getPlato().getNombre());
-						plato.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
-						plato.setEliminado(detalleInternal.getPlato().isEliminado());
-
-						detalleDTO.setPlato(plato);
-
-					}
-
-					detalle.add(detalleDTO);
-				}
-				dto.setDetalle(detalle);
-
-			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
@@ -425,60 +311,25 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 			}
 
-			try {
-				List<DetalleDTO> detalle = new ArrayList<>();
-				for (Detalle detalleInternal : dto2.getDetalle()) {
-					DetalleDTO detalleDTO = new DetalleDTO();
-					detalleDTO.setId(detalleInternal.getId());
-					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalleDTO.setEliminado(detalleInternal.isEliminado());
+			float data = 0;
 
-					if (detalleInternal.getInsumo() != null) {
+			for (Detalle entity2 : detalleRepository.buscarPorPedido(dto2.getId())) {
+				try {
+					data += entity2.getPlato().getPrecioVenta() * entity2.getCantidad();
 
-						InsumoDTO insumo = new InsumoDTO();
-						insumo.setDescripcion(detalleInternal.getInsumo().getDescripcion());
-						insumo.setEsInsumo(detalleInternal.getInsumo().isEsInsumo());
-						insumo.setId(detalleInternal.getInsumo().getId());
-						insumo.setStockActual(detalleInternal.getInsumo().getStockActual());
-						insumo.setStockMaximo(detalleInternal.getInsumo().getStockMaximo());
-						insumo.setStockMinimo(detalleInternal.getInsumo().getStockMinimo());
-						insumo.setNombre(detalleInternal.getInsumo().getNombre());
-						insumo.setPrecioCompra(detalleInternal.getInsumo().getPrecioCompra());
-						insumo.setPrecioVenta(detalleInternal.getInsumo().getPrecioVenta());
-						insumo.setEliminado(detalleInternal.getInsumo().isEliminado());
-
-						UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
-						unidadMedida.setId(detalleInternal.getInsumo().getUnidadMedida().getId());
-						unidadMedida.setNombre(detalleInternal.getInsumo().getUnidadMedida().getNombre());
-						unidadMedida.setAbreviatura(detalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-						unidadMedida.setEliminado(detalleInternal.getInsumo().getUnidadMedida().isEliminado());
-
-						insumo.setUnidadMedida(unidadMedida);
-						detalleDTO.setInsumo(insumo);
-
-					}
-
-					if (detalleInternal.getPlato() != null) {
-
-						PlatoDTO plato = new PlatoDTO();
-						plato.setId(detalleInternal.getPlato().getId());
-						plato.setNombre(detalleInternal.getPlato().getNombre());
-						plato.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
-						plato.setPrecioVenta(detalleInternal.getPlato().getPrecioVenta());
-						plato.setEliminado(detalleInternal.getPlato().isEliminado());
-
-
-						detalleDTO.setPlato(plato);
-
-					}
-
-					detalle.add(detalleDTO);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
 				}
-				dto.setDetalle(detalle);
 
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				try {
+					data += entity2.getInsumo().getPrecioVenta() * entity2.getCantidad();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
 			}
+
+			dto.setMonto(round(data, 2));
 
 		} catch (Exception e) {
 
@@ -533,58 +384,6 @@ public class PedidoService {
 			System.out.println(e.getMessage());
 		}
 
-		List<Detalle> detalle = new ArrayList<>();
-
-		try {
-			for (DetalleDTO detalleDTO : pedidoDTO.getDetalle()) {
-				Detalle detalleTemp = new Detalle();
-				detalleTemp.setCantidad(detalleDTO.getCantidad());
-
-				try {
-					if (detalleDTO.getInsumo() != null) {
-						Insumo insumo = new Insumo();
-
-						insumo = insumoRepository.findById(detalleDTO.getInsumo().getId()).get();
-						insumo.setStockActual((insumo.getStockActual()) - (detalleDTO.getCantidad()));
-
-						insumoRepository.save(insumo);
-						detalleTemp.setInsumo(insumo);
-					}
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-				try {
-					if (detalleDTO.getPlato() != null) {
-						Plato plato = new Plato();
-
-						// Proceso de stock
-						plato = platoRepository.findById(detalleDTO.getPlato().getId()).get();
-						System.out.println(plato.getId());
-						for (DetallePlato platoDetalle : plato.getDetalle()) {
-
-							Insumo insumo = new Insumo();
-							insumo = insumoRepository.findById(platoDetalle.getInsumo().getId()).get();
-							insumo.setStockActual((insumo.getStockActual())
-									- ((detalleDTO.getCantidad()) * (platoDetalle.getCantidad())));
-							insumoRepository.save(insumo);
-
-						}
-
-						plato.setId(detalleDTO.getPlato().getId());
-						detalleTemp.setPlato(plato);
-					}
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-
-				detalle.add(detalleTemp);
-			}
-
-			pedido.setDetalle(detalle);
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 
 		pedidoRepository.save(pedido);
 
@@ -678,34 +477,6 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 			}
 
-			try {
-				List<Detalle> detalle = new ArrayList<>();
-				for (DetalleDTO detalleDTO : pedidoDTO.getDetalle()) {
-					Detalle detalleTemp = new Detalle();
-					detalleTemp.setId(detalleDTO.getId());
-					detalle.add(detalleTemp);
-				}
-				pedido.setDetalle(pedido.getDetalle());
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-
-			try {
-				List<Detalle> detalle = new ArrayList<>();
-				for (DetalleDTO detalleDTO : pedidoDTO.getDetalle()) {
-					Detalle detalleTemp = new Detalle();
-					detalleTemp.setId(detalleDTO.getId());
-					detalle.add(detalleTemp);
-				}
-				pedido.setDetalle(detalle);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-
-			pedidoRepository.save(pedido);
-
-			pedidoDTO.setId(pedido.getId());
 
 		} catch (Exception e) {
 

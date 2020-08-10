@@ -12,5 +12,6 @@ public class DetalleDTO {
 	private int cantidad;
 	private PlatoDTO plato;
 	private InsumoDTO insumo;
+	private PedidoDTO pedido;
 	private boolean eliminado;
 }

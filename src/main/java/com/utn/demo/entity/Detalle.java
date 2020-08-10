@@ -25,10 +25,10 @@ public class Detalle {
 	private int cantidad;
 	@OneToOne
 	private Pedido pedido;
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	@JoinColumn(name = "fk_plato")
 	private Plato plato;
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	@JoinColumn(name = "fk_insumo")
 	private Insumo insumo;
 	@Column(name = "eliminado")

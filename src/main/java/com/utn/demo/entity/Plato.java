@@ -41,7 +41,5 @@ public class Plato {
 	@JoinColumn(name = "fk_categoria")
 	private PlatoCategoria categoria;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<DetallePlato> detalle = new ArrayList<DetallePlato>();
 
 }

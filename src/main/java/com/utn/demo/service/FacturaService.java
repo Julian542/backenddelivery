@@ -243,42 +243,6 @@ public class FacturaService {
 							platoDTO.setPrecioVenta(detalleInternal.getPlato().getPrecioVenta());
 							platoDTO.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
 							platoDTO.setEliminado(detalleInternal.getPlato().isEliminado());
-							List<DetallePlatoDTO> platoDetalle = new ArrayList<>();
-							for (DetallePlato platoDetalleInternal : detalleInternal.getPlato().getDetalle()) {
-								DetallePlatoDTO platoDetalleDTO = new DetallePlatoDTO();
-								platoDetalleDTO.setId(platoDetalleInternal.getId());
-								platoDetalleDTO.setCantidad(platoDetalleInternal.getCantidad());
-								InsumoDTO insumo = new InsumoDTO();
-								insumo.setDescripcion(platoDetalleInternal.getInsumo().getDescripcion());
-								insumo.setEsInsumo(platoDetalleInternal.getInsumo().isEsInsumo());
-								insumo.setId(platoDetalleInternal.getInsumo().getId());
-								insumo.setStockActual(platoDetalleInternal.getInsumo().getStockActual());
-								insumo.setStockMaximo(platoDetalleInternal.getInsumo().getStockMaximo());
-								insumo.setStockMinimo(platoDetalleInternal.getInsumo().getStockMinimo());
-								insumo.setNombre(platoDetalleInternal.getInsumo().getNombre());
-								insumo.setPrecioCompra(platoDetalleInternal.getInsumo().getPrecioCompra());
-								insumo.setPrecioVenta(platoDetalleInternal.getInsumo().getPrecioVenta());
-								insumo.setEliminado(platoDetalleInternal.getInsumo().isEliminado());
-								InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
-								insumoCategoria.setId(platoDetalleInternal.getInsumo().getCategoria().getId());
-								insumoCategoria.setNombre(platoDetalleInternal.getInsumo().getCategoria().getNombre());
-								insumoCategoria.setDescripcion(
-										platoDetalleInternal.getInsumo().getCategoria().getDescripcion());
-								insumoCategoria
-										.setEliminado(platoDetalleInternal.getInsumo().getCategoria().isEliminado());
-								insumo.setCategoria(insumoCategoria);
-								UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
-								unidadMedida.setId(platoDetalleInternal.getInsumo().getUnidadMedida().getId());
-								unidadMedida.setNombre(platoDetalleInternal.getInsumo().getUnidadMedida().getNombre());
-								unidadMedida.setAbreviatura(
-										platoDetalleInternal.getInsumo().getUnidadMedida().getAbreviatura());
-								unidadMedida
-										.setEliminado(platoDetalleInternal.getInsumo().getUnidadMedida().isEliminado());
-								insumo.setUnidadMedida(unidadMedida);
-								platoDetalleDTO.setIngrediente(insumo);
-								platoDetalle.add(platoDetalleDTO);
-							}
-							platoDTO.setDetalle(platoDetalle);
 							PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
 							platoCategoria.setId(detalleInternal.getPlato().getCategoria().getId());
 							platoCategoria.setNombre(detalleInternal.getPlato().getCategoria().getNombre());

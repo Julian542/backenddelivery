@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.InsumoDTO;
+import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.entity.Detalle;
 import com.utn.demo.entity.Insumo;
+import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Plato;
 import com.utn.demo.repository.DetalleRepository;
 
@@ -59,6 +61,17 @@ public class DetalleService {
 				insumo.setEsInsumo(entity.getInsumo().isEsInsumo());
 				insumo.setPrecioVenta(entity.getInsumo().getPrecioVenta());
 				dto.setInsumo(insumo);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			try {
+				PedidoDTO pedido = new PedidoDTO();
+				pedido.setId(entity.getPedido().getId());
+
+				dto.setPedido(pedido);
+
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -114,6 +127,17 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+			
+			try {
+				PedidoDTO pedido = new PedidoDTO();
+				pedido.setId(entity.getPedido().getId());
+
+				dto.setPedido(pedido);
+
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 
 		} catch (Exception e) {
 
@@ -147,6 +171,17 @@ public class DetalleService {
 			Insumo insumo = new Insumo();
 			insumo.setId(detalleDTO.getInsumo().getId());
 			detalle.setInsumo(insumo);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			Pedido pedido = new Pedido();
+			pedido.setId(detalleDTO.getPedido().getId());
+
+			detalle.setPedido(pedido);
+
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -185,6 +220,17 @@ public class DetalleService {
 				Insumo insumo = new Insumo();
 				insumo.setId(detalleDTO.getInsumo().getId());
 				detalle.setInsumo(insumo);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			try {
+				Pedido pedido = new Pedido();
+				pedido.setId(detalleDTO.getPedido().getId());
+
+				detalle.setPedido(pedido);
+
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -245,6 +291,17 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+			
+			try {
+				PedidoDTO pedido = new PedidoDTO();
+				pedido.setId(entity.getPedido().getId());
+
+				dto.setPedido(pedido);
+
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 
 			result.add(dto);
 		}
@@ -253,7 +310,66 @@ public class DetalleService {
 
 	}
 	
+	@Transactional
+	public List<DetalleDTO> buscarPorPlato(int id, int id2) {
+
+		List<DetalleDTO> result = new ArrayList<>();
+
+		for (Detalle entity : detalleRepository.buscarPorPlato(id, id2)) {
+			DetalleDTO dto = new DetalleDTO();
+			dto.setId(entity.getId());
+			dto.setCantidad(entity.getCantidad());
+			dto.setEliminado(entity.isEliminado());
+
+			try {
+				PlatoDTO plato = new PlatoDTO();
+				plato.setId(entity.getPlato().getId());
+				plato.setNombre(entity.getPlato().getNombre());
+				plato.setTiempoPreparacion(entity.getPlato().getTiempoPreparacion());
+				plato.setPrecioVenta(entity.getPlato().getPrecioVenta());
+				dto.setPlato(plato);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
+				InsumoDTO insumo = new InsumoDTO();
+				insumo.setId(entity.getInsumo().getId());
+				insumo.setNombre(entity.getInsumo().getNombre());
+				insumo.setDescripcion(entity.getInsumo().getDescripcion());
+				insumo.setPrecioCompra(entity.getInsumo().getPrecioCompra());
+				insumo.setStockActual(entity.getInsumo().getStockActual());
+				insumo.setStockMinimo(entity.getInsumo().getStockMinimo());
+				insumo.setStockMaximo(entity.getInsumo().getStockMaximo());
+				insumo.setEsInsumo(entity.getInsumo().isEsInsumo());
+				insumo.setPrecioVenta(entity.getInsumo().getPrecioVenta());
+				dto.setInsumo(insumo);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			try {
+				PedidoDTO pedido = new PedidoDTO();
+				pedido.setId(entity.getPedido().getId());
+
+				dto.setPedido(pedido);
+
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			result.add(dto);
+		}
+
+		return result;
+
+	}
 	
+
+
 	public boolean delete(int id) {
 		try {
 			detalleRepository.deleteDetalleById(id);

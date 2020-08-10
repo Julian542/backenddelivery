@@ -26,4 +26,8 @@ public interface PlatoRepository extends JpaRepository<Plato, Integer> {
 	@Transactional
 	@Query(value = "SELECT * FROM plato WHERE eliminado = false",nativeQuery=true)
 	public List<Plato> findAllMod();
+	
+	@Transactional
+	@Query(value = "SELECT * FROM plato WHERE fk_categoria = ?1",nativeQuery=true)
+	public List<Plato> findPlatoPorCategoria(int id);
 }

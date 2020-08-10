@@ -28,4 +28,8 @@ public interface DetallePlatoRepository extends JpaRepository<DetallePlato, Inte
 	@Transactional
 	@Query(value = "SELECT * FROM Detalle_Plato WHERE eliminado = false",nativeQuery=true)
 	public List<DetallePlato> findAllMod();
+	
+	@Transactional
+	@Query(value = "SELECT * FROM Detalle_Plato WHERE plato_id=?1 AND eliminado = false",nativeQuery=true)
+	public List<DetallePlato> findAllPorPlato(int id);
 }

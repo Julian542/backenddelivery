@@ -20,6 +20,10 @@ public interface DetalleRepository extends JpaRepository<Detalle, Integer> {
 	public List<Detalle> buscarPorPedido(int id);
 	
 	@Transactional
+	@Query("from Detalle where pedido_id like ?1 AND fk_plato like ?2 AND eliminado = false")
+	public List<Detalle> buscarPorPlato(int id, int id2);
+	
+	@Transactional
 	@Query(value = "SELECT * FROM Detalle WHERE id=?1 AND eliminado = false",nativeQuery=true)
 	public Detalle findByIdMod(int id);
 	

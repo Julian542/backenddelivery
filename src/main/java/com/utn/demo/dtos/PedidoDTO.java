@@ -22,7 +22,6 @@ public class PedidoDTO {
 	private EstadoDTO estado;
 	private UsuarioDTO usuario;
 	private DomicilioDTO domicilio;
-	private List<DetalleDTO> detalle = new ArrayList<>();
 	private boolean eliminado;
 
 }
