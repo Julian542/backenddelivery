@@ -125,6 +125,57 @@ public class InsumoService {
 
 	}
 	
+	public List<InsumoDTO> buscarPorCategoriaNoInsumo(int id) {
+
+		List<InsumoDTO> result = new ArrayList<>();
+
+		for (Insumo entity : insumoRepository.buscarPorCategoriaNoInsumo(id)) {
+
+			InsumoDTO dto = new InsumoDTO();
+			dto.setId(entity.getId());
+			dto.setNombre(entity.getNombre());
+			dto.setDescripcion(entity.getDescripcion());
+			dto.setPrecioCompra(entity.getPrecioCompra());
+			dto.setStockActual(entity.getStockActual());
+			dto.setStockMinimo(entity.getStockMinimo());
+			dto.setStockMaximo(entity.getStockMaximo());
+			dto.setEsInsumo(entity.isEsInsumo());
+			dto.setPrecioVenta(entity.getPrecioVenta());
+			dto.setEliminado(entity.isEliminado());
+
+			try {
+
+				InsumoCategoriaDTO articuloCategoria = new InsumoCategoriaDTO();
+				articuloCategoria.setId(entity.getCategoria().getId());
+				articuloCategoria.setNombre(entity.getCategoria().getNombre());
+				articuloCategoria.setDescripcion(entity.getCategoria().getDescripcion());
+				articuloCategoria.setEliminado(entity.getCategoria().isEliminado());
+				dto.setCategoria(articuloCategoria);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
+
+				UnidadMedidaDTO unidadMedida = new UnidadMedidaDTO();
+				unidadMedida.setId(entity.getUnidadMedida().getId());
+				unidadMedida.setNombre(entity.getUnidadMedida().getNombre());
+				unidadMedida.setAbreviatura(entity.getUnidadMedida().getAbreviatura());
+				unidadMedida.setEliminado(entity.getUnidadMedida().isEliminado());
+				dto.setUnidadMedida(unidadMedida);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			result.add(dto);
+		}
+
+		return result;
+
+	}
+	
 	public List<InsumoDTO> getAllNoInsumos(boolean esInsumo) {
 
 		List<InsumoDTO> result = new ArrayList<>();

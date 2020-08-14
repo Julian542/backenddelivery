@@ -368,7 +368,63 @@ public class DetalleService {
 
 	}
 	
+	@Transactional
+	public List<DetalleDTO> buscarPorInsumo(int id, int id2) {
 
+		List<DetalleDTO> result = new ArrayList<>();
+
+		for (Detalle entity : detalleRepository.buscarPorInsumo(id, id2)) {
+			DetalleDTO dto = new DetalleDTO();
+			dto.setId(entity.getId());
+			dto.setCantidad(entity.getCantidad());
+			dto.setEliminado(entity.isEliminado());
+
+			try {
+				PlatoDTO plato = new PlatoDTO();
+				plato.setId(entity.getPlato().getId());
+				plato.setNombre(entity.getPlato().getNombre());
+				plato.setTiempoPreparacion(entity.getPlato().getTiempoPreparacion());
+				plato.setPrecioVenta(entity.getPlato().getPrecioVenta());
+				dto.setPlato(plato);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
+				InsumoDTO insumo = new InsumoDTO();
+				insumo.setId(entity.getInsumo().getId());
+				insumo.setNombre(entity.getInsumo().getNombre());
+				insumo.setDescripcion(entity.getInsumo().getDescripcion());
+				insumo.setPrecioCompra(entity.getInsumo().getPrecioCompra());
+				insumo.setStockActual(entity.getInsumo().getStockActual());
+				insumo.setStockMinimo(entity.getInsumo().getStockMinimo());
+				insumo.setStockMaximo(entity.getInsumo().getStockMaximo());
+				insumo.setEsInsumo(entity.getInsumo().isEsInsumo());
+				insumo.setPrecioVenta(entity.getInsumo().getPrecioVenta());
+				dto.setInsumo(insumo);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			try {
+				PedidoDTO pedido = new PedidoDTO();
+				pedido.setId(entity.getPedido().getId());
+
+				dto.setPedido(pedido);
+
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			result.add(dto);
+		}
+
+		return result;
+
+	}
 
 	public boolean delete(int id) {
 		try {

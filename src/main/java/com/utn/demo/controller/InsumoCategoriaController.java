@@ -38,6 +38,17 @@ public class InsumoCategoriaController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/NoInsumo/")
+	@Transactional
+	public ResponseEntity<Object> getAllNoInsumo() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(insumoCategoriaService.getAllNoInsumo());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@GetMapping("/{id}")
 	@Transactional

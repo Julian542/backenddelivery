@@ -24,4 +24,5 @@ public class InsumoCategoria {
 	private String descripcion;
 	@Column(name = "eliminado")
 	private boolean eliminado;
+	private boolean es_insumo;
 }

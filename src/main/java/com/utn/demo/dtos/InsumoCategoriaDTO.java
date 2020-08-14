@@ -12,4 +12,5 @@ public class InsumoCategoriaDTO {
 	private String nombre;
 	private String descripcion;
 	private boolean eliminado;
+	private boolean es_insumo;
 }

@@ -21,6 +21,9 @@ public interface InsumoRepository extends JpaRepository<Insumo, Integer> {
 	@Query(value = "SELECT * FROM insumo WHERE fk_categoria=?1 and eliminado=false", nativeQuery = true)
 	public List<Insumo> getAllporCategoria(int id);
 	
+	@Query(value = "SELECT * FROM insumo WHERE fk_categoria=?1 and es_insumo=false and eliminado=false", nativeQuery = true)
+	public List<Insumo> buscarPorCategoriaNoInsumo(int id);
+	
 	/* Metodo para traer los insumos con poco Stock */
 	@Query(value = "SELECT * FROM insumo WHERE stock_minimo > stock_actual AND fk_categoria=?1 and eliminado=false", nativeQuery = true)
 	public List<Insumo> getInsumosWithLowStock(int id);

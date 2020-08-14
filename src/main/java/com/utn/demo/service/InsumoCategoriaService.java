@@ -28,6 +28,7 @@ public class InsumoCategoriaService {
 				dto.setNombre(entity.getNombre());
 				dto.setDescripcion(entity.getDescripcion());
 				dto.setEliminado(entity.isEliminado());
+				dto.setEs_insumo(entity.isEs_insumo());
 				result.add(dto);
 			}
 		} catch (Exception e) {
@@ -37,6 +38,25 @@ public class InsumoCategoriaService {
 	}
 
 	@Transactional
+	public List<InsumoCategoriaDTO> getAllNoInsumo() {
+		List<InsumoCategoriaDTO> result = new ArrayList<>();
+		try {
+			for (InsumoCategoria entity : insumoCategoriaRepository.findAllNoInsumo()) {
+				InsumoCategoriaDTO dto = new InsumoCategoriaDTO();
+				dto.setId(entity.getId());
+				dto.setNombre(entity.getNombre());
+				dto.setDescripcion(entity.getDescripcion());
+				dto.setEliminado(entity.isEliminado());
+				dto.setEs_insumo(entity.isEs_insumo());
+				result.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Transactional
 	public InsumoCategoriaDTO getOne(int id) {
 		InsumoCategoriaDTO dto = new InsumoCategoriaDTO();
 		try {
@@ -45,6 +65,7 @@ public class InsumoCategoriaService {
 			dto.setNombre(entity.getNombre());
 			dto.setDescripcion(entity.getDescripcion());
 			dto.setEliminado(entity.isEliminado());
+			dto.setEs_insumo(entity.isEs_insumo());
 		} catch (Exception e) {
 			System.out.println("No existe el id");
 		}
@@ -58,6 +79,7 @@ public class InsumoCategoriaService {
 			insumoCategoria.setNombre(insumoCategoriaDTO.getNombre());
 			insumoCategoria.setDescripcion(insumoCategoriaDTO.getDescripcion());
 			insumoCategoria.setEliminado(insumoCategoriaDTO.isEliminado());
+			insumoCategoria.setEs_insumo(insumoCategoriaDTO.isEs_insumo());
 			insumoCategoriaRepository.save(insumoCategoria);
 			insumoCategoriaDTO.setId(insumoCategoria.getId());
 		} catch (Exception e) {
@@ -75,6 +97,7 @@ public class InsumoCategoriaService {
 			insumoCategoria.setNombre(insumoCategoriaDTO.getNombre());
 			insumoCategoria.setDescripcion(insumoCategoriaDTO.getDescripcion());
 			insumoCategoria.setEliminado(insumoCategoriaDTO.isEliminado());
+			insumoCategoria.setEs_insumo(insumoCategoriaDTO.isEs_insumo());
 			insumoCategoriaRepository.save(insumoCategoria);
 			insumoCategoriaDTO.setId(insumoCategoria.getId());
 		} catch (Exception e) {

@@ -25,4 +25,8 @@ public interface InsumoCategoriaRepository extends JpaRepository<InsumoCategoria
 	@Transactional
 	@Query(value = "SELECT * FROM Insumo_Categoria WHERE eliminado = false",nativeQuery=true)
 	public List<InsumoCategoria> findAllMod();
+	
+	@Transactional
+	@Query(value = "SELECT * FROM Insumo_Categoria WHERE eliminado = false and es_insumo=false",nativeQuery=true)
+	public List<InsumoCategoria> findAllNoInsumo();
 }
