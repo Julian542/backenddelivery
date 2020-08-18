@@ -58,6 +58,7 @@ public class PedidoService {
 		for (Pedido dto2 : pedidoRepository.findAllMod()) {
 			PedidoDTO dto = new PedidoDTO();
 			dto.setId(dto2.getId());
+			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
 			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
@@ -165,6 +166,7 @@ public class PedidoService {
 		for (Pedido dto2 : pedidoRepository.getAllByUser(id)) {
 			PedidoDTO dto = new PedidoDTO();
 			dto.setId(dto2.getId());
+			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
 			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
@@ -241,6 +243,7 @@ public class PedidoService {
 
 			Pedido dto2 = pedidoRepository.findByIdMod(id);
 			dto.setId(dto2.getId());
+			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
 			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
@@ -345,6 +348,7 @@ public class PedidoService {
 
 		Pedido pedido = new Pedido();
 
+		pedido.setTiempoPreparacion(pedidoDTO.getTiempoPreparacion());
 		pedido.setHoraEstimada(pedidoDTO.getHoraEstimada());
 		pedido.setFecha(pedidoDTO.getFecha());
 		pedido.setEnvioDelivery(pedidoDTO.isEnvioDelivery());
@@ -439,6 +443,7 @@ public class PedidoService {
 
 			pedido = optional.get();
 
+			pedido.setTiempoPreparacion(pedidoDTO.getTiempoPreparacion());
 			pedido.setHoraEstimada(pedidoDTO.getHoraEstimada());
 			pedido.setFecha(pedidoDTO.getFecha());
 			pedido.setEnvioDelivery(pedidoDTO.isEnvioDelivery());
@@ -505,6 +510,7 @@ public class PedidoService {
 			for (Pedido dto2 : pedidoRepository.findAll()) {
 				PedidoDTO dto = new PedidoDTO();
 				dto.setId(dto2.getId());
+				dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
 				dto.setEnvioDelivery(dto2.isEnvioDelivery());
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(dto2.getUsuario().getId());
