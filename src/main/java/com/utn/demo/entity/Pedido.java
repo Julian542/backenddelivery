@@ -31,6 +31,8 @@ public class Pedido {
 
 	private boolean envioDelivery;
 	
+	private int tiempoPreparacion;
+	
 	@OneToOne
 	private Domicilio domicilio;
 
