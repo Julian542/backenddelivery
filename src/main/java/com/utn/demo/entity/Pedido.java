@@ -37,6 +37,7 @@ public class Pedido {
 	@OneToOne(cascade = CascadeType.DETACH)
 	private Estado estado;
 	
+	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
 	@OneToMany(cascade = CascadeType.ALL)
