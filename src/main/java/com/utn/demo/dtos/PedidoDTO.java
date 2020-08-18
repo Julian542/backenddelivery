@@ -19,6 +19,7 @@ public class PedidoDTO {
 	private boolean envioDelivery;
     private float monto;
     private Date fecha;
+	private int tiempoPreparacion;
 	private EstadoDTO estado;
 	private UsuarioDTO usuario;
 	private DomicilioDTO domicilio;
