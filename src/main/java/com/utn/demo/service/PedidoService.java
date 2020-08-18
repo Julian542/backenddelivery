@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.EstadoDTO;
@@ -536,4 +538,14 @@ public class PedidoService {
 		return bd.floatValue();
 	}
 
+	@Transactional
+	public void updateTiempoRestante(int id, int tiempoRestante) {
+		Optional<Pedido> result = pedidoRepository.findById(id);
+		try {
+			result.get().setTiempoPreparacion(tiempoRestante);
+			pedidoRepository.save(result.get());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

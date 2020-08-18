@@ -121,4 +121,16 @@ public class PedidoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@PutMapping("/updateTiempoRestante/{id}/{tiempoRestante}")
+	@Transactional
+	public ResponseEntity updateTiempoRestante(@PathVariable("id") int id,@PathVariable("tiempoRestante") int tiempoRestante) {
+		try {
+			pedidoService.updateTiempoRestante(id, tiempoRestante);
+			return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"Actualizado\"}");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 }
