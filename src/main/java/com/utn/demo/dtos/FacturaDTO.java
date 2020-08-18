@@ -18,6 +18,7 @@ public class FacturaDTO{
 	private Date fecha;
 	private String tipoFactura;
 	private String tipoPago;
+	private String nroTarjeta;
 	private UsuarioDTO usuario;
 	private PedidoDTO pedido;
 	private List<DetalleDTO> detalle = new ArrayList<>();
