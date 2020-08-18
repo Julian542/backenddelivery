@@ -274,6 +274,12 @@ public class PedidoService {
 					dtodom.setNumero(d.getNumero());
 					dtodom.setPiso(d.getPiso());
 					dtodom.setEliminado(d.isEliminado());
+					//
+					UsuarioDTO userDTO = new UsuarioDTO();
+					userDTO.setId(d.getPropietario().getId());
+					userDTO.setNombre(d.getPropietario().getNombre());
+					userDTO.setApellido(d.getPropietario().getApellido());
+					userDTO.setTelefono(d.getPropietario().getTelefono());
 					domiciliosdto.add(dtodom);
 				}
 				user.setDomicilios(domiciliosdto);
@@ -300,6 +306,13 @@ public class PedidoService {
 				dtodom.setNumero(dto2.getDomicilio().getNumero());
 				dtodom.setPiso(dto2.getDomicilio().getPiso());
 				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
+				
+				UsuarioDTO userDTO = new UsuarioDTO();
+				userDTO.setId(dto2.getUsuario().getId());
+				userDTO.setNombre(dto2.getUsuario().getNombre());
+				userDTO.setApellido(dto2.getUsuario().getApellido());
+				userDTO.setTelefono(dto2.getUsuario().getTelefono());
+				dtodom.setPropietario(userDTO);
 
 				dto.setDomicilio(dtodom);
 			} catch(Exception e) {
@@ -516,9 +529,12 @@ public class PedidoService {
 				dto.setEnvioDelivery(dto2.isEnvioDelivery());
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(dto2.getUsuario().getId());
+				user.setNombre(dto2.getUsuario().getNombre());
+				user.setApellido(dto2.getUsuario().getApellido());
 				dto.setUsuario(user);
 				DomicilioDTO domicilioDTO = new DomicilioDTO();
 				domicilioDTO.setId(dto2.getDomicilio().getId());
+				domicilioDTO.setPropietario(user);
 				dto.setDomicilio(domicilioDTO);
 				EstadoDTO estado = new EstadoDTO();
 				estado.setId(dto2.getEstado().getId());
