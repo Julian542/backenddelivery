@@ -49,6 +49,17 @@ public class PedidoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/estado/{id}/{id2}")
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<Object> getPedidoEstado(@PathVariable int id,@PathVariable int id2) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidoEstado(id, id2));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@GetMapping("/{id}")
 	@Transactional
