@@ -12,6 +12,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
 	@Query(value = "SELECT * FROM pedido WHERE fk_usuario = ?1 AND eliminado=false", nativeQuery = true)
 	public List<Pedido> getAllByUser(int id);
+	
+	@Query(value = "SELECT * FROM pedido WHERE fk_usuario = ?1 AND estado_id = ?2 AND eliminado=false", nativeQuery = true)
+	public List<Pedido> getPedidoEstado(int id, int id2);
 
 	@Modifying
 	@Transactional
