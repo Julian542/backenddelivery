@@ -83,7 +83,9 @@ public class PedidoService {
 				}
 
 			}
-
+			if(dto.getDomicilio()==null) {
+				data=data-(data*0.1f);
+			}
 			dto.setMonto(round(data, 2));
 
 			try {
@@ -422,7 +424,9 @@ public class PedidoService {
 				}
 
 			}
-
+			if(dto.getDomicilio()==null) {
+				data=data-(data*0.1f);
+			}
 			dto.setMonto(round(data, 2));
 
 		} catch (Exception e) {
