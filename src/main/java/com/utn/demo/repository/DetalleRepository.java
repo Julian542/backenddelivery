@@ -20,6 +20,10 @@ public interface DetalleRepository extends JpaRepository<Detalle, Integer> {
 	public List<Detalle> buscarPorPedido(int id);
 	
 	@Transactional
+	@Query(value = "SELECT * FROM Detalle WHERE pedido_id = ?1 AND eliminado = false AND CAST(fecha AS DATE) >= CAST(?2 AS DATE) AND CAST(fecha AS DATE) <= CAST(?3 AS DATE)",nativeQuery=true)
+	public List<Detalle> buscarPorPedidoFecha(int id, String fechaDesde, String fechaHasta);
+	
+	@Transactional
 	@Query("from Detalle where pedido_id like ?1 AND fk_plato like ?2 AND eliminado = false")
 	public List<Detalle> buscarPorPlato(int id, int id2);
 	

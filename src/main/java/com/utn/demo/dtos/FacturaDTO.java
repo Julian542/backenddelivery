@@ -1,7 +1,7 @@
 package com.utn.demo.dtos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ public class FacturaDTO{
 	private double subtotal;
 	private double montoDescuento;
 	private double total;
-	private Date fecha;
+	private LocalDate fecha;
 	private String tipoFactura;
 	private String tipoPago;
 	private String nroTarjeta;

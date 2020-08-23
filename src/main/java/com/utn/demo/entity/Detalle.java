@@ -1,5 +1,7 @@
 package com.utn.demo.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ public class Detalle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private LocalDate fecha;
 	private int cantidad;
 	@OneToOne
 	private Pedido pedido;

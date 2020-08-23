@@ -1,5 +1,6 @@
 package com.utn.demo.repository;
 
+import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,8 +22,9 @@ public interface FacturaRepository extends JpaRepository<Factura, Integer> {
 	public List<Factura> getAllByUser(int id);
 
 	/* Metodo para traer todas las facturas en un periodo de tiempo */
-	@Query(value = "SELECT * FROM factura WHERE fecha BETWEEN ?1 AND ?2", nativeQuery = true)
+	@Query(value = "SELECT * FROM factura WHERE CAST(fecha AS DATE) >= CAST(?1 AS DATE) AND CAST(fecha AS DATE) <= CAST(?2 AS DATE) AND eliminado = FALSE", nativeQuery = true)
 	public List<Factura> getFacturasByDate(String fechaDesde, String fechaHasta);
+
 
 	@Modifying
 	@Transactional

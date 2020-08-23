@@ -15,6 +15,7 @@ import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.dtos.PlatoCategoriaDTO;
 import com.utn.demo.dtos.PlatoDTO;
+import com.utn.demo.dtos.PlatosPopularesDTO;
 import com.utn.demo.dtos.RecaudacionesDTO;
 import com.utn.demo.dtos.UnidadMedidaDTO;
 import com.utn.demo.dtos.UsuarioDTO;
@@ -23,15 +24,20 @@ import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Factura;
 import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Usuario;
+import com.utn.demo.repository.DetalleRepository;
 import com.utn.demo.repository.FacturaRepository;
+import com.utn.demo.repository.PedidoRepository;
 
 @Service
 public class FacturaService {
 
 	private FacturaRepository facturaRepository;
+	private DetalleRepository detalleRepository;
 
-	public FacturaService(FacturaRepository facturaRepository) {
+	public FacturaService(FacturaRepository facturaRepository, DetalleRepository detalleRepository,
+			PedidoRepository pedidoRepository) {
 		this.facturaRepository = facturaRepository;
+		this.detalleRepository = detalleRepository;
 	}
 
 	@Transactional
@@ -228,88 +234,85 @@ public class FacturaService {
 	}
 
 	@Transactional
-	public List<PlatoDTO> getPlatosPopulares(String fechaDesde, String fechaHasta) throws Exception {
+	public PlatosPopularesDTO getPlatosPopulares(String fechaDesde, String fechaHasta) throws Exception {
+
+		PlatosPopularesDTO platosPopulares = new PlatosPopularesDTO();
+		List<Integer> PlatoPopular = new ArrayList<Integer>();
+		List<Integer> Cantidad = new ArrayList<Integer>();
 		List<PlatoDTO> finalPlatos = new ArrayList<PlatoDTO>();
+
 		try {
 			List<Factura> facturas = facturaRepository.getFacturasByDate(fechaDesde, fechaHasta);
-			List<PlatoDTO> platoDTOs = new ArrayList<PlatoDTO>();
 			for (Factura factura : facturas) {
-				for (Detalle detalleInternal : factura.getDetalle()) {
-					PlatoDTO platoDTO = new PlatoDTO();
-					platoDTO.setId(detalleInternal.getPlato().getId());
-					if (platoDTO.getId() != 6) {
-						for (int i = 0; i < detalleInternal.getCantidad(); i++) {
-							platoDTO.setCantidadVendida(detalleInternal.getPlato().getCantidadVendida());
-							platoDTO.setDescripcion(detalleInternal.getPlato().getDescripcion());
-							platoDTO.setImagen(detalleInternal.getPlato().getImagen());
-							platoDTO.setNombre(detalleInternal.getPlato().getNombre());
-							platoDTO.setPrecioCosto(detalleInternal.getPlato().getPrecioCosto());
-							platoDTO.setPrecioVenta(detalleInternal.getPlato().getPrecioVenta());
-							platoDTO.setTiempoPreparacion(detalleInternal.getPlato().getTiempoPreparacion());
-							platoDTO.setEliminado(detalleInternal.getPlato().isEliminado());
-							PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
-							platoCategoria.setId(detalleInternal.getPlato().getCategoria().getId());
-							platoCategoria.setNombre(detalleInternal.getPlato().getCategoria().getNombre());
-							platoCategoria.setDescripcion(detalleInternal.getPlato().getCategoria().getDescripcion());
-							platoCategoria.setEliminado(detalleInternal.getPlato().getCategoria().isEliminado());
-							platoDTO.setCategoria(platoCategoria);
-							platoDTOs.add(platoDTO);
+				List<Detalle> detalles = detalleRepository.buscarPorPedidoFecha(factura.getPedido().getId(),fechaDesde, fechaHasta);
+				for (Detalle detalleInternal : detalles) {
+					boolean key = false;
+					int i;
+					if (PlatoPopular.size() > 0 && detalleInternal.getPlato() != null) {
+
+						for (i = 0; i < PlatoPopular.size(); i++) {
+							if (PlatoPopular.get(i) == detalleInternal.getPlato().getId()) {
+
+								Cantidad.add(i, Cantidad.get(i) + 1);
+
+								key = true;
+							}
+						}
+					}
+					if (key == false && detalleInternal.getPlato() != null) {
+						PlatoPopular.add(detalleInternal.getPlato().getId());
+						Cantidad.add(1);
+					}
+					key = false;
+				}
+			}
+			
+			int i, j, aux, aux2;
+			for (i = 0; i < Cantidad.size(); i++) {
+				for (j = 0; j < Cantidad.size() - 1; j++) {
+					if (j + 1 >= Cantidad.size()) {
+						if (Cantidad.get(j + 1) < Cantidad.get(j)) {
+							aux = Cantidad.get(j + 1);
+							aux2 = PlatoPopular.get(j + 1);
+							Cantidad.set(j + 1, Cantidad.get(j));
+							PlatoPopular.set(j + 1, PlatoPopular.get(j));
+							Cantidad.set(j, aux);
+							PlatoPopular.set(j, aux2);
 						}
 					}
 				}
 			}
-			// Hace 1 solo arreglo con 1 Registro por Id
-			List<PlatoDTO> platoDTs = new ArrayList<PlatoDTO>();
-			List<Integer> cantidadList = new ArrayList<Integer>();
-			for (PlatoDTO platitoDTO : platoDTOs) {
-				if (!platoDTs.contains(platitoDTO)) {
-					platoDTs.add(platitoDTO);
-				}
+			
+			if (PlatoPopular.size() > 0) {
+				platosPopulares.setId_Plato1(PlatoPopular.get(0));
+				platosPopulares.setCantidad_Plato1(Cantidad.get(0));
 			}
-			// Le setea la cantidad total de dicho Id en un Arreglo de Integer
-			for (PlatoDTO PlatoDTO1 : platoDTs) {
-				int cantidad = 0;
-				for (PlatoDTO PlatoDTO2 : platoDTOs) {
-					if (PlatoDTO1.getId() == PlatoDTO2.getId()) {
-						++cantidad;
-					}
-				}
-				cantidadList.add(cantidad);
+			if (PlatoPopular.size() > 1) {
+				platosPopulares.setId_Plato2(PlatoPopular.get(1));
+				platosPopulares.setCantidad_Plato2(Cantidad.get(1));
 			}
-			// Metodo Burbuja
-			int i, j, aux;
-			PlatoDTO auxDTO;
-			for (i = 0; i < cantidadList.size() - 1; i++) {
-				for (j = 0; j < cantidadList.size() - i - 1; j++) {
-					if (cantidadList.get(j + 1) < cantidadList.get(j)) {
-						aux = cantidadList.get(j + 1);
-						auxDTO = platoDTs.get(j + 1);
-						cantidadList.set(j + 1, cantidadList.get(j));
-						platoDTs.set(j + 1, platoDTs.get(j));
-						cantidadList.set(j, aux);
-						platoDTs.set(j, auxDTO);
-					}
-				}
+			if (PlatoPopular.size() > 2) {
+				platosPopulares.setId_Plato3(PlatoPopular.get(2));
+				platosPopulares.setCantidad_Plato3(Cantidad.get(2));
 			}
-			// Invierte el Array
-			PlatoDTO auxI;
-			for (int ind = 0; ind < platoDTs.size() / 2; ind++) {
-				auxI = platoDTs.get(ind);
-				platoDTs.set(ind, platoDTs.get(platoDTs.size() - 1 - ind));
-				platoDTs.set(platoDTs.size() - 1 - ind, auxI);
+			if (PlatoPopular.size() > 3) {
+				platosPopulares.setId_Plato4(PlatoPopular.get(3));
+				platosPopulares.setCantidad_Plato4(Cantidad.get(3));
 			}
-			// Los 5 mas populares
-			for (int k = 0; k < platoDTs.size(); k++) {
-				finalPlatos.add(platoDTs.get(k));
-				if (k == 4) {
-					break;
-				}
+			if (PlatoPopular.size() > 4) {
+				platosPopulares.setId_Plato5(PlatoPopular.get(4));
+				platosPopulares.setCantidad_Plato5(Cantidad.get(4));
 			}
+			if (PlatoPopular.size() > 5) {
+				platosPopulares.setId_Plato6(PlatoPopular.get(5));
+				platosPopulares.setCantidad_Plato6(Cantidad.get(5));
+			}
+
 		} catch (
 
 		Exception e) {
 			throw new Exception();
 		}
-		return finalPlatos;
+		return platosPopulares;
 	}
 }

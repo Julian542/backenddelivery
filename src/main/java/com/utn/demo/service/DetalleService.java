@@ -33,6 +33,7 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
+			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -95,6 +96,7 @@ public class DetalleService {
 
 			Detalle entity = detalleRepository.findByIdMod(id);
 			dto.setId(entity.getId());
+			dto.setFecha(entity.getFecha());
 			dto.setCantidad(entity.getCantidad());
 			dto.setEliminado(entity.isEliminado());
 
@@ -155,6 +157,7 @@ public class DetalleService {
 		Detalle detalle = new Detalle();
 
 		detalle.setCantidad(detalleDTO.getCantidad());
+		detalle.setFecha(detalleDTO.getFecha());
 		detalle.setEliminado(detalleDTO.isEliminado());
 
 		try {
@@ -205,6 +208,7 @@ public class DetalleService {
 			detalle = optional.get();
 
 			detalle.setCantidad(detalleDTO.getCantidad());
+			detalle.setFecha(detalleDTO.getFecha());
 			detalle.setEliminado(detalleDTO.isEliminado());
 
 			try {
@@ -261,6 +265,7 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
+			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -319,6 +324,7 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
+			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -377,6 +383,7 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
+			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
