@@ -96,7 +96,7 @@ public class FacturaController {
 
 	@GetMapping("/platosPopulares/{fechaDesde}/{fechaHasta}")
 	@Transactional
-	public ResponseEntity<Object> getPlatosPopulares(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
+	public ResponseEntity getPlatosPopulares(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getPlatosPopulares(fechaDesde, fechaHasta));
 		} catch (Exception e) {

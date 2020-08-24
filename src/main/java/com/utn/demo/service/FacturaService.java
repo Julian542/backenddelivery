@@ -239,6 +239,7 @@ public class FacturaService {
 		PlatosPopularesDTO platosPopulares = new PlatosPopularesDTO();
 		List<Integer> PlatoPopular = new ArrayList<Integer>();
 		List<Integer> Cantidad = new ArrayList<Integer>();
+		List<String> Nombre = new ArrayList<String>();
 		List<PlatoDTO> finalPlatos = new ArrayList<PlatoDTO>();
 
 		try {
@@ -261,6 +262,7 @@ public class FacturaService {
 					}
 					if (key == false && detalleInternal.getPlato() != null) {
 						PlatoPopular.add(detalleInternal.getPlato().getId());
+						Nombre.add(detalleInternal.getPlato().getNombre());
 						Cantidad.add(1);
 					}
 					key = false;
@@ -286,26 +288,33 @@ public class FacturaService {
 			if (PlatoPopular.size() > 0) {
 				platosPopulares.setId_Plato1(PlatoPopular.get(0));
 				platosPopulares.setCantidad_Plato1(Cantidad.get(0));
+				platosPopulares.setNombre_Plato1(Nombre.get(0));
 			}
 			if (PlatoPopular.size() > 1) {
 				platosPopulares.setId_Plato2(PlatoPopular.get(1));
 				platosPopulares.setCantidad_Plato2(Cantidad.get(1));
+				platosPopulares.setNombre_Plato2(Nombre.get(1));
+				
 			}
 			if (PlatoPopular.size() > 2) {
 				platosPopulares.setId_Plato3(PlatoPopular.get(2));
 				platosPopulares.setCantidad_Plato3(Cantidad.get(2));
+				platosPopulares.setNombre_Plato3(Nombre.get(2));
 			}
 			if (PlatoPopular.size() > 3) {
 				platosPopulares.setId_Plato4(PlatoPopular.get(3));
 				platosPopulares.setCantidad_Plato4(Cantidad.get(3));
+				platosPopulares.setNombre_Plato4(Nombre.get(3));
 			}
 			if (PlatoPopular.size() > 4) {
 				platosPopulares.setId_Plato5(PlatoPopular.get(4));
 				platosPopulares.setCantidad_Plato5(Cantidad.get(4));
+				platosPopulares.setNombre_Plato5(Nombre.get(4));
 			}
 			if (PlatoPopular.size() > 5) {
 				platosPopulares.setId_Plato6(PlatoPopular.get(5));
 				platosPopulares.setCantidad_Plato6(Cantidad.get(5));
+				platosPopulares.setNombre_Plato6(Nombre.get(5));
 			}
 
 		} catch (
