@@ -433,6 +433,202 @@ public class DetalleService {
 
 	}
 
+	@Transactional
+	public DetalleDTO updatePlato(int id, DetalleDTO detalleDTO) {
+
+		Optional<Detalle> optional = detalleRepository.findById(id);
+		Detalle detalle = new Detalle();
+		boolean faltaStock=false;
+
+		try {
+
+			detalle = optional.get();
+
+			detalle.setCantidad(detalleDTO.getCantidad());
+			detalle.setEliminado(detalleDTO.isEliminado());
+
+			try {
+				Plato plato = new Plato();
+				plato.setId(detalleDTO.getPlato().getId());
+				if(detalle.getPlato().getId()!=detalleDTO.getPlato().getId()) {
+					for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalle.getPlato().getId())) {
+						
+						DetallePlato platoDetalle = new DetallePlato();
+							
+							platoDetalle.setId(entity2.getId());
+							platoDetalle.setCantidad(entity2.getCantidad());
+							platoDetalle.setEliminado(entity2.isEliminado());
+							Insumo insumo = new Insumo();
+							insumo.setId(entity2.getInsumo().getId());
+							
+							insumo.setNombre(entity2.getInsumo().getNombre());
+							insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+							insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+							insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+							insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+							insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+							insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+							insumo.setEliminado(entity2.getInsumo().isEliminado());
+							insumo.setUnidadMedida(entity2.getInsumo().getUnidadMedida());
+
+							try {
+
+								InsumoCategoria articuloCategoria = new InsumoCategoria();
+								articuloCategoria.setId(entity2.getInsumo().getCategoria().getId());
+								articuloCategoria.setNombre(entity2.getInsumo().getCategoria().getNombre());
+								articuloCategoria.setDescripcion(entity2.getInsumo().getCategoria().getDescripcion());
+								articuloCategoria.setEliminado(entity2.getInsumo().getCategoria().isEliminado());
+								insumo.setCategoria(articuloCategoria);
+
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
+							
+							insumo.setStockActual(entity2.getInsumo().getStockActual()+((entity2.getCantidad()*0.001)*detalle.getCantidad()));
+							platoDetalle.setInsumo(insumo);
+
+
+						insumoRepository.save(insumo);
+					}
+				}
+					for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalleDTO.getPlato().getId())) {
+						
+						DetallePlato platoDetalle = new DetallePlato();
+							
+							platoDetalle.setId(entity2.getId());
+							platoDetalle.setCantidad(entity2.getCantidad());
+							platoDetalle.setEliminado(entity2.isEliminado());
+							Insumo insumo = new Insumo();
+							insumo.setId(entity2.getInsumo().getId());
+							
+							insumo.setNombre(entity2.getInsumo().getNombre());
+							insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+							insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+							insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+							insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+							insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+							insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+							insumo.setEliminado(entity2.getInsumo().isEliminado());
+							insumo.setUnidadMedida(entity2.getInsumo().getUnidadMedida());
+
+							try {
+
+								InsumoCategoria articuloCategoria = new InsumoCategoria();
+								articuloCategoria.setId(entity2.getInsumo().getCategoria().getId());
+								articuloCategoria.setNombre(entity2.getInsumo().getCategoria().getNombre());
+								articuloCategoria.setDescripcion(entity2.getInsumo().getCategoria().getDescripcion());
+								articuloCategoria.setEliminado(entity2.getInsumo().getCategoria().isEliminado());
+								insumo.setCategoria(articuloCategoria);
+
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
+							
+							insumo.setStockActual(entity2.getInsumo().getStockActual()-((entity2.getCantidad()*0.001)*detalleDTO.getCantidad()));
+							platoDetalle.setInsumo(insumo);
+							if(entity2.getInsumo().getStockActual()<((entity2.getCantidad()*0.001)*detalleDTO.getCantidad())) {
+								faltaStock=true;
+							}		
+
+						insumoRepository.save(insumo);
+					}
+
+				
+				
+				detalle.setPlato(plato);
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			if(faltaStock) {
+				try {
+					for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalleDTO.getPlato().getId())) {
+						
+						DetallePlato platoDetalle = new DetallePlato();
+							
+							platoDetalle.setId(entity2.getId());
+							platoDetalle.setCantidad(entity2.getCantidad());
+							platoDetalle.setEliminado(entity2.isEliminado());
+							Insumo insumo = new Insumo();
+							insumo.setId(entity2.getInsumo().getId());
+							
+							insumo.setNombre(entity2.getInsumo().getNombre());
+							insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+							insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+							insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+							insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+							insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+							insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+							insumo.setEliminado(entity2.getInsumo().isEliminado());
+							insumo.setUnidadMedida(entity2.getInsumo().getUnidadMedida());
+
+							try {
+
+								InsumoCategoria articuloCategoria = new InsumoCategoria();
+								articuloCategoria.setId(entity2.getInsumo().getCategoria().getId());
+								articuloCategoria.setNombre(entity2.getInsumo().getCategoria().getNombre());
+								articuloCategoria.setDescripcion(entity2.getInsumo().getCategoria().getDescripcion());
+								articuloCategoria.setEliminado(entity2.getInsumo().getCategoria().isEliminado());
+								insumo.setCategoria(articuloCategoria);
+
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
+							
+							
+							insumo.setStockActual(entity2.getInsumo().getStockActual()+((entity2.getCantidad()*0.001)*detalleDTO.getCantidad()));
+							platoDetalle.setInsumo(insumo);
+	
+
+						insumoRepository.save(insumo);
+					}
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+
+			try {
+				Insumo insumo = new Insumo();
+				insumo.setId(detalleDTO.getInsumo().getId());
+				detalle.setInsumo(insumo);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			try {
+				Pedido pedido = new Pedido();
+				pedido.setId(detalleDTO.getPedido().getId());
+
+				detalle.setPedido(pedido);
+
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			if(faltaStock) {
+				detalleDTO=null;
+				return detalleDTO;
+			}
+			
+			detalleRepository.save(detalle);
+
+			detalleDTO.setId(detalle.getId());
+
+		} catch (Exception e) {
+
+			System.out.println("Bad Request");
+			detalleDTO.setId(0);
+
+		}
+
+		return detalleDTO;
+
+	}
+
 	public boolean delete(int id) {
 		try {
 			detalleRepository.deleteDetalleById(id);
