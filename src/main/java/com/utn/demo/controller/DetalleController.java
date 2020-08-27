@@ -52,6 +52,23 @@ public class DetalleController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@PutMapping("/subirPlato/{id}")
+	@Transactional
+	public ResponseEntity putPlato(@PathVariable int id, @RequestBody DetalleDTO dto) {
+		try {
+			DetalleDTO plato = detalleService.updatePlato(id, dto);
+			if(plato==null) {
+				return ResponseEntity.status(HttpStatus.OK).body(false);
+			}else {
+				return ResponseEntity.status(HttpStatus.OK).body(plato);
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@PostMapping("/")
 	@Transactional
