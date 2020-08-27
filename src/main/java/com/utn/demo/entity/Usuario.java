@@ -30,7 +30,6 @@ public class Usuario {
 	private String apellido;
 	private String email;
 	private String password;
-	private String imagen;
 	private String rol;
 	private Date fechaNacimiento;
 	@OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL)

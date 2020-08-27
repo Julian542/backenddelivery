@@ -29,21 +29,31 @@ public class UsuarioService {
 		this.repositorioUsuario = repositorioUsuario;
 		this.repositorioDomicilio= repositorioDomicilio;
 	}
-	
-	@Transactional
-	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
 
-		File archivo = new File("static\\images\\"+file.getOriginalFilename());
-		if (archivo.exists()) {
-		    System.out.println("Ya existe esta imagen");
-		    return archivo.getAbsolutePath();
+	public List<UsuarioDTO> getCocineros() {
+
+		List<UsuarioDTO> dtos = new ArrayList<>();
+
+		for (Usuario e : repositorioUsuario.getCocineros()) {
+			UsuarioDTO unDto = new UsuarioDTO();
+			unDto.setId(e.getId());
+			unDto.setApellido(e.getApellido());
+			unDto.setDni(e.getDni());
+			unDto.setEmail(e.getEmail());
+			unDto.setEsCliente(e.isEsCliente());
+			unDto.setFechaNacimiento(e.getFechaNacimiento());
+			unDto.setNombre(e.getNombre());
+			unDto.setPassword(e.getPassword());
+			unDto.setRol(e.getRol());
+			unDto.setTelefono(e.getTelefono());
+			unDto.setEliminado(e.isEliminado());
+			dtos.add(unDto);
 		}
-		else {
-		    System.out.println("No existe esta imagen");
-		    file.transferTo(archivo);
-			return archivo.getAbsolutePath();
-		}
+		return dtos;
 	}
+	
+	// este metodo existe para consultar la existencia de un usuario en la base de
+	// datos,
 
 	@Transactional
 	public String existeEmail(String email) {
@@ -55,9 +65,7 @@ public class UsuarioService {
 			return "false";
 		}
 	}
-	// este metodo existe para consultar la existencia de un usuario en la base de
-	// datos,
-
+	
 	// findAll
 	@Transactional
 	public List<UsuarioDTO> findAll() {
@@ -90,7 +98,6 @@ public class UsuarioService {
 			unDto.setEmail(e.getEmail());
 			unDto.setEsCliente(e.isEsCliente());
 			unDto.setFechaNacimiento(e.getFechaNacimiento());
-			unDto.setImagen(e.getImagen());
 			unDto.setNombre(e.getNombre());
 			unDto.setPassword(e.getPassword());
 			unDto.setRol(e.getRol());
@@ -131,7 +138,6 @@ public class UsuarioService {
 		unDto.setEmail(e.getEmail());
 		unDto.setEsCliente(e.isEsCliente());
 		unDto.setFechaNacimiento(e.getFechaNacimiento());
-		unDto.setImagen(e.getImagen());
 		unDto.setNombre(e.getNombre());
 		unDto.setPassword(e.getPassword());
 		unDto.setRol(e.getRol());
@@ -174,7 +180,6 @@ public class UsuarioService {
 		unDto.setEmail(e.getEmail());
 		unDto.setEsCliente(e.isEsCliente());
 		unDto.setFechaNacimiento(e.getFechaNacimiento());
-		unDto.setImagen(e.getImagen());
 		unDto.setNombre(e.getNombre());
 		unDto.setPassword(e.getPassword());
 		unDto.setRol(e.getRol());
@@ -194,7 +199,6 @@ public class UsuarioService {
 		u.setEmail(dto.getEmail());
 		u.setEsCliente(dto.isEsCliente());
 		u.setFechaNacimiento(dto.getFechaNacimiento());
-		u.setImagen(dto.getImagen());
 		u.setNombre(dto.getNombre());
 		u.setPassword(dto.getPassword());
 		u.setRol(dto.getRol());
@@ -218,7 +222,6 @@ public class UsuarioService {
 		u.setEmail(dto.getEmail());
 		u.setEsCliente(dto.isEsCliente());
 		u.setFechaNacimiento(dto.getFechaNacimiento());
-		u.setImagen(dto.getImagen());
 		u.setNombre(dto.getNombre());
 		u.setPassword(dto.getPassword());
 		u.setRol(dto.getRol());

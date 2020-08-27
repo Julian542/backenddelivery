@@ -22,6 +22,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	// Traer el usuario por su mail
 	@Query(value = "SELECT * FROM usuario WHERE email = ?1 and eliminado=false", nativeQuery = true)
 	public Optional<Usuario> buscarPorEmail(String email);
+	
+	@Transactional
+	@Query(value = "SELECT * FROM usuario WHERE rol = 'cocinero' and eliminado=false", nativeQuery = true)
+	public List<Usuario> getCocineros();
 
 	@Modifying
 	@Transactional

@@ -40,7 +40,7 @@ public class PedidoController {
 	}
 
 	@GetMapping("/byUser/{id}")
-	@CrossOrigin(origins = "*")
+	@Transactional
 	public ResponseEntity<Object> getAllByUser(@PathVariable int id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getAllByUser(id));

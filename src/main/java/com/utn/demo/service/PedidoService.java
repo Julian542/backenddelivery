@@ -317,6 +317,17 @@ public class PedidoService {
 			} catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
+			
+			try {
+				EstadoDTO dtoestado = new EstadoDTO();
+				dtoestado.setId(dto2.getEstado().getId());
+				dtoestado.setNombre(dto2.getEstado().getNombre());
+				dtoestado.setEliminado(dto2.getEstado().isEliminado());
+
+				dto.setEstado(dtoestado);
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
 
 			result.add(dto);
 		}

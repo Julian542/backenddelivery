@@ -31,17 +31,7 @@ public class UsuarioController {
 		this.servicio = servicio;
 	}
 
-	@PostMapping("/uploadImg")
-	@Transactional
-	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file)
-			throws IllegalStateException, IOException {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(servicio.uploadFile(file));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("{\"message\": \"Error ocurrido en uploadFile\"}");
-		}
-	}
+	
 
 	@GetMapping("/")
 	@Transactional
@@ -81,6 +71,17 @@ public class UsuarioController {
 	public ResponseEntity<Object> buscarPorEmail(@PathVariable String email) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(servicio.buscarPorCorreo(email));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+	
+	@GetMapping("/traerCocineros")
+	@Transactional
+	public ResponseEntity<Object> getCocineros() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(servicio.getCocineros());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");

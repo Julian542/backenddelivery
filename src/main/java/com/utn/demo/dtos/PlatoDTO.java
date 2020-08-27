@@ -21,6 +21,7 @@ public class PlatoDTO {
 	private String descripcion;
 	private String imagen;
 	private int cantidadVendida;
+
 	private List<DetallePlatoDTO> detalle = new ArrayList<DetallePlatoDTO>();
 	private PlatoCategoriaDTO categoria;
 	private boolean eliminado;
