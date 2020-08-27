@@ -6,22 +6,33 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.utn.demo.dtos.DetalleDTO;
+import com.utn.demo.dtos.DetallePlatoDTO;
+import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.entity.Detalle;
+import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Insumo;
+import com.utn.demo.entity.InsumoCategoria;
 import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Plato;
+import com.utn.demo.repository.DetallePlatoRepository;
 import com.utn.demo.repository.DetalleRepository;
+import com.utn.demo.repository.InsumoRepository;
+import com.utn.demo.repository.PlatoRepository;
 
 @Service
 public class DetalleService {
 
 	private DetalleRepository detalleRepository;
+	private DetallePlatoRepository detallePlatoRepository;
+	private InsumoRepository insumoRepository;
 
-	public DetalleService(DetalleRepository detalleRepository) {
+	public DetalleService(DetalleRepository detalleRepository,PlatoRepository platoRepository,InsumoRepository insumoRepository, DetallePlatoRepository detallePlatoRepository) {
 		this.detalleRepository = detalleRepository;
+		this.detallePlatoRepository=detallePlatoRepository;
+		this.insumoRepository=insumoRepository;
 	}
 
 	@Transactional
@@ -33,7 +44,6 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
-			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -96,7 +106,6 @@ public class DetalleService {
 
 			Detalle entity = detalleRepository.findByIdMod(id);
 			dto.setId(entity.getId());
-			dto.setFecha(entity.getFecha());
 			dto.setCantidad(entity.getCantidad());
 			dto.setEliminado(entity.isEliminado());
 
@@ -155,19 +164,64 @@ public class DetalleService {
 	public DetalleDTO save(DetalleDTO detalleDTO) {
 
 		Detalle detalle = new Detalle();
+		boolean faltaStock=false;
 
 		detalle.setCantidad(detalleDTO.getCantidad());
-		detalle.setFecha(detalleDTO.getFecha());
 		detalle.setEliminado(detalleDTO.isEliminado());
 
 		try {
 			Plato plato = new Plato();
 			plato.setId(detalleDTO.getPlato().getId());
-			detalle.setPlato(plato);
+			for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalleDTO.getPlato().getId())) {
+				
+				DetallePlato platoDetalle = new DetallePlato();
+					
+					platoDetalle.setId(entity2.getId());
+					platoDetalle.setCantidad(entity2.getCantidad());
+					platoDetalle.setEliminado(entity2.isEliminado());
+					Insumo insumo = new Insumo();
+					insumo.setId(entity2.getInsumo().getId());
+					
+					insumo.setNombre(entity2.getInsumo().getNombre());
+					insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+					insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+					insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+					insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+					insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+					insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+					insumo.setEliminado(entity2.getInsumo().isEliminado());
+					insumo.setUnidadMedida(entity2.getInsumo().getUnidadMedida());
 
+					try {
+
+						InsumoCategoria articuloCategoria = new InsumoCategoria();
+						articuloCategoria.setId(entity2.getInsumo().getCategoria().getId());
+						articuloCategoria.setNombre(entity2.getInsumo().getCategoria().getNombre());
+						articuloCategoria.setDescripcion(entity2.getInsumo().getCategoria().getDescripcion());
+						articuloCategoria.setEliminado(entity2.getInsumo().getCategoria().isEliminado());
+						insumo.setCategoria(articuloCategoria);
+
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					
+					
+					insumo.setStockActual(entity2.getInsumo().getStockActual()-((entity2.getCantidad()*0.001)*detalleDTO.getCantidad()));
+					platoDetalle.setInsumo(insumo);
+					if(entity2.getInsumo().getStockActual()<((entity2.getCantidad()*0.001)*detalleDTO.getCantidad())) {
+						faltaStock=true;
+					}		
+
+				insumoRepository.save(insumo);
+			}
+			
+			detalle.setPlato(plato);
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
+		
 
 		try {
 
@@ -189,7 +243,10 @@ public class DetalleService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
+		if(faltaStock) {
+			detalleDTO=null;
+			return detalleDTO;
+		}
 		detalleRepository.save(detalle);
 
 		detalleDTO.setId(detalle.getId());
@@ -202,20 +259,103 @@ public class DetalleService {
 
 		Optional<Detalle> optional = detalleRepository.findById(id);
 		Detalle detalle = new Detalle();
+		boolean faltaStock=false;
 
 		try {
 
 			detalle = optional.get();
 
 			detalle.setCantidad(detalleDTO.getCantidad());
-			detalle.setFecha(detalleDTO.getFecha());
 			detalle.setEliminado(detalleDTO.isEliminado());
 
 			try {
 				Plato plato = new Plato();
 				plato.setId(detalleDTO.getPlato().getId());
-				detalle.setPlato(plato);
+					for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalle.getPlato().getId())) {
+						
+						DetallePlato platoDetalle = new DetallePlato();
+							
+							platoDetalle.setId(entity2.getId());
+							platoDetalle.setCantidad(entity2.getCantidad());
+							platoDetalle.setEliminado(entity2.isEliminado());
+							Insumo insumo = new Insumo();
+							insumo.setId(entity2.getInsumo().getId());
+							
+							insumo.setNombre(entity2.getInsumo().getNombre());
+							insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+							insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+							insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+							insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+							insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+							insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+							insumo.setEliminado(entity2.getInsumo().isEliminado());
+							insumo.setUnidadMedida(entity2.getInsumo().getUnidadMedida());
 
+							try {
+
+								InsumoCategoria articuloCategoria = new InsumoCategoria();
+								articuloCategoria.setId(entity2.getInsumo().getCategoria().getId());
+								articuloCategoria.setNombre(entity2.getInsumo().getCategoria().getNombre());
+								articuloCategoria.setDescripcion(entity2.getInsumo().getCategoria().getDescripcion());
+								articuloCategoria.setEliminado(entity2.getInsumo().getCategoria().isEliminado());
+								insumo.setCategoria(articuloCategoria);
+
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
+							
+							insumo.setStockActual(entity2.getInsumo().getStockActual()+((entity2.getCantidad()*0.001)*detalle.getCantidad()));
+							platoDetalle.setInsumo(insumo);
+
+
+						insumoRepository.save(insumo);
+					}
+					for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalleDTO.getPlato().getId())) {
+						
+						DetallePlato platoDetalle = new DetallePlato();
+							
+							platoDetalle.setId(entity2.getId());
+							platoDetalle.setCantidad(entity2.getCantidad());
+							platoDetalle.setEliminado(entity2.isEliminado());
+							Insumo insumo = new Insumo();
+							insumo.setId(entity2.getInsumo().getId());
+							
+							insumo.setNombre(entity2.getInsumo().getNombre());
+							insumo.setDescripcion(entity2.getInsumo().getDescripcion());
+							insumo.setPrecioCompra(entity2.getInsumo().getPrecioCompra());
+							insumo.setStockMinimo(entity2.getInsumo().getStockMinimo());
+							insumo.setStockMaximo(entity2.getInsumo().getStockMaximo());
+							insumo.setEsInsumo(entity2.getInsumo().isEsInsumo());
+							insumo.setPrecioVenta(entity2.getInsumo().getPrecioVenta());
+							insumo.setEliminado(entity2.getInsumo().isEliminado());
+							insumo.setUnidadMedida(entity2.getInsumo().getUnidadMedida());
+
+							try {
+
+								InsumoCategoria articuloCategoria = new InsumoCategoria();
+								articuloCategoria.setId(entity2.getInsumo().getCategoria().getId());
+								articuloCategoria.setNombre(entity2.getInsumo().getCategoria().getNombre());
+								articuloCategoria.setDescripcion(entity2.getInsumo().getCategoria().getDescripcion());
+								articuloCategoria.setEliminado(entity2.getInsumo().getCategoria().isEliminado());
+								insumo.setCategoria(articuloCategoria);
+
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
+							
+							insumo.setStockActual(entity2.getInsumo().getStockActual()-((entity2.getCantidad()*0.001)*detalleDTO.getCantidad()));
+							platoDetalle.setInsumo(insumo);
+							if(entity2.getInsumo().getStockActual()<((entity2.getCantidad()*0.001)*detalleDTO.getCantidad())) {
+								faltaStock=true;
+							}		
+
+						insumoRepository.save(insumo);
+					}
+
+				
+				
+				detalle.setPlato(plato);
+				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -240,6 +380,11 @@ public class DetalleService {
 				System.out.println(e.getMessage());
 			}
 
+			if(faltaStock) {
+				detalleDTO=null;
+				return detalleDTO;
+			}
+			
 			detalleRepository.save(detalle);
 
 			detalleDTO.setId(detalle.getId());
@@ -265,7 +410,6 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
-			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -324,7 +468,6 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
-			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -383,7 +526,6 @@ public class DetalleService {
 			DetalleDTO dto = new DetalleDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
-			dto.setFecha(entity.getFecha());
 			dto.setEliminado(entity.isEliminado());
 
 			try {

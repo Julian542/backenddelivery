@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Where;
+
+import com.utn.demo.dtos.DetallePlatoDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

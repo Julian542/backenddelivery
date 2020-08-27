@@ -158,6 +158,7 @@ public class PlatoService {
 	public List<PlatoDTO> getAll() {
 
 		List<PlatoDTO> result = new ArrayList<>();
+		boolean faltaStock=false;
 
 		for (Plato entity : platoRepository.findAllMod()) {
 
@@ -201,6 +202,7 @@ public class PlatoService {
 					ingrediente.setCantidad(entity2.getCantidad());
 					ingrediente.setId(entity2.getId());
 					ingrediente.setEliminado(entity2.isEliminado());
+
 
 					ingredientes.add(ingrediente);
 				} catch (Exception e) {
