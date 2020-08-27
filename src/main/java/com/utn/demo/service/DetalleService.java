@@ -10,18 +10,26 @@ import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.PedidoDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.entity.Detalle;
+import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Insumo;
+import com.utn.demo.entity.InsumoCategoria;
 import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Plato;
+import com.utn.demo.repository.DetallePlatoRepository;
 import com.utn.demo.repository.DetalleRepository;
+import com.utn.demo.repository.InsumoRepository;
 
 @Service
 public class DetalleService {
 
 	private DetalleRepository detalleRepository;
+	private DetallePlatoRepository detallePlatoRepository;
+	private InsumoRepository insumoRepository;
 
-	public DetalleService(DetalleRepository detalleRepository) {
+	public DetalleService(DetalleRepository detalleRepository, DetallePlatoRepository detallePlatoRepository) {
 		this.detalleRepository = detalleRepository;
+		this.detallePlatoRepository = detallePlatoRepository;
+		this.insumoRepository = insumoRepository;
 	}
 
 	@Transactional

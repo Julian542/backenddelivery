@@ -50,6 +50,7 @@ public class FacturaService {
 				object.setTipoFactura(object2.getTipoFactura());
 				object.setTipoPago(object2.getTipoPago());
 				object.setNroTarjeta(object2.getNroTarjeta());
+				object.setDniTitular(object2.getDniTitular());
 				object.setFecha(object2.getFecha());
 				object.setSubtotal(object2.getSubtotal());
 				object.setMontoDescuento(object2.getMontoDescuento());
@@ -85,6 +86,7 @@ public class FacturaService {
 			object.setId(object2.getId());
 			object.setTipoFactura(object2.getTipoFactura());
 			object.setNroTarjeta(object2.getNroTarjeta());
+			object.setDniTitular(object2.getDniTitular());
 			object.setTipoPago(object2.getTipoPago());
 			object.setFecha(object2.getFecha());
 			object.setSubtotal(object2.getSubtotal());
@@ -126,6 +128,7 @@ public class FacturaService {
 			factura.setMontoDescuento(facturaDTO.getMontoDescuento());
 			factura.setTotal(facturaDTO.getTotal());
 			factura.setNroTarjeta(facturaDTO.getNroTarjeta());
+			factura.setDniTitular(facturaDTO.getDniTitular());
 			factura.setEliminado(facturaDTO.isEliminado());
 			Pedido pedido = new Pedido();
 			pedido.setId(facturaDTO.getPedido().getId());
@@ -157,6 +160,7 @@ public class FacturaService {
 			factura.setTipoFactura(facturaDTO.getTipoFactura());
 			factura.setTipoPago(facturaDTO.getTipoPago());
 			factura.setNroTarjeta(facturaDTO.getNroTarjeta());
+			factura.setDniTitular(facturaDTO.getDniTitular());
 			factura.setFecha(facturaDTO.getFecha());
 			factura.setSubtotal(facturaDTO.getSubtotal());
 			factura.setMontoDescuento(facturaDTO.getMontoDescuento());

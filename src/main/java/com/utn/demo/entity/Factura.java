@@ -36,6 +36,7 @@ public class Factura {
 	private String tipoFactura;
 	private String tipoPago;
 	private String nroTarjeta;
+	private int dniTitular;
 	private LocalDate fecha;
 	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "fk_usuario")
