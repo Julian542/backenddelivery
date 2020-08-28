@@ -210,9 +210,9 @@ public class DetallePlatoService {
 			platoDetalle.setEliminado(platoDetalleDTO.isEliminado());
 
 			try {
-				Insumo insumo = new Insumo();
-				insumo.setId(platoDetalleDTO.getIngrediente().getId());
-				platoDetalle.setInsumo(insumo);
+				Insumo articulo = new Insumo();
+				articulo.setId(platoDetalleDTO.getIngrediente().getId());
+				platoDetalle.setInsumo(articulo);
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

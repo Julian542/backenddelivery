@@ -28,4 +28,5 @@ public class PlatosPopularesDTO {
 	private int id_Plato6;
 	private int cantidad_Plato6;
 	private String nombre_Plato6;
+
 }

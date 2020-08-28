@@ -29,21 +29,6 @@ public class UsuarioService {
 		this.repositorioUsuario = repositorioUsuario;
 		this.repositorioDomicilio= repositorioDomicilio;
 	}
-	
-	@Transactional
-	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
-
-		File archivo = new File("static\\images\\"+file.getOriginalFilename());
-		if (archivo.exists()) {
-		    System.out.println("Ya existe esta imagen");
-		    return archivo.getAbsolutePath();
-		}
-		else {
-		    System.out.println("No existe esta imagen");
-		    file.transferTo(archivo);
-			return archivo.getAbsolutePath();
-		}
-	}
 
 	public List<UsuarioDTO> getCocineros() {
 

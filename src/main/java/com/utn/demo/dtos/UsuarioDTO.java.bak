@@ -22,7 +22,6 @@ public class UsuarioDTO {
 	private String apellido;
 	private String email;
 	private String password;
-	private String imagen;
 	private String rol;
 	private List<DomicilioDTO> domicilios = new ArrayList<DomicilioDTO>();
 	private boolean eliminado;

@@ -243,7 +243,6 @@ public class FacturaService {
 		PlatosPopularesDTO platosPopulares = new PlatosPopularesDTO();
 		List<Integer> PlatoPopular = new ArrayList<Integer>();
 		List<Integer> Cantidad = new ArrayList<Integer>();
-		List<String> Nombre = new ArrayList<String>();
 		List<PlatoDTO> finalPlatos = new ArrayList<PlatoDTO>();
 
 		try {
@@ -266,7 +265,6 @@ public class FacturaService {
 					}
 					if (key == false && detalleInternal.getPlato() != null) {
 						PlatoPopular.add(detalleInternal.getPlato().getId());
-						Nombre.add(detalleInternal.getPlato().getNombre());
 						Cantidad.add(1);
 					}
 					key = false;

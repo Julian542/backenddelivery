@@ -26,7 +26,7 @@ public class DetalleService {
 	private DetallePlatoRepository detallePlatoRepository;
 	private InsumoRepository insumoRepository;
 
-	public DetalleService(DetalleRepository detalleRepository,InsumoRepository insumoRepository, DetallePlatoRepository detallePlatoRepository) {
+	public DetalleService(DetalleRepository detalleRepository, DetallePlatoRepository detallePlatoRepository) {
 		this.detalleRepository = detalleRepository;
 		this.detallePlatoRepository = detallePlatoRepository;
 		this.insumoRepository = insumoRepository;
@@ -314,6 +314,7 @@ public class DetalleService {
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
 						}
+						System.out.println("Paso1");
 						insumo.setStockActual(entity2.getInsumo().getStockActual()
 								+ ((entity2.getCantidad() * 0.001) * detalle.getCantidad()));
 						platoDetalle.setInsumo(insumo);
@@ -353,6 +354,7 @@ public class DetalleService {
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
+					System.out.println("Paso2");
 					insumo.setStockActual(entity2.getInsumo().getStockActual()
 							- ((entity2.getCantidad() * 0.001) * detalleDTO.getCantidad()));
 					platoDetalle.setInsumo(insumo);
@@ -404,6 +406,7 @@ public class DetalleService {
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
 						}
+						System.out.println("Paso3");
 						insumo.setStockActual(entity2.getInsumo().getStockActual()
 								+ ((entity2.getCantidad() * 0.001) * detalleDTO.getCantidad()));
 						platoDetalle.setInsumo(insumo);
@@ -454,49 +457,6 @@ public class DetalleService {
 
 	}
 
-	
-	
-	
-	@Transactional
-	public boolean verificarStock(int id, DetalleDTO detalleDTO) {
-
-		Optional<Detalle> optional = detalleRepository.findById(id);
-		Detalle detalle = new Detalle();
-		boolean faltaStock = false;
-
-		try {
-			detalle = optional.get();
-			try {
-				for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalleDTO.getPlato().getId())) {
-					if (entity2.getInsumo()
-							.getStockActual() < ((entity2.getCantidad() * 0.001) * detalleDTO.getCantidad())) {
-						faltaStock = true;
-					}
-
-				}
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			
-			if (faltaStock) {
-				return false;
-			}
-
-		} catch (Exception e) {
-
-			System.out.println("Bad Request");
-			detalleDTO.setId(0);
-
-		}
-
-		return true;
-
-	}
-	
-	
-	
-	
 	
 	@Transactional
 	public List<DetalleDTO> buscarPorPedido(int id) {

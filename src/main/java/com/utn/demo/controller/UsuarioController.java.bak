@@ -31,7 +31,7 @@ public class UsuarioController {
 		this.servicio = servicio;
 	}
 
-	@PostMapping("/uploadImg")
+@PostMapping("/uploadImg")
 	@Transactional
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file)
 			throws IllegalStateException, IOException {
