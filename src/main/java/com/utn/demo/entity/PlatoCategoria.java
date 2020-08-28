@@ -23,4 +23,5 @@ public class PlatoCategoria {
 	private String descripcion;
 	@Column(name = "eliminado")
 	private boolean eliminado;
+	private String imagen;
 }

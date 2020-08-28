@@ -25,6 +25,7 @@ public class PlatoCategoriaService {
 			for (PlatoCategoria object2 : platoCategoriaRepository.findAllMod()) {
 				PlatoCategoriaDTO object = new PlatoCategoriaDTO();
 				object.setId(object2.getId());
+				object.setImagen(object2.getImagen());
 				object.setNombre(object2.getNombre());
 				object.setDescripcion(object2.getDescripcion());
 				object.setEliminado(object2.isEliminado());
@@ -43,6 +44,7 @@ public class PlatoCategoriaService {
 			PlatoCategoria object2 = platoCategoriaRepository.findByIdMod(id);
 			object.setId(object2.getId());
 			object.setNombre(object2.getNombre());
+			object.setImagen(object2.getImagen());
 			object.setDescripcion(object2.getDescripcion());
 			object.setEliminado(object2.isEliminado());
 		} catch (Exception e) {
@@ -56,6 +58,7 @@ public class PlatoCategoriaService {
 		PlatoCategoria platoCategoria = new PlatoCategoria();
 		try {
 			platoCategoria.setNombre(platoCategoriaDTO.getNombre());
+			platoCategoria.setImagen(platoCategoriaDTO.getImagen());
 			platoCategoria.setDescripcion(platoCategoriaDTO.getDescripcion());
 			platoCategoria.setEliminado(platoCategoriaDTO.isEliminado());
 			platoCategoriaRepository.save(platoCategoria);
@@ -73,6 +76,7 @@ public class PlatoCategoriaService {
 		try {
 			platoCategoria = optional.get();
 			platoCategoria.setNombre(platoCategoriaDTO.getNombre());
+			platoCategoria.setImagen(platoCategoriaDTO.getImagen());
 			platoCategoria.setDescripcion(platoCategoriaDTO.getDescripcion());
 			platoCategoria.setEliminado(platoCategoriaDTO.isEliminado());
 			platoCategoriaRepository.save(platoCategoria);
