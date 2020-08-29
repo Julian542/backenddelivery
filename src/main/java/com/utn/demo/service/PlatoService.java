@@ -22,6 +22,8 @@ import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Plato;
 import com.utn.demo.entity.PlatoCategoria;
 import com.utn.demo.repository.DetallePlatoRepository;
+import com.utn.demo.repository.DetalleRepository;
+import com.utn.demo.repository.InsumoRepository;
 import com.utn.demo.repository.PlatoRepository;
 
 @Service
@@ -29,10 +31,12 @@ public class PlatoService {
 
 	private PlatoRepository platoRepository;
 	private DetallePlatoRepository detallePlatoRepository;
+	private InsumoRepository insumoRepository;
 
-	public PlatoService(PlatoRepository platoRepository, DetallePlatoRepository detallePlatoRepository) {
+	public PlatoService(PlatoRepository platoRepository,InsumoRepository insumoRepository, DetallePlatoRepository detallePlatoRepository) {
 		this.platoRepository = platoRepository;
 		this.detallePlatoRepository=detallePlatoRepository;
+		this.insumoRepository = insumoRepository;
 		
 	}
 	
