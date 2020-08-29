@@ -92,18 +92,7 @@ public class DetalleController {
 		}
 	}
 
-	@PutMapping("/verificarStock/{id}")
-	@Transactional
-	public ResponseEntity verificarStock(@PathVariable int id, @RequestBody DetalleDTO dto) {
-		try {
-
-			return ResponseEntity.status(HttpStatus.OK).body(detalleService.verificarStock(id, dto));
-
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
+	
 
 	@GetMapping("/query/{id}")
 	@Transactional

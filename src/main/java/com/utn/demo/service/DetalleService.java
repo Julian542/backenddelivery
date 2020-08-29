@@ -453,48 +453,6 @@ public class DetalleService {
 		return detalleDTO;
 
 	}
-
-	
-	
-	
-	@Transactional
-	public boolean verificarStock(int id, DetalleDTO detalleDTO) {
-
-		Optional<Detalle> optional = detalleRepository.findById(id);
-		Detalle detalle = new Detalle();
-		boolean faltaStock = false;
-
-		try {
-			detalle = optional.get();
-			try {
-				for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(detalleDTO.getPlato().getId())) {
-					if (entity2.getInsumo()
-							.getStockActual() < ((entity2.getCantidad() * 0.001) * detalleDTO.getCantidad())) {
-						faltaStock = true;
-					}
-
-				}
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			
-			if (faltaStock) {
-				return false;
-			}
-
-		} catch (Exception e) {
-
-			System.out.println("Bad Request");
-			detalleDTO.setId(0);
-
-		}
-
-		return true;
-
-	}
-	
-	
 	
 	
 	

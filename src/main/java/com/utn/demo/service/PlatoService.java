@@ -9,12 +9,15 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.DetallePlatoDTO;
 import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.PlatoCategoriaDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.dtos.UnidadMedidaDTO;
+import com.utn.demo.entity.Detalle;
 import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Plato;
 import com.utn.demo.entity.PlatoCategoria;
@@ -306,6 +309,39 @@ public class PlatoService {
 		}
 
 		return dto;
+
+	}
+	
+	@Transactional
+	public boolean verificarStock(int id, int cantidad) {
+
+		boolean faltaStock = false;
+
+		try {
+			try {
+				for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(id)) {
+					if (entity2.getInsumo()
+							.getStockActual() < ((entity2.getCantidad() * 0.001) * cantidad)) {
+						faltaStock = true;
+					}
+
+				}
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			if (faltaStock) {
+				return false;
+			}
+
+		} catch (Exception e) {
+
+			System.out.println("Bad Request");
+
+		}
+
+		return true;
 
 	}
 

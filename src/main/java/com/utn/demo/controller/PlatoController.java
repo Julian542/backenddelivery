@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.service.PlatoService;
 
@@ -60,6 +62,19 @@ public class PlatoController {
 	public ResponseEntity<Object> platosCategoria(@PathVariable String categoria) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(platoService.platosCategoria(categoria));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+	
+	@PutMapping("/verificarStock/{id}/{cantidad}")
+	@Transactional
+	public ResponseEntity verificarStock(@PathVariable int id, @RequestBody int cantidad) {
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(platoService.verificarStock(id, cantidad));
+
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
