@@ -68,9 +68,9 @@ public class PlatoController {
 		}
 	}
 	
-	@PutMapping("/verificarStock/{id}/{cantidad}")
+	@GetMapping("/verificarStock/{id}/{cantidad}")
 	@Transactional
-	public ResponseEntity verificarStock(@PathVariable int id, @RequestBody int cantidad) {
+	public ResponseEntity verificarStock(@PathVariable int id, @PathVariable int cantidad) {
 		try {
 
 			return ResponseEntity.status(HttpStatus.OK).body(platoService.verificarStock(id, cantidad));

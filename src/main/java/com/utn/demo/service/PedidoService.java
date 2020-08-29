@@ -83,9 +83,7 @@ public class PedidoService {
 				}
 
 			}
-			if(dto.getDomicilio()==null) {
-				data=data-(data*0.1f);
-			}
+
 			dto.setMonto(round(data, 2));
 
 			try {
@@ -445,9 +443,6 @@ public class PedidoService {
 					System.out.println(e.getMessage());
 				}
 
-			}
-			if(dto.getDomicilio()==null) {
-				data=data-(data*0.1f);
 			}
 			dto.setMonto(round(data, 2));
 
