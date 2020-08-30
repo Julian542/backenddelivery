@@ -23,15 +23,12 @@ public class Configuracion_EmpresaService {
 		try {
 			for (Configuracion_Empresa i : entity) {
 				cDto.setId(i.getId());
-				cDto.setHorarioCierre(i.getHoraCierre());
-				cDto.setHorarioApertura(i.getHoraApertura());
 				cDto.setCantidadCocineros(i.getCantidadCocineros());
 				cDto.setNombreEmpresa(i.getNombre());
 				cDto.setEmailEmpresa(i.getEmail());
 				cDto.setCuit(i.getCuit());
 				cDto.setNumeroFiscal(i.getNumeroFiscal());
 				cDto.setSociedad(i.getSociedad());
-				cDto.setPaginaWeb(i.getPaginaWeb());
 				cDto.setEliminado(i.isEliminado());
 			}
 		} catch (Exception e) {
@@ -44,15 +41,12 @@ public class Configuracion_EmpresaService {
 	public Configuracion_EmpresaDTO save(Configuracion_EmpresaDTO dto) throws Exception {
 		Configuracion_Empresa entity = new Configuracion_Empresa();
 		try {
-			entity.setHoraCierre(dto.getHorarioCierre());
-			entity.setHoraApertura(dto.getHorarioApertura());
 			entity.setCantidadCocineros(dto.getCantidadCocineros());
 			entity.setNombre(dto.getNombreEmpresa());
 			entity.setEmail(dto.getEmailEmpresa());
 			entity.setCuit(dto.getCuit());
 			entity.setNumeroFiscal(dto.getNumeroFiscal());
 			entity.setSociedad(dto.getSociedad());
-			entity.setPaginaWeb(dto.getPaginaWeb());
 			entity.setEliminado(dto.isEliminado());
 			entity = configuracion_EmpresaRepository.save(entity);
 			dto.setId(entity.getId());
@@ -69,15 +63,12 @@ public class Configuracion_EmpresaService {
 		try {
 			Configuracion_Empresa entity = configuracion_EmpresaRepository.findByIdMod(id);
 			entity.setId(DTO.getId());
-			entity.setHoraCierre(DTO.getHorarioCierre());
-			entity.setHoraApertura(DTO.getHorarioApertura());
 			entity.setCantidadCocineros(DTO.getCantidadCocineros());
 			entity.setNombre(DTO.getNombreEmpresa());
 			entity.setEmail(DTO.getEmailEmpresa());
 			entity.setCuit(DTO.getCuit());
 			entity.setNumeroFiscal(DTO.getNumeroFiscal());
 			entity.setSociedad(DTO.getSociedad());
-			entity.setPaginaWeb(DTO.getPaginaWeb());
 			entity.setEliminado(DTO.isEliminado());
 			configuracion_EmpresaRepository.save(entity);
 		} catch (Exception e) {
