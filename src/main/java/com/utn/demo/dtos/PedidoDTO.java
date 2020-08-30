@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PedidoDTO {
 	private int id;
-	private String horaEstimada;
 	private boolean envioDelivery;
 	private float monto;
 	private Date fecha;
