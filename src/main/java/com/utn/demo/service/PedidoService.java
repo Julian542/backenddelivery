@@ -141,6 +141,114 @@ public class PedidoService {
 	}
 
 	@Transactional
+	public List<PedidoDTO> getAllMenosFacturados() {
+
+		List<PedidoDTO> result = new ArrayList<>();
+
+		for (Pedido dto2 : pedidoRepository.getAllPedidosMenosFacturados()) {
+			PedidoDTO dto = new PedidoDTO();
+			dto.setId(dto2.getId());
+			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
+			dto.setFecha(dto2.getFecha());
+			dto.setEnvioDelivery(dto2.isEnvioDelivery());
+			dto.setEliminado(dto.isEliminado());
+
+			float data = 0;
+
+			for (Detalle entity2 : detalleRepository.buscarPorPedido(dto2.getId())) {
+				try {
+					data += entity2.getPlato().getPrecioVenta() * entity2.getCantidad();
+
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+				try {
+					data += entity2.getInsumo().getPrecioVenta() * entity2.getCantidad();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			dto.setMonto(round(data, 2));
+
+			try {
+
+				UsuarioDTO user = new UsuarioDTO();
+				user.setId(dto2.getUsuario().getId());
+				user.setNombre(dto2.getUsuario().getNombre());
+				user.setApellido(dto2.getUsuario().getApellido());
+				user.setTelefono(dto2.getUsuario().getTelefono());
+				List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
+				for (Domicilio d : domicilioRepository.buscarPorUsuario(user.getId())) {
+					DomicilioDTO dtodom = new DomicilioDTO();
+					dtodom.setCalle(d.getCalle());
+					dtodom.setDepartamento(d.getDepartamento());
+					dtodom.setId(d.getId());
+					//
+					LocalidadDTO localidaddto = new LocalidadDTO();
+					localidaddto.setId(d.getLocalidad().getId());
+					localidaddto.setNombre(d.getLocalidad().getNombre());
+					localidaddto.setEliminado(d.getLocalidad().isEliminado());
+					//
+					dtodom.setLocalidad(localidaddto);
+					dtodom.setNumero(d.getNumero());
+					dtodom.setPiso(d.getPiso());
+					dtodom.setEliminado(d.isEliminado());
+					domiciliosdto.add(dtodom);
+				}
+				user.setDomicilios(domiciliosdto);
+				dto.setUsuario(user);
+
+			} catch (Exception e) {
+
+				System.out.println(e.getMessage());
+
+			}
+
+			try {
+				DomicilioDTO dtodom = new DomicilioDTO();
+				dtodom.setCalle(dto2.getDomicilio().getCalle());
+				dtodom.setDepartamento(dto2.getDomicilio().getDepartamento());
+				dtodom.setId(dto2.getDomicilio().getId());
+				//
+				LocalidadDTO localidaddto = new LocalidadDTO();
+				localidaddto.setId(dto2.getDomicilio().getLocalidad().getId());
+				localidaddto.setNombre(dto2.getDomicilio().getLocalidad().getNombre());
+				localidaddto.setEliminado(dto2.getDomicilio().getLocalidad().isEliminado());
+				//
+				dtodom.setLocalidad(localidaddto);
+				dtodom.setNumero(dto2.getDomicilio().getNumero());
+				dtodom.setPiso(dto2.getDomicilio().getPiso());
+				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
+
+				dto.setDomicilio(dtodom);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
+				EstadoDTO estado = new EstadoDTO();
+				estado.setId(dto2.getEstado().getId());
+				estado.setNombre(dto2.getEstado().getNombre());
+				estado.setEliminado(dto2.getEstado().isEliminado());
+				dto.setEstado(estado);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			result.add(dto);
+		}
+
+		return result;
+
+	}
+
+	
+	
+	@Transactional
 	public List<PedidoDTO> getPedidoEstado(int id, int id2) {
 
 		List<PedidoDTO> result = new ArrayList<>();

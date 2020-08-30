@@ -38,6 +38,17 @@ public class PedidoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/getPedidosMenosFacturados/")
+	@Transactional
+	public ResponseEntity<Object> getAllMenosFacturados() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getAllMenosFacturados());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@GetMapping("/byUser/{id}")
 	@Transactional
