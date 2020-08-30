@@ -27,6 +27,7 @@ public class Configuracion_EmpresaService {
 				cDto.setNombre(i.getNombre());
 				cDto.setEmail(i.getEmail());
 				cDto.setCuit(i.getCuit());
+				cDto.setTelefono(i.getTelefono());
 				cDto.setNumeroFiscal(i.getNumeroFiscal());
 				cDto.setSociedad(i.getSociedad());
 				cDto.setEliminado(i.isEliminado());
@@ -46,6 +47,7 @@ public class Configuracion_EmpresaService {
 			entity.setEmail(dto.getEmail());
 			entity.setCuit(dto.getCuit());
 			entity.setNumeroFiscal(dto.getNumeroFiscal());
+			entity.setTelefono(dto.getTelefono());
 			entity.setSociedad(dto.getSociedad());
 			entity.setEliminado(dto.isEliminado());
 			entity = configuracion_EmpresaRepository.save(entity);
@@ -69,6 +71,7 @@ public class Configuracion_EmpresaService {
 			entity.setCuit(DTO.getCuit());
 			entity.setNumeroFiscal(DTO.getNumeroFiscal());
 			entity.setSociedad(DTO.getSociedad());
+			entity.setTelefono(DTO.getTelefono());
 			entity.setEliminado(DTO.isEliminado());
 			configuracion_EmpresaRepository.save(entity);
 		} catch (Exception e) {
