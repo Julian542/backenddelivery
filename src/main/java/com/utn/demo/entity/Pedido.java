@@ -25,7 +25,6 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String horaEstimada;
 	private boolean envioDelivery;
 	private int tiempoPreparacion;
 	@OneToOne
