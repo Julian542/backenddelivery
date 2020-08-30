@@ -27,9 +27,6 @@ public class Configuracion_Empresa {
 	private String nombre;
 	private String email;
 	private String sociedad;
-	private String paginaWeb;
-	private Date horaApertura;
-	private Date horaCierre;
 	@Column(name = "eliminado")
 	private boolean eliminado;
 }
