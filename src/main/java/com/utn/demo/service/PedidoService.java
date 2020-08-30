@@ -47,7 +47,6 @@ public class PedidoService {
 			PedidoDTO dto = new PedidoDTO();
 			dto.setId(dto2.getId());
 			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
-			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
 			dto.setEliminado(dto.isEliminado());
@@ -153,7 +152,6 @@ public class PedidoService {
 		for (Pedido dto2 : pedidoRepository.getPedidoEstado(id, id2)) {
 			PedidoDTO dto = new PedidoDTO();
 			dto.setId(dto2.getId());
-			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
 			dto.setEliminado(dto2.isEliminado());
@@ -240,7 +238,6 @@ public class PedidoService {
 			PedidoDTO dto = new PedidoDTO();
 			dto.setId(dto2.getId());
 			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
-			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
 			dto.setEliminado(dto2.isEliminado());
@@ -328,7 +325,6 @@ public class PedidoService {
 			Pedido dto2 = pedidoRepository.findByIdMod(id);
 			dto.setId(dto2.getId());
 			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
-			dto.setHoraEstimada(dto2.getHoraEstimada());
 			dto.setFecha(dto2.getFecha());
 			dto.setEnvioDelivery(dto2.isEnvioDelivery());
 			dto.setEliminado(dto2.isEliminado());
@@ -446,7 +442,6 @@ public class PedidoService {
 		Pedido pedido = new Pedido();
 
 		pedido.setTiempoPreparacion(pedidoDTO.getTiempoPreparacion());
-		pedido.setHoraEstimada(pedidoDTO.getHoraEstimada());
 		pedido.setFecha(pedidoDTO.getFecha());
 		pedido.setEnvioDelivery(pedidoDTO.isEnvioDelivery());
 		pedido.setEliminado(pedidoDTO.isEliminado());
@@ -541,7 +536,6 @@ public class PedidoService {
 			pedido = optional.get();
 
 			pedido.setTiempoPreparacion(pedidoDTO.getTiempoPreparacion());
-			pedido.setHoraEstimada(pedidoDTO.getHoraEstimada());
 			pedido.setFecha(pedidoDTO.getFecha());
 			pedido.setEnvioDelivery(pedidoDTO.isEnvioDelivery());
 			pedido.setEliminado(pedidoDTO.isEliminado());
@@ -655,7 +649,6 @@ public class PedidoService {
 			try {
 				dto.setId(dto2.getId());
 				dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
-				dto.setHoraEstimada(dto2.getHoraEstimada());
 				dto.setFecha(dto2.getFecha());
 				dto.setEnvioDelivery(dto2.isEnvioDelivery());
 				dto.setEliminado(dto2.isEliminado());
