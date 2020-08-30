@@ -14,8 +14,8 @@ public class Configuracion_EmpresaDTO {
 	private int numeroFiscal;
 	private int telefono;
 	private int cantidadCocineros;
-	private String nombreEmpresa;
-	private String emailEmpresa;
+	private String nombre;
+	private String email;
 	private String sociedad;
 	private boolean eliminado;
 }
