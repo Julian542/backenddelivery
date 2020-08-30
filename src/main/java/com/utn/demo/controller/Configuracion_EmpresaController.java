@@ -28,7 +28,7 @@ public class Configuracion_EmpresaController {
 		this.Configuracion_EmpresaService = Configuracion_EmpresaService;
 	}
 
-	@GetMapping("/")
+	@GetMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> getOne() {
 		try {
