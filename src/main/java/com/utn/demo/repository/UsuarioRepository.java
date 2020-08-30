@@ -34,4 +34,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	@Transactional
 	@Query(value = "SELECT * FROM usuario WHERE eliminado = false", nativeQuery = true)
 	public List<Usuario> findAllMod();
+	
+	@Transactional
+	@Query(value = "SELECT * FROM usuario WHERE rol=?1 AND eliminado = false", nativeQuery = true)
+	public List<Usuario> traerPorRol(String rol);
 }

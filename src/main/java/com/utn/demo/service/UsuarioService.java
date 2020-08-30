@@ -77,6 +77,48 @@ public class UsuarioService {
 		}
 	}
 
+	//Traer todos los usuarios por rol
+	@Transactional
+	public List<UsuarioDTO> findAllPorRol(String rol) {
+		List<UsuarioDTO> dtos = new ArrayList<>();
+
+		for (Usuario e : repositorioUsuario.traerPorRol(rol)) {
+			UsuarioDTO unDto = new UsuarioDTO();
+			unDto.setId(e.getId());
+			unDto.setApellido(e.getApellido());
+			unDto.setDni(e.getDni());
+			List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
+			for (Domicilio d : repositorioDomicilio.buscarPorUsuario(e.getId())) {
+				DomicilioDTO dtodom = new DomicilioDTO();
+				dtodom.setCalle(d.getCalle());
+				dtodom.setDepartamento(d.getDepartamento());
+				dtodom.setId(d.getId());
+				//
+				LocalidadDTO localidaddto = new LocalidadDTO();
+				localidaddto.setId(d.getLocalidad().getId());
+				localidaddto.setNombre(d.getLocalidad().getNombre());
+				localidaddto.setEliminado(d.getLocalidad().isEliminado());
+				//
+				dtodom.setLocalidad(localidaddto);
+				dtodom.setNumero(d.getNumero());
+				dtodom.setPiso(d.getPiso());
+				dtodom.setEliminado(d.isEliminado());
+				domiciliosdto.add(dtodom);
+			}
+			unDto.setDomicilios(domiciliosdto);
+			unDto.setEmail(e.getEmail());
+			unDto.setEsCliente(e.isEsCliente());
+			unDto.setFechaNacimiento(e.getFechaNacimiento());
+			unDto.setNombre(e.getNombre());
+			unDto.setPassword(e.getPassword());
+			unDto.setRol(e.getRol());
+			unDto.setTelefono(e.getTelefono());
+			unDto.setEliminado(e.isEliminado());
+			dtos.add(unDto);
+		}
+		return dtos;
+	}
+	
 	// findAll
 	@Transactional
 	public List<UsuarioDTO> findAll() {

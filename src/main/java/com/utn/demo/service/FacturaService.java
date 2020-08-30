@@ -181,12 +181,41 @@ public class FacturaService {
 				Pedido pedido = factura.getPedido();
 				for (Detalle detalle : detalleRepository.buscarPorPedido(factura.getPedido().getId())) {
 					if (pedido.isEnvioDelivery() == true) {
-						Ganancias += ((detalle.getInsumo().getPrecioVenta() + detalle.getPlato().getPrecioVenta())
+						if(detalle.getPlato()==null) {
+						Ganancias += ((detalle.getInsumo().getPrecioVenta())
 								* factura.getMontoDescuento());
+						}else {
+							if(detalle.getInsumo()==null) {
+								Ganancias += ((detalle.getPlato().getPrecioVenta())
+										* factura.getMontoDescuento());
+							}else{
+								Ganancias += ((detalle.getInsumo().getPrecioVenta() + detalle.getPlato().getPrecioVenta())
+										* factura.getMontoDescuento());
+							}
+						}
 					} else {
-						Ganancias += (detalle.getInsumo().getPrecioVenta() + detalle.getPlato().getPrecioVenta());
+						if(detalle.getInsumo()==null) {
+							Ganancias += (detalle.getPlato().getPrecioVenta());
+						}else {
+							
+							if(detalle.getPlato()==null) {
+								Ganancias += (detalle.getInsumo().getPrecioVenta());
+							}else {
+								Ganancias += (detalle.getInsumo().getPrecioVenta() + detalle.getInsumo().getPrecioVenta());
+							}
+						}
 					}
-					Gastos += (detalle.getInsumo().getPrecioCompra() + detalle.getPlato().getPrecioCosto());
+					if(detalle.getInsumo()==null) {
+						Gastos += (detalle.getPlato().getPrecioCosto());
+					}else {
+						
+						if(detalle.getPlato()==null) {
+							Gastos += (detalle.getInsumo().getPrecioCompra());
+						}else {
+							Gastos += (detalle.getInsumo().getPrecioCompra() + detalle.getPlato().getPrecioCosto());
+						}
+					}
+
 				}
 			}
 			Total = Ganancias - Gastos;

@@ -97,6 +97,17 @@ public class UsuarioController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/traerPorRol/{rol}")
+	@Transactional
+	public ResponseEntity<Object> traerPorRol(@PathVariable String rol) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(servicio.findAllPorRol(rol));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@PostMapping("/")
 	@Transactional

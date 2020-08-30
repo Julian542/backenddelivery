@@ -630,13 +630,34 @@ public class PedidoService {
 		List<PedidoDTO> result = new ArrayList<>();
 		for (Pedido dto2 : pedidoRepository.getPedidosPorUsuario(id, fechaDesde, fechaHasta)) {
 			PedidoDTO dto = new PedidoDTO();
+			dto.setId(dto2.getId());
+			dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
+			dto.setFecha(dto2.getFecha());
+			dto.setEnvioDelivery(dto2.isEnvioDelivery());
+			dto.setEliminado(dto.isEliminado());
+
+			float data = 0;
+
+			for (Detalle entity2 : detalleRepository.buscarPorPedido(dto2.getId())) {
+				try {
+					data += entity2.getPlato().getPrecioVenta() * entity2.getCantidad();
+
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+				try {
+					data += entity2.getInsumo().getPrecioVenta() * entity2.getCantidad();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			dto.setMonto(round(data, 2));
+
 			try {
-				dto.setId(dto2.getId());
-				dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
-				dto.setFecha(dto2.getFecha());
-				dto.setEnvioDelivery(dto2.isEnvioDelivery());
-				dto.setEliminado(dto2.isEliminado());
-				//
+
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(dto2.getUsuario().getId());
 				user.setNombre(dto2.getUsuario().getNombre());
@@ -662,7 +683,14 @@ public class PedidoService {
 				}
 				user.setDomicilios(domiciliosdto);
 				dto.setUsuario(user);
-				//
+
+			} catch (Exception e) {
+
+				System.out.println(e.getMessage());
+
+			}
+
+			try {
 				DomicilioDTO dtodom = new DomicilioDTO();
 				dtodom.setCalle(dto2.getDomicilio().getCalle());
 				dtodom.setDepartamento(dto2.getDomicilio().getDepartamento());
@@ -677,20 +705,26 @@ public class PedidoService {
 				dtodom.setNumero(dto2.getDomicilio().getNumero());
 				dtodom.setPiso(dto2.getDomicilio().getPiso());
 				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
-				//
+
 				dto.setDomicilio(dtodom);
-				//
-				EstadoDTO dtoestado = new EstadoDTO();
-				dtoestado.setId(dto2.getEstado().getId());
-				dtoestado.setNombre(dto2.getEstado().getNombre());
-				dtoestado.setEliminado(dto2.getEstado().isEliminado());
-				//
-				dto.setEstado(dtoestado);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+
+			try {
+				EstadoDTO estado = new EstadoDTO();
+				estado.setId(dto2.getEstado().getId());
+				estado.setNombre(dto2.getEstado().getNombre());
+				estado.setEliminado(dto2.getEstado().isEliminado());
+				dto.setEstado(estado);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			result.add(dto);
 		}
+
 		return result;
 
 	}
