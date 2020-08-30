@@ -62,14 +62,6 @@ public class FacturaService {
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(object2.getUsuario().getId());
 				object.setUsuario(user);
-				List<DetalleDTO> detalle = new ArrayList<>();
-				for (Detalle detalleInternal : object2.getDetalle()) {
-					DetalleDTO detalleDTO = new DetalleDTO();
-					detalleDTO.setId(detalleInternal.getId());
-					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalle.add(detalleDTO);
-				}
-				object.setDetalle(detalle);
 				result.add(object);
 			}
 		} catch (Exception e) {
@@ -100,14 +92,6 @@ public class FacturaService {
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(object2.getUsuario().getId());
 				object.setUsuario(user);
-				List<DetalleDTO> detalle = new ArrayList<>();
-				for (Detalle detalleInternal : object2.getDetalle()) {
-					DetalleDTO detalleDTO = new DetalleDTO();
-					detalleDTO.setId(detalleInternal.getId());
-					detalleDTO.setCantidad(detalleInternal.getCantidad());
-					detalle.add(detalleDTO);
-				}
-				object.setDetalle(detalle);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -136,13 +120,6 @@ public class FacturaService {
 			Usuario user = new Usuario();
 			user.setId(facturaDTO.getUsuario().getId());
 			factura.setUsuario(user);
-			List<Detalle> detalle = new ArrayList<>();
-			for (DetalleDTO detalleDTO : facturaDTO.getDetalle()) {
-				Detalle detalleTemp = new Detalle();
-				detalleTemp.setId(detalleDTO.getId());
-				detalle.add(detalleTemp);
-			}
-			factura.setDetalle(detalle);
 			facturaRepository.save(factura);
 			facturaDTO.setId(factura.getId());
 		} catch (Exception e) {
@@ -173,13 +150,6 @@ public class FacturaService {
 				Usuario user = new Usuario();
 				user.setId(facturaDTO.getUsuario().getId());
 				factura.setUsuario(user);
-				List<Detalle> detalle = new ArrayList<>();
-				for (DetalleDTO detalleDTO : facturaDTO.getDetalle()) {
-					Detalle detalleTemp = new Detalle();
-					detalleTemp.setId(detalleDTO.getId());
-					detalle.add(detalleTemp);
-				}
-				factura.setDetalle(detalle);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -217,7 +187,7 @@ public class FacturaService {
 			recaudacionesDTO.setFechaHasta(fecha);
 			for (Factura factura : facturas) {
 				Pedido pedido = factura.getPedido();
-				for (Detalle detalle : factura.getPedido().getDetalle()) {
+				for (Detalle detalle : detalleRepository.buscarPorPedido(factura.getPedido().getId())) {
 					if (pedido.isEnvioDelivery() == true) {
 						Ganancias += ((detalle.getInsumo().getPrecioVenta() + detalle.getPlato().getPrecioVenta())
 								* factura.getMontoDescuento());

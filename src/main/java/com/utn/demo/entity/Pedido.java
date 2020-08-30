@@ -44,9 +44,6 @@ public class Pedido {
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Detalle> detalle = new ArrayList<>();
-
 	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "fk_usuario")
 	private Usuario usuario;

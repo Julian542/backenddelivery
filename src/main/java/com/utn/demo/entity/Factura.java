@@ -44,8 +44,6 @@ public class Factura {
 	@OneToOne
 	@JoinColumn(name = "fk_pedido")
 	private Pedido pedido;
-	@OneToMany
-	private List<Detalle> detalle = new ArrayList<>();
 	@Column(name = "eliminado")
 	private boolean eliminado;
 }

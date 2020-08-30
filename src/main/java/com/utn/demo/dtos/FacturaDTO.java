@@ -22,6 +22,5 @@ public class FacturaDTO{
 	private int dniTitular;
 	private UsuarioDTO usuario;
 	private PedidoDTO pedido;
-	private List<DetalleDTO> detalle = new ArrayList<>();
 	private boolean eliminado;
 }
