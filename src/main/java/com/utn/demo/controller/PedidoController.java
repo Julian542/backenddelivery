@@ -144,4 +144,15 @@ public class PedidoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+
+	@GetMapping("/getPedidosPorUsuario/{id}/{fechaDesde}/{fechaHasta}")
+	@Transactional
+	public ResponseEntity<Object> getPedidosPorUsuario(@PathVariable int id, @PathVariable String fechaDesde, @PathVariable String fechaHasta) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidosPorUsuario(id, fechaDesde, fechaHasta));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 }

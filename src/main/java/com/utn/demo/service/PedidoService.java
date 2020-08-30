@@ -45,13 +45,15 @@ public class PedidoService {
 	private PlatoRepository platoRepository;
 
 	public PedidoService(PedidoRepository pedidoRepository, InsumoRepository insumoRepository,
-			PlatoRepository platoRepository, DetalleRepository detalleRepository, DomicilioRepository domicilioRepository) {
+			PlatoRepository platoRepository, DetalleRepository detalleRepository,
+			DomicilioRepository domicilioRepository) {
 		this.pedidoRepository = pedidoRepository;
 		this.insumoRepository = insumoRepository;
 		this.platoRepository = platoRepository;
 		this.detalleRepository = detalleRepository;
 		this.domicilioRepository = domicilioRepository;
 	}
+
 	@Transactional
 	public List<PedidoDTO> getAll() {
 
@@ -113,7 +115,6 @@ public class PedidoService {
 				}
 				user.setDomicilios(domiciliosdto);
 				dto.setUsuario(user);
-				
 
 			} catch (Exception e) {
 
@@ -138,7 +139,7 @@ public class PedidoService {
 				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
 
 				dto.setDomicilio(dtodom);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
@@ -153,14 +154,13 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 			}
 
-
 			result.add(dto);
 		}
 
 		return result;
 
 	}
-	
+
 	@Transactional
 	public List<PedidoDTO> getPedidoEstado(int id, int id2) {
 
@@ -225,10 +225,10 @@ public class PedidoService {
 				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
 
 				dto.setDomicilio(dtodom);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				EstadoDTO dtoestado = new EstadoDTO();
 				dtoestado.setId(dto2.getEstado().getId());
@@ -236,7 +236,7 @@ public class PedidoService {
 				dtoestado.setEliminado(dto2.getEstado().isEliminado());
 
 				dto.setEstado(dtoestado);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
@@ -246,7 +246,7 @@ public class PedidoService {
 		return result;
 
 	}
-	
+
 	@Transactional
 	public List<PedidoDTO> getAllByUser(int id) {
 
@@ -312,10 +312,10 @@ public class PedidoService {
 				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
 
 				dto.setDomicilio(dtodom);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				EstadoDTO dtoestado = new EstadoDTO();
 				dtoestado.setId(dto2.getEstado().getId());
@@ -323,7 +323,7 @@ public class PedidoService {
 				dtoestado.setEliminado(dto2.getEstado().isEliminado());
 
 				dto.setEstado(dtoestado);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
@@ -333,9 +333,9 @@ public class PedidoService {
 		return result;
 
 	}
+
 	@Transactional
 	public PedidoDTO getOne(int id) {
-
 
 		PedidoDTO dto = new PedidoDTO();
 
@@ -388,7 +388,7 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 
 			}
-			
+
 			try {
 				DomicilioDTO dtodom = new DomicilioDTO();
 				dtodom.setCalle(dto2.getDomicilio().getCalle());
@@ -404,7 +404,7 @@ public class PedidoService {
 				dtodom.setNumero(dto2.getDomicilio().getNumero());
 				dtodom.setPiso(dto2.getDomicilio().getPiso());
 				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
-				
+
 				UsuarioDTO userDTO = new UsuarioDTO();
 				userDTO.setId(dto2.getUsuario().getId());
 				userDTO.setNombre(dto2.getUsuario().getNombre());
@@ -413,7 +413,7 @@ public class PedidoService {
 				dtodom.setPropietario(userDTO);
 
 				dto.setDomicilio(dtodom);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
@@ -455,6 +455,7 @@ public class PedidoService {
 		return dto;
 
 	}
+
 	@Transactional
 	public PedidoDTO save(PedidoDTO pedidoDTO) {
 
@@ -477,7 +478,7 @@ public class PedidoService {
 			System.out.println(e.getMessage());
 
 		}
-		
+
 		try {
 
 			Domicilio domicilio = new Domicilio();
@@ -489,7 +490,6 @@ public class PedidoService {
 			System.out.println(e.getMessage());
 
 		}
-		
 
 		try {
 			Estado estado = new Estado();
@@ -500,13 +500,13 @@ public class PedidoService {
 			System.out.println(e.getMessage());
 		}
 
-
 		pedidoRepository.save(pedido);
 
 		pedidoDTO.setId(pedido.getId());
 		return pedidoDTO;
 
 	}
+
 	@Transactional
 	public PedidoDTO updateEstado(int id, PedidoDTO pedidoDTO, int estado) {
 
@@ -545,6 +545,7 @@ public class PedidoService {
 		return pedidoDTO;
 
 	}
+
 	@Transactional
 	public PedidoDTO update(PedidoDTO pedidoDTO, int id) {
 
@@ -572,7 +573,7 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 
 			}
-			
+
 			try {
 
 				Domicilio domicilio = new Domicilio();
@@ -594,7 +595,6 @@ public class PedidoService {
 				System.out.println(e.getMessage());
 			}
 
-
 		} catch (Exception e) {
 
 			System.out.println("Bad Request");
@@ -605,6 +605,7 @@ public class PedidoService {
 		return pedidoDTO;
 
 	}
+
 	@Transactional
 	public boolean delete(int id) {
 		try {
@@ -614,7 +615,7 @@ public class PedidoService {
 			return false;
 		}
 	}
-	
+
 	@Transactional
 	public List<PedidoDTO> getPedidos() {
 		List<PedidoDTO> result = new ArrayList<>();
@@ -660,5 +661,77 @@ public class PedidoService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	@Transactional
+	public List<PedidoDTO> getPedidosPorUsuario(int id, String fechaDesde, String fechaHasta) {
+		List<PedidoDTO> result = new ArrayList<>();
+		for (Pedido dto2 : pedidoRepository.getPedidosPorUsuario(id, fechaDesde, fechaHasta)) {
+			PedidoDTO dto = new PedidoDTO();
+			try {
+				dto.setId(dto2.getId());
+				dto.setTiempoPreparacion(dto2.getTiempoPreparacion());
+				dto.setHoraEstimada(dto2.getHoraEstimada());
+				dto.setFecha(dto2.getFecha());
+				dto.setEnvioDelivery(dto2.isEnvioDelivery());
+				dto.setEliminado(dto2.isEliminado());
+				dto.setMonto(dto2.getMonto());
+				//
+				UsuarioDTO user = new UsuarioDTO();
+				user.setId(dto2.getUsuario().getId());
+				user.setNombre(dto2.getUsuario().getNombre());
+				user.setApellido(dto2.getUsuario().getApellido());
+				user.setTelefono(dto2.getUsuario().getTelefono());
+				List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
+				for (Domicilio d : domicilioRepository.buscarPorUsuario(user.getId())) {
+					DomicilioDTO dtodom = new DomicilioDTO();
+					dtodom.setCalle(d.getCalle());
+					dtodom.setDepartamento(d.getDepartamento());
+					dtodom.setId(d.getId());
+					//
+					LocalidadDTO localidaddto = new LocalidadDTO();
+					localidaddto.setId(d.getLocalidad().getId());
+					localidaddto.setNombre(d.getLocalidad().getNombre());
+					localidaddto.setEliminado(d.getLocalidad().isEliminado());
+					//
+					dtodom.setLocalidad(localidaddto);
+					dtodom.setNumero(d.getNumero());
+					dtodom.setPiso(d.getPiso());
+					dtodom.setEliminado(d.isEliminado());
+					domiciliosdto.add(dtodom);
+				}
+				user.setDomicilios(domiciliosdto);
+				dto.setUsuario(user);
+				//
+				DomicilioDTO dtodom = new DomicilioDTO();
+				dtodom.setCalle(dto2.getDomicilio().getCalle());
+				dtodom.setDepartamento(dto2.getDomicilio().getDepartamento());
+				dtodom.setId(dto2.getDomicilio().getId());
+				//
+				LocalidadDTO localidaddto = new LocalidadDTO();
+				localidaddto.setId(dto2.getDomicilio().getLocalidad().getId());
+				localidaddto.setNombre(dto2.getDomicilio().getLocalidad().getNombre());
+				localidaddto.setEliminado(dto2.getDomicilio().getLocalidad().isEliminado());
+				//
+				dtodom.setLocalidad(localidaddto);
+				dtodom.setNumero(dto2.getDomicilio().getNumero());
+				dtodom.setPiso(dto2.getDomicilio().getPiso());
+				dtodom.setEliminado(dto2.getDomicilio().isEliminado());
+				//
+				dto.setDomicilio(dtodom);
+				//
+				EstadoDTO dtoestado = new EstadoDTO();
+				dtoestado.setId(dto2.getEstado().getId());
+				dtoestado.setNombre(dto2.getEstado().getNombre());
+				dtoestado.setEliminado(dto2.getEstado().isEliminado());
+				//
+				dto.setEstado(dtoestado);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			result.add(dto);
+		}
+		return result;
+
 	}
 }

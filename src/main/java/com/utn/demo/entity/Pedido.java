@@ -35,6 +35,8 @@ public class Pedido {
 	
 	private int tiempoPreparacion;
 	
+    private float monto;
+	
 	@OneToOne
 	private Domicilio domicilio;
 
