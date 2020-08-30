@@ -54,7 +54,7 @@ public class DetallePlatoService {
 				um.setEliminado(entity.getInsumo().getUnidadMedida().isEliminado());
 
 				insumo.setUnidadMedida(um);
-				
+
 				dto.setIngrediente(insumo);
 
 			} catch (Exception e) {
@@ -67,7 +67,7 @@ public class DetallePlatoService {
 		return result;
 
 	}
-	
+
 	@Transactional
 	public List<DetallePlatoDTO> getAllPorPlato(int id) {
 
@@ -100,7 +100,7 @@ public class DetallePlatoService {
 				um.setEliminado(entity.getInsumo().getUnidadMedida().isEliminado());
 
 				insumo.setUnidadMedida(um);
-				
+
 				dto.setIngrediente(insumo);
 
 			} catch (Exception e) {
@@ -147,7 +147,7 @@ public class DetallePlatoService {
 				um.setEliminado(entity.getInsumo().getUnidadMedida().isEliminado());
 
 				insumo.setUnidadMedida(um);
-				
+
 				dto.setIngrediente(insumo);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -169,7 +169,7 @@ public class DetallePlatoService {
 		DetallePlato platoDetalle = new DetallePlato();
 
 		try {
-			
+
 			platoDetalle.setCantidad(platoDetalleDTO.getCantidad());
 			platoDetalle.setEliminado(platoDetalleDTO.isEliminado());
 			Insumo insumo = new Insumo();
@@ -179,15 +179,15 @@ public class DetallePlatoService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		try {
-			Plato plato =new Plato();
+			Plato plato = new Plato();
 			plato.setId(platoDetalleDTO.getPlato().getId());
 			platoDetalle.setPlato(plato);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		platoDetalleRepository.save(platoDetalle);
 
 		platoDetalleDTO.setId(platoDetalle.getId());
@@ -217,15 +217,14 @@ public class DetallePlatoService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
-				Plato plato =new Plato();
+				Plato plato = new Plato();
 				plato.setId(platoDetalleDTO.getPlato().getId());
 				platoDetalle.setPlato(plato);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-
 
 			platoDetalleRepository.save(platoDetalle);
 
@@ -251,6 +250,5 @@ public class DetallePlatoService {
 			return false;
 		}
 	}
-	
-}
 
+}

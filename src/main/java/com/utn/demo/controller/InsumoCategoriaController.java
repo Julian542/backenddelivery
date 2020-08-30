@@ -38,7 +38,7 @@ public class InsumoCategoriaController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/NoInsumo/")
 	@Transactional
 	public ResponseEntity<Object> getAllNoInsumo() {

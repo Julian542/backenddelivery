@@ -3,9 +3,7 @@ package com.utn.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.UnidadMedidaDTO;
@@ -124,7 +122,7 @@ public class InsumoService {
 		return result;
 
 	}
-	
+
 	public List<InsumoDTO> buscarPorCategoriaNoInsumo(int id) {
 
 		List<InsumoDTO> result = new ArrayList<>();
@@ -175,7 +173,7 @@ public class InsumoService {
 		return result;
 
 	}
-	
+
 	public List<InsumoDTO> getAllNoInsumos(boolean esInsumo) {
 
 		List<InsumoDTO> result = new ArrayList<>();
@@ -376,7 +374,7 @@ public class InsumoService {
 		try {
 			insumoRepository.deleteInsumoById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -386,7 +384,7 @@ public class InsumoService {
 		try {
 			for (Insumo insumo : insumoRepository.getInsumosWithLowStock(id)) {
 				InsumoDTO insumoDTO = new InsumoDTO();
-				
+
 				insumoDTO.setDescripcion(insumo.getDescripcion());
 				insumoDTO.setEsInsumo(insumo.isEsInsumo());
 				insumoDTO.setId(insumo.getId());
@@ -398,16 +396,16 @@ public class InsumoService {
 				insumoDTO.setStockMaximo(insumo.getStockMaximo());
 				insumoDTO.setStockMinimo(insumo.getStockMinimo());
 				insumoDTO.setEliminado(insumo.isEliminado());
-				
+
 				UnidadMedidaDTO unidadMedidaDTO = new UnidadMedidaDTO();
 				unidadMedidaDTO.setId(insumo.getUnidadMedida().getId());
 				unidadMedidaDTO.setNombre(insumo.getUnidadMedida().getNombre());
 				insumoDTO.setUnidadMedida(unidadMedidaDTO);
-				
+
 				InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
 				insumoCategoria.setId(insumo.getCategoria().getId());
 				insumoDTO.setCategoria(insumoCategoria);
-				
+
 				InsumoDTOs.add(insumoDTO);
 			}
 		} catch (Exception e) {

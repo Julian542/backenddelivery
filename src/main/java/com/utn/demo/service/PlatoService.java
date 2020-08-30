@@ -5,25 +5,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.DetallePlatoDTO;
-import com.utn.demo.dtos.InsumoCategoriaDTO;
 import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.PlatoCategoriaDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.dtos.UnidadMedidaDTO;
-import com.utn.demo.entity.Detalle;
 import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Plato;
 import com.utn.demo.entity.PlatoCategoria;
 import com.utn.demo.repository.DetallePlatoRepository;
-import com.utn.demo.repository.DetalleRepository;
-import com.utn.demo.repository.InsumoRepository;
 import com.utn.demo.repository.PlatoRepository;
 
 @Service
@@ -31,32 +24,28 @@ public class PlatoService {
 
 	private PlatoRepository platoRepository;
 	private DetallePlatoRepository detallePlatoRepository;
-	private InsumoRepository insumoRepository;
 
-	public PlatoService(PlatoRepository platoRepository,InsumoRepository insumoRepository, DetallePlatoRepository detallePlatoRepository) {
+	public PlatoService(PlatoRepository platoRepository, DetallePlatoRepository detallePlatoRepository) {
 		this.platoRepository = platoRepository;
-		this.detallePlatoRepository=detallePlatoRepository;
-		this.insumoRepository = insumoRepository;
-		
+		this.detallePlatoRepository = detallePlatoRepository;
 	}
-	
+
 	@Transactional
 	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
 
-		File archivo = new File("static\\images\\"+file.getOriginalFilename());
+		File archivo = new File("static\\images\\" + file.getOriginalFilename());
 		if (archivo.exists()) {
-		    System.out.println("Ya existe esta imagen");
-		    return archivo.getAbsolutePath();
-		}
-		else {
-		    System.out.println("No existe esta imagen");
-		    file.transferTo(archivo);
+			System.out.println("Ya existe esta imagen");
+			return archivo.getAbsolutePath();
+		} else {
+			System.out.println("No existe esta imagen");
+			file.transferTo(archivo);
 			return archivo.getAbsolutePath();
 		}
 	}
 
 	@Transactional
-	public List<PlatoDTO> platosCategoria(String categoria){
+	public List<PlatoDTO> platosCategoria(String categoria) {
 		List<PlatoDTO> result = new ArrayList<>();
 		List<Plato> entidades = platoRepository.platosCategoria(categoria);
 		for (Plato entity : entidades) {
@@ -127,7 +116,7 @@ public class PlatoService {
 					um.setEliminado(entity2.getInsumo().getUnidadMedida().isEliminado());
 
 					insumo.setUnidadMedida(um);
-					
+
 					ingrediente.setIngrediente(insumo);
 					ingrediente.setCantidad(entity2.getCantidad());
 					ingrediente.setId(entity2.getId());
@@ -140,7 +129,6 @@ public class PlatoService {
 			}
 
 			dto.setDetalle(ingredientes);
-			
 
 			try {
 				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
@@ -160,7 +148,7 @@ public class PlatoService {
 		return result;
 
 	}
-	
+
 	@Transactional
 	public List<PlatoDTO> getAll() {
 
@@ -203,7 +191,7 @@ public class PlatoService {
 					um.setEliminado(entity2.getInsumo().getUnidadMedida().isEliminado());
 
 					insumo.setUnidadMedida(um);
-					
+
 					ingrediente.setIngrediente(insumo);
 					ingrediente.setCantidad(entity2.getCantidad());
 					ingrediente.setId(entity2.getId());
@@ -216,7 +204,6 @@ public class PlatoService {
 			}
 
 			dto.setDetalle(ingredientes);
-			
 
 			try {
 				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
@@ -254,7 +241,6 @@ public class PlatoService {
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setCantidadVendida(entity.getCantidadVendida());
 			dto.setEliminado(entity.isEliminado());
-
 
 			List<DetallePlatoDTO> ingredientes = new ArrayList<DetallePlatoDTO>();
 			for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(entity.getId())) {
@@ -294,7 +280,6 @@ public class PlatoService {
 
 			dto.setDetalle(ingredientes);
 
-
 			try {
 				PlatoCategoriaDTO platoCategoria = new PlatoCategoriaDTO();
 				platoCategoria.setId(entity.getCategoria().getId());
@@ -315,7 +300,7 @@ public class PlatoService {
 		return dto;
 
 	}
-	
+
 	@Transactional
 	public boolean verificarStock(int id, int cantidad) {
 
@@ -324,8 +309,7 @@ public class PlatoService {
 		try {
 			try {
 				for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(id)) {
-					if (entity2.getInsumo()
-							.getStockActual() < ((entity2.getCantidad() * 0.001) * cantidad)) {
+					if (entity2.getInsumo().getStockActual() < ((entity2.getCantidad() * 0.001) * cantidad)) {
 						faltaStock = true;
 					}
 
@@ -334,7 +318,7 @@ public class PlatoService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			if (faltaStock) {
 				return false;
 			}
@@ -362,7 +346,6 @@ public class PlatoService {
 		plato.setImagen(platoDTO.getImagen());
 		plato.setCantidadVendida(platoDTO.getCantidadVendida());
 		plato.setEliminado(platoDTO.isEliminado());
-
 
 		try {
 
@@ -399,8 +382,6 @@ public class PlatoService {
 			plato.setCantidadVendida(platoDTO.getCantidadVendida());
 			plato.setEliminado(platoDTO.isEliminado());
 
-
-
 			try {
 
 				PlatoCategoria platoCategoria = new PlatoCategoria();
@@ -430,7 +411,7 @@ public class PlatoService {
 		try {
 			platoRepository.deletePlatoById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

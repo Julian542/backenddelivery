@@ -1,7 +1,6 @@
 package com.utn.demo.controller;
 
 import javax.transaction.Transactional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.service.DetalleService;
 
@@ -38,7 +36,6 @@ public class DetalleController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
-
 		}
 	}
 
@@ -52,47 +49,6 @@ public class DetalleController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-
-	@PostMapping("/")
-	@Transactional
-	public ResponseEntity<Object> post(@RequestBody DetalleDTO dto) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(detalleService.save(dto));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
-
-	@PutMapping("/{id}")
-	@Transactional
-	public ResponseEntity<Object> put(@PathVariable int id, @RequestBody DetalleDTO dto) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(detalleService.update(id, dto));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
-
-	@PutMapping("/subirPlato/{id}")
-	@Transactional
-	public ResponseEntity putPlato(@PathVariable int id, @RequestBody DetalleDTO dto) {
-		try {
-			DetalleDTO plato = detalleService.updatePlato(id, dto);
-			if (plato == null) {
-				return ResponseEntity.status(HttpStatus.OK).body(false);
-			} else {
-				return ResponseEntity.status(HttpStatus.OK).body(plato);
-			}
-
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
-
-	
 
 	@GetMapping("/query/{id}")
 	@Transactional
@@ -125,6 +81,45 @@ public class DetalleController {
 			return ResponseEntity.status(HttpStatus.OK).body(detalleService.buscarPorInsumo(id, id2));
 		} catch (Exception e) {
 
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@PostMapping("/")
+	@Transactional
+	public ResponseEntity<Object> post(@RequestBody DetalleDTO dto) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(detalleService.save(dto));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<Object> put(@PathVariable int id, @RequestBody DetalleDTO dto) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(detalleService.update(id, dto));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@PutMapping("/subirPlato/{id}")
+	@Transactional
+	public ResponseEntity<Object> putPlato(@PathVariable int id, @RequestBody DetalleDTO dto) {
+		try {
+			DetalleDTO plato = detalleService.updatePlato(id, dto);
+			if (plato == null) {
+				return ResponseEntity.status(HttpStatus.OK).body(false);
+			} else {
+				return ResponseEntity.status(HttpStatus.OK).body(plato);
+			}
+
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}

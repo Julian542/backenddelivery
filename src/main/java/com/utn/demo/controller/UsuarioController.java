@@ -86,7 +86,7 @@ public class UsuarioController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/traerCocineros")
 	@Transactional
 	public ResponseEntity<Object> getCocineros() {

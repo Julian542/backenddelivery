@@ -42,7 +42,6 @@ public class DetallePlatoController {
 	@GetMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> getOne(@PathVariable int id) {
-
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(detallePlatoService.getOne(id));
 		} catch (Exception e) {
@@ -50,7 +49,7 @@ public class DetallePlatoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/porPlato/{id}")
 	@Transactional
 	public ResponseEntity<Object> getAllPorPlato(@PathVariable int id) {
@@ -65,7 +64,6 @@ public class DetallePlatoController {
 	@PostMapping("/")
 	@Transactional
 	public ResponseEntity<Object> post(@RequestBody DetallePlatoDTO dto) {
-
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(detallePlatoService.save(dto));
 		} catch (Exception e) {
@@ -77,7 +75,6 @@ public class DetallePlatoController {
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> put(@PathVariable int id, @RequestBody DetallePlatoDTO dto) {
-
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(detallePlatoService.update(dto, id));
 		} catch (Exception e) {
@@ -88,7 +85,6 @@ public class DetallePlatoController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable int id) {
-
 		boolean borrado = detallePlatoService.delete(id);
 		if (borrado) {
 			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");

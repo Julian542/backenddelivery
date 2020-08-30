@@ -26,7 +26,8 @@ public class DetalleService {
 	private DetallePlatoRepository detallePlatoRepository;
 	private InsumoRepository insumoRepository;
 
-	public DetalleService(DetalleRepository detalleRepository,InsumoRepository insumoRepository, DetallePlatoRepository detallePlatoRepository) {
+	public DetalleService(DetalleRepository detalleRepository, InsumoRepository insumoRepository,
+			DetallePlatoRepository detallePlatoRepository) {
 		this.detalleRepository = detalleRepository;
 		this.detallePlatoRepository = detallePlatoRepository;
 		this.insumoRepository = insumoRepository;
@@ -53,7 +54,6 @@ public class DetalleService {
 
 				dto.setPlato(plato);
 
-
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -74,13 +74,12 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				PedidoDTO pedido = new PedidoDTO();
 				pedido.setId(entity.getPedido().getId());
 
 				dto.setPedido(pedido);
-
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -92,8 +91,6 @@ public class DetalleService {
 		return result;
 
 	}
-
-
 
 	@Transactional
 	public DetalleDTO getOne(int id) {
@@ -137,13 +134,12 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				PedidoDTO pedido = new PedidoDTO();
 				pedido.setId(entity.getPedido().getId());
 
 				dto.setPedido(pedido);
-
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -186,13 +182,12 @@ public class DetalleService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		try {
 			Pedido pedido = new Pedido();
 			pedido.setId(detalleDTO.getPedido().getId());
 
 			detalle.setPedido(pedido);
-
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -236,13 +231,12 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				Pedido pedido = new Pedido();
 				pedido.setId(detalleDTO.getPedido().getId());
 
 				detalle.setPedido(pedido);
-
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -262,7 +256,7 @@ public class DetalleService {
 		return detalleDTO;
 
 	}
-	
+
 	@Transactional
 	public DetalleDTO updatePlato(int id, DetalleDTO detalleDTO) {
 
@@ -453,9 +447,7 @@ public class DetalleService {
 		return detalleDTO;
 
 	}
-	
-	
-	
+
 	@Transactional
 	public List<DetalleDTO> buscarPorPedido(int id) {
 
@@ -496,13 +488,12 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				PedidoDTO pedido = new PedidoDTO();
 				pedido.setId(entity.getPedido().getId());
 
 				dto.setPedido(pedido);
-
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -514,7 +505,7 @@ public class DetalleService {
 		return result;
 
 	}
-	
+
 	@Transactional
 	public List<DetalleDTO> buscarPorPlato(int id, int id2) {
 
@@ -555,13 +546,12 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				PedidoDTO pedido = new PedidoDTO();
 				pedido.setId(entity.getPedido().getId());
 
 				dto.setPedido(pedido);
-
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -573,7 +563,7 @@ public class DetalleService {
 		return result;
 
 	}
-	
+
 	@Transactional
 	public List<DetalleDTO> buscarPorInsumo(int id, int id2) {
 
@@ -614,13 +604,12 @@ public class DetalleService {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			try {
 				PedidoDTO pedido = new PedidoDTO();
 				pedido.setId(entity.getPedido().getId());
 
 				dto.setPedido(pedido);
-
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -633,13 +622,11 @@ public class DetalleService {
 
 	}
 
-	
-
 	public boolean delete(int id) {
 		try {
 			detalleRepository.deleteDetalleById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

@@ -7,20 +7,12 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import com.utn.demo.dtos.DetalleDTO;
-import com.utn.demo.dtos.DetallePlatoDTO;
 import com.utn.demo.dtos.FacturaDTO;
-import com.utn.demo.dtos.InsumoCategoriaDTO;
-import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.PedidoDTO;
-import com.utn.demo.dtos.PlatoCategoriaDTO;
-import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.dtos.PlatosPopularesDTO;
 import com.utn.demo.dtos.RecaudacionesDTO;
-import com.utn.demo.dtos.UnidadMedidaDTO;
 import com.utn.demo.dtos.UsuarioDTO;
 import com.utn.demo.entity.Detalle;
-import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Factura;
 import com.utn.demo.entity.Pedido;
 import com.utn.demo.entity.Usuario;
@@ -214,12 +206,12 @@ public class FacturaService {
 		List<Integer> PlatoPopular = new ArrayList<Integer>();
 		List<Integer> Cantidad = new ArrayList<Integer>();
 		List<String> Nombre = new ArrayList<String>();
-		List<PlatoDTO> finalPlatos = new ArrayList<PlatoDTO>();
 
 		try {
 			List<Factura> facturas = facturaRepository.getFacturasByDate(fechaDesde, fechaHasta);
 			for (Factura factura : facturas) {
-				List<Detalle> detalles = detalleRepository.buscarPorPedidoFecha(factura.getPedido().getId(),fechaDesde, fechaHasta);
+				List<Detalle> detalles = detalleRepository.buscarPorPedidoFecha(factura.getPedido().getId(), fechaDesde,
+						fechaHasta);
 				for (Detalle detalleInternal : detalles) {
 					boolean key = false;
 					int i;
@@ -242,7 +234,7 @@ public class FacturaService {
 					key = false;
 				}
 			}
-			
+
 			int i, j, aux, aux2;
 			for (i = 0; i < Cantidad.size(); i++) {
 				for (j = 0; j < Cantidad.size() - 1; j++) {
@@ -258,7 +250,7 @@ public class FacturaService {
 					}
 				}
 			}
-			
+
 			if (PlatoPopular.size() > 0) {
 				platosPopulares.setId_Plato1(PlatoPopular.get(0));
 				platosPopulares.setCantidad_Plato1(Cantidad.get(0));
@@ -268,7 +260,7 @@ public class FacturaService {
 				platosPopulares.setId_Plato2(PlatoPopular.get(1));
 				platosPopulares.setCantidad_Plato2(Cantidad.get(1));
 				platosPopulares.setNombre_Plato2(Nombre.get(1));
-				
+
 			}
 			if (PlatoPopular.size() > 2) {
 				platosPopulares.setId_Plato3(PlatoPopular.get(2));

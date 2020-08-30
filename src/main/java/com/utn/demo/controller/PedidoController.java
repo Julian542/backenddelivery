@@ -49,10 +49,10 @@ public class PedidoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/estado/{id}/{id2}")
 	@CrossOrigin(origins = "*")
-	public ResponseEntity<Object> getPedidoEstado(@PathVariable int id,@PathVariable int id2) {
+	public ResponseEntity<Object> getPedidoEstado(@PathVariable int id, @PathVariable int id2) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidoEstado(id, id2));
 		} catch (Exception e) {
@@ -72,11 +72,48 @@ public class PedidoController {
 		}
 	}
 
+	@GetMapping("/getPedidosPorUsuario/{id}/{fechaDesde}/{fechaHasta}")
+	@Transactional
+	public ResponseEntity<Object> getPedidosPorUsuario(@PathVariable int id, @PathVariable String fechaDesde,
+			@PathVariable String fechaHasta) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(pedidoService.getPedidosPorUsuario(id, fechaDesde, fechaHasta));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@GetMapping("/getPedidos")
+	@Transactional
+	public ResponseEntity<Object> getPedidos() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidos());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
 	@PostMapping("/")
 	@Transactional
 	public ResponseEntity<Object> post(@RequestBody PedidoDTO dto) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.save(dto));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@PutMapping("/updateTiempoRestante/{id}/{tiempoRestante}")
+	@Transactional
+	public ResponseEntity updateTiempoRestante(@PathVariable("id") int id,
+			@PathVariable("tiempoRestante") int tiempoRestante) {
+		try {
+			pedidoService.updateTiempoRestante(id, tiempoRestante);
+			return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"Actualizado\"}");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
@@ -119,40 +156,6 @@ public class PedidoController {
 			return ResponseEntity.status(HttpStatus.OK).body(borrado);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
-		}
-	}
-
-	@GetMapping("/getPedidos")
-	@Transactional
-	public ResponseEntity<Object> getPedidos() {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidos());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
-	
-	@PutMapping("/updateTiempoRestante/{id}/{tiempoRestante}")
-	@Transactional
-	public ResponseEntity updateTiempoRestante(@PathVariable("id") int id,@PathVariable("tiempoRestante") int tiempoRestante) {
-		try {
-			pedidoService.updateTiempoRestante(id, tiempoRestante);
-			return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"Actualizado\"}");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
-
-	@GetMapping("/getPedidosPorUsuario/{id}/{fechaDesde}/{fechaHasta}")
-	@Transactional
-	public ResponseEntity<Object> getPedidosPorUsuario(@PathVariable int id, @PathVariable String fechaDesde, @PathVariable String fechaHasta) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(pedidoService.getPedidosPorUsuario(id, fechaDesde, fechaHasta));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
 }

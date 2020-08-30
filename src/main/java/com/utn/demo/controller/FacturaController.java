@@ -1,6 +1,5 @@
 package com.utn.demo.controller;
 
-import java.util.Date;
 import javax.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +50,28 @@ public class FacturaController {
 		}
 	}
 
+	@GetMapping("/recaudaciones/{fechaDesde}/{fechaHasta}")
+	@Transactional
+	public ResponseEntity<Object> getRecaudaciones(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getRecaudaciones(fechaDesde, fechaHasta));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@GetMapping("/platosPopulares/{fechaDesde}/{fechaHasta}")
+	@Transactional
+	public ResponseEntity<Object> getPlatosPopulares(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getPlatosPopulares(fechaDesde, fechaHasta));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
 	@PostMapping("/")
 	@Transactional
 	public ResponseEntity<Object> post(@RequestBody FacturaDTO dto) {
@@ -80,28 +101,6 @@ public class FacturaController {
 			return ResponseEntity.status(HttpStatus.OK).body("'message':'Eliminado'");
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
-		}
-	}
-
-	@GetMapping("/recaudaciones/{fechaDesde}/{fechaHasta}")
-	@Transactional
-	public ResponseEntity<Object> getRecaudaciones(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getRecaudaciones(fechaDesde, fechaHasta));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
-		}
-	}
-
-	@GetMapping("/platosPopulares/{fechaDesde}/{fechaHasta}")
-	@Transactional
-	public ResponseEntity getPlatosPopulares(@PathVariable String fechaDesde, @PathVariable String fechaHasta) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getPlatosPopulares(fechaDesde, fechaHasta));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
 }

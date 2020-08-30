@@ -55,7 +55,7 @@ public class InsumoCategoriaService {
 		}
 		return result;
 	}
-	
+
 	@Transactional
 	public InsumoCategoriaDTO getOne(int id) {
 		InsumoCategoriaDTO dto = new InsumoCategoriaDTO();

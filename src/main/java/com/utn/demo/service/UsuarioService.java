@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.LocalidadDTO;
 import com.utn.demo.dtos.UsuarioDTO;
@@ -27,20 +24,19 @@ public class UsuarioService {
 
 	public UsuarioService(UsuarioRepository repositorioUsuario, DomicilioRepository repositorioDomicilio) {
 		this.repositorioUsuario = repositorioUsuario;
-		this.repositorioDomicilio= repositorioDomicilio;
+		this.repositorioDomicilio = repositorioDomicilio;
 	}
-	
+
 	@Transactional
 	public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
 
-		File archivo = new File("static\\images\\"+file.getOriginalFilename());
+		File archivo = new File("static\\images\\" + file.getOriginalFilename());
 		if (archivo.exists()) {
-		    System.out.println("Ya existe esta imagen");
-		    return archivo.getAbsolutePath();
-		}
-		else {
-		    System.out.println("No existe esta imagen");
-		    file.transferTo(archivo);
+			System.out.println("Ya existe esta imagen");
+			return archivo.getAbsolutePath();
+		} else {
+			System.out.println("No existe esta imagen");
+			file.transferTo(archivo);
 			return archivo.getAbsolutePath();
 		}
 	}
@@ -66,7 +62,7 @@ public class UsuarioService {
 		}
 		return dtos;
 	}
-	
+
 	// este metodo existe para consultar la existencia de un usuario en la base de
 	// datos,
 
@@ -80,7 +76,7 @@ public class UsuarioService {
 			return "false";
 		}
 	}
-	
+
 	// findAll
 	@Transactional
 	public List<UsuarioDTO> findAll() {
@@ -171,7 +167,7 @@ public class UsuarioService {
 		unDto.setId(e.getId());
 		unDto.setApellido(e.getApellido());
 		unDto.setDni(e.getDni());
-		
+
 		List<DomicilioDTO> domiciliosdto = new ArrayList<DomicilioDTO>();
 		for (Domicilio d : repositorioDomicilio.buscarPorUsuario(e.getId())) {
 			DomicilioDTO dtodom = new DomicilioDTO();
@@ -190,7 +186,7 @@ public class UsuarioService {
 			dtodom.setEliminado(d.isEliminado());
 			domiciliosdto.add(dtodom);
 		}
-		
+
 		unDto.setDomicilios(domiciliosdto);
 		unDto.setEmail(e.getEmail());
 		unDto.setEsCliente(e.isEsCliente());
@@ -251,7 +247,7 @@ public class UsuarioService {
 		try {
 			repositorioUsuario.deleteUsuarioById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

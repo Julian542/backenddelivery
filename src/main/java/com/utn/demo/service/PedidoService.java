@@ -10,30 +10,19 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.DomicilioDTO;
 import com.utn.demo.dtos.EstadoDTO;
-import com.utn.demo.dtos.InsumoDTO;
 import com.utn.demo.dtos.LocalidadDTO;
 import com.utn.demo.dtos.PedidoDTO;
-import com.utn.demo.dtos.PlatoDTO;
-import com.utn.demo.dtos.UnidadMedidaDTO;
 import com.utn.demo.dtos.UsuarioDTO;
 import com.utn.demo.entity.Detalle;
-import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Domicilio;
 import com.utn.demo.entity.Estado;
-import com.utn.demo.entity.Insumo;
 import com.utn.demo.entity.Pedido;
-import com.utn.demo.entity.Plato;
 import com.utn.demo.entity.Usuario;
 import com.utn.demo.repository.DetalleRepository;
 import com.utn.demo.repository.DomicilioRepository;
-import com.utn.demo.repository.InsumoRepository;
 import com.utn.demo.repository.PedidoRepository;
-import com.utn.demo.repository.PlatoRepository;
 
 @Service
 public class PedidoService {
@@ -41,15 +30,10 @@ public class PedidoService {
 	private PedidoRepository pedidoRepository;
 	private DetalleRepository detalleRepository;
 	private DomicilioRepository domicilioRepository;
-	private InsumoRepository insumoRepository;
-	private PlatoRepository platoRepository;
 
-	public PedidoService(PedidoRepository pedidoRepository, InsumoRepository insumoRepository,
-			PlatoRepository platoRepository, DetalleRepository detalleRepository,
+	public PedidoService(PedidoRepository pedidoRepository, DetalleRepository detalleRepository,
 			DomicilioRepository domicilioRepository) {
 		this.pedidoRepository = pedidoRepository;
-		this.insumoRepository = insumoRepository;
-		this.platoRepository = platoRepository;
 		this.detalleRepository = detalleRepository;
 		this.domicilioRepository = domicilioRepository;
 	}
@@ -675,7 +659,6 @@ public class PedidoService {
 				dto.setFecha(dto2.getFecha());
 				dto.setEnvioDelivery(dto2.isEnvioDelivery());
 				dto.setEliminado(dto2.isEliminado());
-				dto.setMonto(dto2.getMonto());
 				//
 				UsuarioDTO user = new UsuarioDTO();
 				user.setId(dto2.getUsuario().getId());

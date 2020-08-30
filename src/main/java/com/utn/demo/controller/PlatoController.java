@@ -1,7 +1,6 @@
 package com.utn.demo.controller;
 
 import java.io.IOException;
-import java.util.Date;
 import javax.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.utn.demo.dtos.DetalleDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.service.PlatoService;
 
@@ -56,7 +53,7 @@ public class PlatoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/searchByCategory/{categoria}")
 	@Transactional
 	public ResponseEntity<Object> platosCategoria(@PathVariable String categoria) {
@@ -67,7 +64,7 @@ public class PlatoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/verificarStock/{id}/{cantidad}")
 	@Transactional
 	public ResponseEntity verificarStock(@PathVariable int id, @PathVariable int cantidad) {
@@ -80,7 +77,7 @@ public class PlatoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
-	
+
 	@GetMapping("/platoPorCategoria/{id}")
 	@Transactional
 	public ResponseEntity<Object> getPorCategoria(@PathVariable int id) {
