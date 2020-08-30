@@ -35,6 +35,7 @@ public class InsumoService {
 			dto.setStockActual(entity.getStockActual());
 			dto.setStockMinimo(entity.getStockMinimo());
 			dto.setStockMaximo(entity.getStockMaximo());
+			dto.setImagen(entity.getImagen());
 			dto.setEsInsumo(entity.isEsInsumo());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setEliminado(entity.isEliminado());
@@ -86,6 +87,7 @@ public class InsumoService {
 			dto.setStockActual(entity.getStockActual());
 			dto.setStockMinimo(entity.getStockMinimo());
 			dto.setStockMaximo(entity.getStockMaximo());
+			dto.setImagen(entity.getImagen());
 			dto.setEsInsumo(entity.isEsInsumo());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setEliminado(entity.isEliminado());
@@ -137,6 +139,7 @@ public class InsumoService {
 			dto.setStockActual(entity.getStockActual());
 			dto.setStockMinimo(entity.getStockMinimo());
 			dto.setStockMaximo(entity.getStockMaximo());
+			dto.setImagen(entity.getImagen());
 			dto.setEsInsumo(entity.isEsInsumo());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setEliminado(entity.isEliminado());
@@ -188,6 +191,7 @@ public class InsumoService {
 			dto.setStockActual(entity.getStockActual());
 			dto.setStockMinimo(entity.getStockMinimo());
 			dto.setStockMaximo(entity.getStockMaximo());
+			dto.setImagen(entity.getImagen());
 			dto.setEsInsumo(entity.isEsInsumo());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setEliminado(entity.isEliminado());
@@ -237,6 +241,7 @@ public class InsumoService {
 			dto.setStockActual(entity.getStockActual());
 			dto.setStockMinimo(entity.getStockMinimo());
 			dto.setStockMaximo(entity.getStockMaximo());
+			dto.setImagen(entity.getImagen());
 			dto.setEsInsumo(entity.isEsInsumo());
 			dto.setPrecioVenta(entity.getPrecioVenta());
 			dto.setEliminado(entity.isEliminado());
@@ -286,6 +291,7 @@ public class InsumoService {
 		insumo.setStockActual(insumoDTO.getStockActual());
 		insumo.setStockMinimo(insumoDTO.getStockMinimo());
 		insumo.setStockMaximo(insumoDTO.getStockMaximo());
+		insumo.setImagen(insumoDTO.getImagen());
 		insumo.setEsInsumo(insumoDTO.isEsInsumo());
 		insumo.setPrecioVenta(insumoDTO.getPrecioVenta());
 		insumo.setEliminado(insumoDTO.isEliminado());
@@ -333,6 +339,7 @@ public class InsumoService {
 			insumo.setStockActual(insumoDTO.getStockActual());
 			insumo.setStockMinimo(insumoDTO.getStockMinimo());
 			insumo.setStockMaximo(insumoDTO.getStockMaximo());
+			insumo.setImagen(insumoDTO.getImagen());
 			insumo.setEsInsumo(insumoDTO.isEsInsumo());
 			insumo.setEliminado(insumoDTO.isEliminado());
 
