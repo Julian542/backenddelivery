@@ -500,22 +500,6 @@ public class PedidoService {
 			estadoObj.setId(estado);
 			pedido.setEstado(estadoObj);
 
-			if (estado == 22) {
-				String sDate1 = pedido.getHoraEstimada();
-				Date date1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(sDate1);
-				// System.out.println(sDate1+"\t"+date1);
-
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(date1);
-				calendar.add(Calendar.MINUTE, 10);
-				Date fechaSalida = calendar.getTime();
-
-				Format f = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-				String strDate = f.format(fechaSalida);
-
-				pedido.setHoraEstimada(strDate);
-			}
-
 			pedidoRepository.save(pedido);
 
 		} catch (Exception e) {
