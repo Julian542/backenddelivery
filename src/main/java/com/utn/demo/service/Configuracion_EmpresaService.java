@@ -24,8 +24,8 @@ public class Configuracion_EmpresaService {
 			for (Configuracion_Empresa i : entity) {
 				cDto.setId(i.getId());
 				cDto.setCantidadCocineros(i.getCantidadCocineros());
-				cDto.setNombreEmpresa(i.getNombre());
-				cDto.setEmailEmpresa(i.getEmail());
+				cDto.setNombre(i.getNombre());
+				cDto.setEmail(i.getEmail());
 				cDto.setCuit(i.getCuit());
 				cDto.setNumeroFiscal(i.getNumeroFiscal());
 				cDto.setSociedad(i.getSociedad());
@@ -42,8 +42,8 @@ public class Configuracion_EmpresaService {
 		Configuracion_Empresa entity = new Configuracion_Empresa();
 		try {
 			entity.setCantidadCocineros(dto.getCantidadCocineros());
-			entity.setNombre(dto.getNombreEmpresa());
-			entity.setEmail(dto.getEmailEmpresa());
+			entity.setNombre(dto.getNombre());
+			entity.setEmail(dto.getEmail());
 			entity.setCuit(dto.getCuit());
 			entity.setNumeroFiscal(dto.getNumeroFiscal());
 			entity.setSociedad(dto.getSociedad());
@@ -64,8 +64,8 @@ public class Configuracion_EmpresaService {
 			Configuracion_Empresa entity = configuracion_EmpresaRepository.findByIdMod(id);
 			entity.setId(DTO.getId());
 			entity.setCantidadCocineros(DTO.getCantidadCocineros());
-			entity.setNombre(DTO.getNombreEmpresa());
-			entity.setEmail(DTO.getEmailEmpresa());
+			entity.setNombre(DTO.getNombre());
+			entity.setEmail(DTO.getEmail());
 			entity.setCuit(DTO.getCuit());
 			entity.setNumeroFiscal(DTO.getNumeroFiscal());
 			entity.setSociedad(DTO.getSociedad());
