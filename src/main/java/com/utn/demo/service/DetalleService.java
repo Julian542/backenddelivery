@@ -640,26 +640,26 @@ public class DetalleService {
 					for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(detalle.getPlato().getId())) {
 						Insumo insumo = new Insumo();
 						insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
-						if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "kg"
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "kg")
-								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "l"
-										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "l")) {
+						if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
+								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg"))
+								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
+										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
 							insumo.setStockActual(insumo.getStockActual() - detPlato.getCantidad());
 
-						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "kg"
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "g")
-								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "l"
-										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "ml")) {
+						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
+								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
+								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
+										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
 							insumo.setStockActual(((insumo.getStockActual() * 1000) - detPlato.getCantidad()) / 1000);
 
-						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "g"
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "k")
-								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "ml"
-										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "l")) {
+						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
+								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("k"))
+								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
+										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
 							insumo.setStockActual((insumo.getStockActual() - (detPlato.getCantidad() / 1000)) * 1000);
 
-						} else {
-							insumo.setStockActual(insumo.getStockActual() - detalle.getCantidad());
+						} else if (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
+							insumo.setStockActual(insumo.getStockActual() - detPlato.getCantidad());
 						}
 						insumoRepository.save(insumo);
 					}

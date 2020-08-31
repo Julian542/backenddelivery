@@ -14,9 +14,11 @@ import com.utn.demo.dtos.PlatoCategoriaDTO;
 import com.utn.demo.dtos.PlatoDTO;
 import com.utn.demo.dtos.UnidadMedidaDTO;
 import com.utn.demo.entity.DetallePlato;
+import com.utn.demo.entity.Insumo;
 import com.utn.demo.entity.Plato;
 import com.utn.demo.entity.PlatoCategoria;
 import com.utn.demo.repository.DetallePlatoRepository;
+import com.utn.demo.repository.InsumoRepository;
 import com.utn.demo.repository.PlatoRepository;
 
 @Service
@@ -24,10 +26,13 @@ public class PlatoService {
 
 	private PlatoRepository platoRepository;
 	private DetallePlatoRepository detallePlatoRepository;
+	private InsumoRepository insumoRepository;
 
-	public PlatoService(PlatoRepository platoRepository, DetallePlatoRepository detallePlatoRepository) {
+	public PlatoService(PlatoRepository platoRepository, DetallePlatoRepository detallePlatoRepository,
+			InsumoRepository insumoRepository) {
 		this.platoRepository = platoRepository;
 		this.detallePlatoRepository = detallePlatoRepository;
+		this.insumoRepository = insumoRepository;
 	}
 
 	@Transactional
@@ -303,34 +308,50 @@ public class PlatoService {
 
 	@Transactional
 	public boolean verificarStock(int id, int cantidad) {
-
-		boolean faltaStock = false;
-
+		Boolean faltaStock = false;
 		try {
-			try {
-				for (DetallePlato entity2 : detallePlatoRepository.getAllByUser(id)) {
-					if (entity2.getInsumo().getStockActual() < ((entity2.getCantidad() * 0.001) * cantidad)) {
+			for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(id)) {
+				System.out.println(detPlato);
+				Insumo insumo = new Insumo();
+				insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
+				if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
+						&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg"))
+						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
+								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
+					if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
 						faltaStock = true;
+						break;
 					}
 
+				} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
+						&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
+						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
+								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
+					if (((insumo.getStockActual() * 1000) - (detPlato.getCantidad() * cantidad) / 1000) < 0) {
+						faltaStock = true;
+						break;
+					}
+
+				} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
+						&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "k")
+						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
+								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
+					if ((insumo.getStockActual() - ((detPlato.getCantidad() / 100) * cantidad) * 1000) < 0) {
+						faltaStock = true;
+						break;
+					}
+
+				} else if (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
+					if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
+						faltaStock = true;
+						break;
+					}
 				}
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
 			}
-
-			if (faltaStock) {
-				return false;
-			}
-
 		} catch (Exception e) {
-
-			System.out.println("Bad Request");
-
+			System.out.println(e.getMessage());
 		}
-
-		return true;
-
+		return !faltaStock;
 	}
 
 	@Transactional
