@@ -647,7 +647,8 @@ public class DetalleService {
 								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
 										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
 								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
-										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
+										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))
+								|| insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
 							insumo.setStockActual(insumo.getStockActual() - detPlato.getCantidad());
 
 						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
@@ -662,8 +663,6 @@ public class DetalleService {
 										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
 							insumo.setStockActual((insumo.getStockActual() - (detPlato.getCantidad() / 1000)) * 1000);
 
-						} else if (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
-							insumo.setStockActual(insumo.getStockActual() - detPlato.getCantidad());
 						}
 						insumoRepository.save(insumo);
 					}

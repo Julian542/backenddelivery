@@ -321,7 +321,8 @@ public class PlatoService {
 							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
 									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
 							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
-									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))
+							|| insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
 						if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
 							hayStock = false;
 							break;
@@ -345,11 +346,6 @@ public class PlatoService {
 							break;
 						}
 
-					} else if (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
-						if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
-							hayStock = false;
-							break;
-						}
 					}
 				}
 			}
