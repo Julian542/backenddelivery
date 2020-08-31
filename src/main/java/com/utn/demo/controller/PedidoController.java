@@ -109,7 +109,7 @@ public class PedidoController {
 
 	@PutMapping("/updateTiempoRestante/{id}/{tiempoRestante}")
 	@Transactional
-	public ResponseEntity updateTiempoRestante(@PathVariable("id") int id,
+	public ResponseEntity<String> updateTiempoRestante(@PathVariable("id") int id,
 			@PathVariable("tiempoRestante") int tiempoRestante) {
 		try {
 			pedidoService.updateTiempoRestante(id, tiempoRestante);

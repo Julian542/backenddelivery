@@ -720,8 +720,6 @@ public class PedidoService {
 
 			result.add(dto);
 		}
-
 		return result;
-
 	}
 }

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class DetallePlatoDTO {
 	private int id;
 	private float cantidad;
+	private UnidadMedidaDTO unidadMedida;
 	private InsumoDTO ingrediente;
 	private boolean eliminado;
 	private PlatoDTO plato;

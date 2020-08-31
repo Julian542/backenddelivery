@@ -631,4 +631,48 @@ public class DetalleService {
 		}
 	}
 
+	@Transactional
+	public Boolean descontarPlatos(int id) {
+		Boolean seDesconto = true;
+		try {
+			for (Detalle detalle : detalleRepository.buscarPorPedido(id)) {
+				if (detalle.getInsumo().getNombre() != "Insumo Vacio" && detalle.getInsumo().getNombre() != null) {
+					for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(id)) {
+						if (detalle.getInsumo().getNombre() != "Insumo Vacio"
+								&& detalle.getInsumo().getNombre() != null) {
+							Insumo insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
+							if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "kg"
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "kg")
+									|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "l"
+											&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "l")) {
+								insumo.setStockActual(insumo.getStockActual() - detPlato.getCantidad());
+							} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "kg"
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "g")
+									|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "l"
+											&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "ml")) {
+								insumo.setStockActual(
+										((insumo.getStockActual() * 1000) - detPlato.getCantidad()) / 1000);
+							} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "g"
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "k")
+									|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase() == "ml"
+											&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase() == "l")) {
+								insumo.setStockActual(
+										(insumo.getStockActual() - (detPlato.getCantidad() / 1000)) * 1000);
+							}
+							insumoRepository.save(insumo);
+						}
+					}
+				}
+				if (detalle.getPlato().getNombre() != "Plato Vacio" && detalle.getPlato().getNombre() != null) {
+					Insumo insumo = insumoRepository.getOne(detalle.getInsumo().getId());
+					insumo.setStockActual(insumo.getStockActual() - detalle.getCantidad());
+					insumoRepository.save(insumo);
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return seDesconto;
+	}
 }

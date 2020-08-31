@@ -23,6 +23,8 @@ public class DetallePlato {
 	private int id;
 	private float cantidad;
 	@OneToOne
+	private UnidadMedida unidadMedida;
+	@OneToOne
 	private Plato plato;
 	@OneToOne
 	@JoinColumn(name = "fk_insumo")

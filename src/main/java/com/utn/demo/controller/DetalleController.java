@@ -1,5 +1,6 @@
 package com.utn.demo.controller;
 
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -122,6 +123,17 @@ public class DetalleController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
+
+	@PutMapping("/descontarPlatos/{id}")
+	@Transactional
+	public ResponseEntity<Object> descontarPlatos(@PathVariable int id) {
+		boolean borrado = detalleService.descontarPlatos(id);
+		if (borrado) {
+			return ResponseEntity.status(HttpStatus.OK).body(borrado);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al descontar'");
 		}
 	}
 

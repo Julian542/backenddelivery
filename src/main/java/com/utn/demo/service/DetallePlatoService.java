@@ -11,6 +11,7 @@ import com.utn.demo.dtos.UnidadMedidaDTO;
 import com.utn.demo.entity.DetallePlato;
 import com.utn.demo.entity.Insumo;
 import com.utn.demo.entity.Plato;
+import com.utn.demo.entity.UnidadMedida;
 import com.utn.demo.repository.DetallePlatoRepository;
 
 @Service
@@ -32,6 +33,19 @@ public class DetallePlatoService {
 			DetallePlatoDTO dto = new DetallePlatoDTO();
 			dto.setId(entity.getId());
 			dto.setCantidad(entity.getCantidad());
+
+			try {
+				UnidadMedidaDTO unM = new UnidadMedidaDTO();
+				unM.setId(entity.getUnidadMedida().getId());
+				unM.setNombre(entity.getUnidadMedida().getNombre());
+				unM.setAbreviatura(entity.getUnidadMedida().getAbreviatura());
+				unM.setEliminado(entity.getUnidadMedida().isEliminado());
+
+				dto.setUnidadMedida(unM);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			dto.setEliminado(entity.isEliminado());
 
 			try {
@@ -81,6 +95,18 @@ public class DetallePlatoService {
 			dto.setEliminado(entity.isEliminado());
 
 			try {
+				UnidadMedidaDTO unM = new UnidadMedidaDTO();
+				unM.setId(entity.getUnidadMedida().getId());
+				unM.setNombre(entity.getUnidadMedida().getNombre());
+				unM.setAbreviatura(entity.getUnidadMedida().getAbreviatura());
+				unM.setEliminado(entity.getUnidadMedida().isEliminado());
+
+				dto.setUnidadMedida(unM);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
 				InsumoDTO insumo = new InsumoDTO();
 				insumo.setId(entity.getInsumo().getId());
 				insumo.setNombre(entity.getInsumo().getNombre());
@@ -126,6 +152,18 @@ public class DetallePlatoService {
 			dto.setCantidad(entity.getCantidad());
 			dto.setEliminado(entity.isEliminado());
 
+			try {
+				UnidadMedidaDTO unM = new UnidadMedidaDTO();
+				unM.setId(entity.getUnidadMedida().getId());
+				unM.setNombre(entity.getUnidadMedida().getNombre());
+				unM.setAbreviatura(entity.getUnidadMedida().getAbreviatura());
+				unM.setEliminado(entity.getUnidadMedida().isEliminado());
+
+				dto.setUnidadMedida(unM);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
 			try {
 
 				InsumoDTO insumo = new InsumoDTO();
@@ -175,6 +213,9 @@ public class DetallePlatoService {
 			Insumo insumo = new Insumo();
 			insumo.setId(platoDetalleDTO.getIngrediente().getId());
 			platoDetalle.setInsumo(insumo);
+			UnidadMedida um = new UnidadMedida();
+			um.setId(platoDetalleDTO.getUnidadMedida().getId());
+			platoDetalle.setUnidadMedida(um);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -213,7 +254,9 @@ public class DetallePlatoService {
 				Insumo insumo = new Insumo();
 				insumo.setId(platoDetalleDTO.getIngrediente().getId());
 				platoDetalle.setInsumo(insumo);
-
+				UnidadMedida um = new UnidadMedida();
+				um.setId(platoDetalleDTO.getUnidadMedida().getId());
+				platoDetalle.setUnidadMedida(um);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
