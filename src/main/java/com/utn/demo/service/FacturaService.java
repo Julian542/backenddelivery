@@ -93,6 +93,38 @@ public class FacturaService {
 		}
 		return result;
 	}
+	
+	@Transactional
+	public List<FacturaDTO> getAllEnLocal() {
+		List<FacturaDTO> result = new ArrayList<>();
+		try {
+			for (Factura object2 : facturaRepository.findAllMod()) {
+				if (object2.getPedido().getDomicilio().getId()==99) {
+					FacturaDTO object = new FacturaDTO();
+					object.setId(object2.getId());
+					object.setTipoFactura(object2.getTipoFactura());
+					object.setTipoPago(object2.getTipoPago());
+					object.setNroTarjeta(object2.getNroTarjeta());
+					object.setDniTitular(object2.getDniTitular());
+					object.setFecha(object2.getFecha());
+					object.setSubtotal(object2.getSubtotal());
+					object.setMontoDescuento(object2.getMontoDescuento());
+					object.setTotal(object2.getTotal());
+					object.setEliminado(object2.isEliminado());
+					PedidoDTO pedido = new PedidoDTO();
+					pedido.setId(object2.getPedido().getId());
+					object.setPedido(pedido);
+					UsuarioDTO user = new UsuarioDTO();
+					user.setId(object2.getUsuario().getId());
+					object.setUsuario(user);
+					result.add(object);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
 
 	@Transactional
 	public FacturaDTO getOne(int id) {

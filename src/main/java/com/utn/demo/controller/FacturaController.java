@@ -114,4 +114,15 @@ public class FacturaController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("'message':'Error al eliminar'");
 		}
 	}
+	
+	@GetMapping("/getAllEnLocal/")
+	@Transactional
+	public ResponseEntity<Object> getAllEnLocal() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getAllEnLocal());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 }

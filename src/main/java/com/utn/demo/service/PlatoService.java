@@ -200,6 +200,16 @@ public class PlatoService {
 					ingrediente.setIngrediente(insumo);
 					ingrediente.setCantidad(entity2.getCantidad());
 					ingrediente.setId(entity2.getId());
+					UnidadMedidaDTO um2 = new UnidadMedidaDTO();
+					try {
+						um2.setId(entity2.getInsumo().getUnidadMedida().getId());
+						um2.setNombre(entity2.getInsumo().getUnidadMedida().getNombre());
+						um2.setAbreviatura(entity2.getInsumo().getUnidadMedida().getAbreviatura());
+						um2.setEliminado(entity2.getInsumo().getUnidadMedida().isEliminado());
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					ingrediente.setUnidadMedida(um2);
 					ingrediente.setEliminado(entity2.isEliminado());
 
 					ingredientes.add(ingrediente);
@@ -275,6 +285,16 @@ public class PlatoService {
 					ingrediente.setIngrediente(insumo);
 					ingrediente.setCantidad(entity2.getCantidad());
 					ingrediente.setId(entity2.getId());
+					UnidadMedidaDTO um2 = new UnidadMedidaDTO();
+					try {
+						um2.setId(entity2.getInsumo().getUnidadMedida().getId());
+						um2.setNombre(entity2.getInsumo().getUnidadMedida().getNombre());
+						um2.setAbreviatura(entity2.getInsumo().getUnidadMedida().getAbreviatura());
+						um2.setEliminado(entity2.getInsumo().getUnidadMedida().isEliminado());
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					ingrediente.setUnidadMedida(um2);
 					ingrediente.setEliminado(entity2.isEliminado());
 
 					ingredientes.add(ingrediente);
