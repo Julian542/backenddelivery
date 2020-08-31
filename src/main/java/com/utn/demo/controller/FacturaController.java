@@ -49,6 +49,17 @@ public class FacturaController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/getFacturasMenosFacturados/")
+	@Transactional
+	public ResponseEntity<Object> getAllMenosFacturados() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(facturaService.getAllMenosFacturados());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@GetMapping("/recaudaciones/{fechaDesde}/{fechaHasta}")
 	@Transactional

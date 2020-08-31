@@ -63,6 +63,38 @@ public class FacturaService {
 	}
 
 	@Transactional
+	public List<FacturaDTO> getAllMenosFacturados() {
+		List<FacturaDTO> result = new ArrayList<>();
+		try {
+			for (Factura object2 : facturaRepository.findAllMod()) {
+				if (object2.getPedido().getEstado().getId() != 6) {
+					FacturaDTO object = new FacturaDTO();
+					object.setId(object2.getId());
+					object.setTipoFactura(object2.getTipoFactura());
+					object.setTipoPago(object2.getTipoPago());
+					object.setNroTarjeta(object2.getNroTarjeta());
+					object.setDniTitular(object2.getDniTitular());
+					object.setFecha(object2.getFecha());
+					object.setSubtotal(object2.getSubtotal());
+					object.setMontoDescuento(object2.getMontoDescuento());
+					object.setTotal(object2.getTotal());
+					object.setEliminado(object2.isEliminado());
+					PedidoDTO pedido = new PedidoDTO();
+					pedido.setId(object2.getPedido().getId());
+					object.setPedido(pedido);
+					UsuarioDTO user = new UsuarioDTO();
+					user.setId(object2.getUsuario().getId());
+					object.setUsuario(user);
+					result.add(object);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+
+	@Transactional
 	public FacturaDTO getOne(int id) {
 		FacturaDTO object = new FacturaDTO();
 		try {
@@ -181,37 +213,36 @@ public class FacturaService {
 				Pedido pedido = factura.getPedido();
 				for (Detalle detalle : detalleRepository.buscarPorPedido(factura.getPedido().getId())) {
 					if (pedido.isEnvioDelivery() == true) {
-						if(detalle.getPlato()==null) {
-						Ganancias += ((detalle.getInsumo().getPrecioVenta())
-								* factura.getMontoDescuento());
-						}else {
-							if(detalle.getInsumo()==null) {
-								Ganancias += ((detalle.getPlato().getPrecioVenta())
-										* factura.getMontoDescuento());
-							}else{
-								Ganancias += ((detalle.getInsumo().getPrecioVenta() + detalle.getPlato().getPrecioVenta())
-										* factura.getMontoDescuento());
+						if (detalle.getPlato() == null) {
+							Ganancias += ((detalle.getInsumo().getPrecioVenta()) * factura.getMontoDescuento());
+						} else {
+							if (detalle.getInsumo() == null) {
+								Ganancias += ((detalle.getPlato().getPrecioVenta()) * factura.getMontoDescuento());
+							} else {
+								Ganancias += ((detalle.getInsumo().getPrecioVenta()
+										+ detalle.getPlato().getPrecioVenta()) * factura.getMontoDescuento());
 							}
 						}
 					} else {
-						if(detalle.getInsumo()==null) {
+						if (detalle.getInsumo() == null) {
 							Ganancias += (detalle.getPlato().getPrecioVenta());
-						}else {
-							
-							if(detalle.getPlato()==null) {
+						} else {
+
+							if (detalle.getPlato() == null) {
 								Ganancias += (detalle.getInsumo().getPrecioVenta());
-							}else {
-								Ganancias += (detalle.getInsumo().getPrecioVenta() + detalle.getInsumo().getPrecioVenta());
+							} else {
+								Ganancias += (detalle.getInsumo().getPrecioVenta()
+										+ detalle.getInsumo().getPrecioVenta());
 							}
 						}
 					}
-					if(detalle.getInsumo()==null) {
+					if (detalle.getInsumo() == null) {
 						Gastos += (detalle.getPlato().getPrecioCosto());
-					}else {
-						
-						if(detalle.getPlato()==null) {
+					} else {
+
+						if (detalle.getPlato() == null) {
 							Gastos += (detalle.getInsumo().getPrecioCompra());
-						}else {
+						} else {
 							Gastos += (detalle.getInsumo().getPrecioCompra() + detalle.getPlato().getPrecioCosto());
 						}
 					}
