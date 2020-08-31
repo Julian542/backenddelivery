@@ -18,6 +18,7 @@ import com.utn.demo.entity.Plato;
 import com.utn.demo.repository.DetallePlatoRepository;
 import com.utn.demo.repository.DetalleRepository;
 import com.utn.demo.repository.InsumoRepository;
+import com.utn.demo.repository.PlatoRepository;
 
 @Service
 public class DetalleService {
@@ -25,12 +26,14 @@ public class DetalleService {
 	private DetalleRepository detalleRepository;
 	private DetallePlatoRepository detallePlatoRepository;
 	private InsumoRepository insumoRepository;
+	private PlatoRepository platoRepository;
 
 	public DetalleService(DetalleRepository detalleRepository, InsumoRepository insumoRepository,
-			DetallePlatoRepository detallePlatoRepository) {
+			DetallePlatoRepository detallePlatoRepository, PlatoRepository platoRepository) {
 		this.detalleRepository = detalleRepository;
 		this.detallePlatoRepository = detallePlatoRepository;
 		this.insumoRepository = insumoRepository;
+		this.platoRepository = platoRepository;
 	}
 
 	@Transactional
@@ -637,6 +640,9 @@ public class DetalleService {
 		try {
 			for (Detalle detalle : detalleRepository.buscarPorPedido(id)) {
 				if (detalle.getPlato() != null) {
+					Plato plato = platoRepository.getOne(detalle.getPlato().getId());
+					plato.setCantidadVendida(plato.getCantidadVendida() + 1);
+					platoRepository.save(plato);
 					for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(detalle.getPlato().getId())) {
 						Insumo insumo = new Insumo();
 						insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
