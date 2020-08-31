@@ -636,7 +636,7 @@ public class DetalleService {
 		Boolean seDesconto = true;
 		try {
 			for (Detalle detalle : detalleRepository.buscarPorPedido(id)) {
-				if (detalle.getInsumo().getNombre() != "Insumo Vacio" || detalle.getInsumo() != null) {
+				if (!detalle.getInsumo().getNombre().equals("Insumo Vacio") || detalle.getInsumo() != null) {
 					for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(detalle.getPlato().getId())) {
 						Insumo insumo = new Insumo();
 						insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
@@ -668,7 +668,7 @@ public class DetalleService {
 						insumoRepository.save(insumo);
 					}
 				}
-				if (detalle.getPlato().getNombre() != "Plato Vacio" || detalle.getPlato() != null) {
+				if (!detalle.getPlato().getNombre().equals("Plato Vacio") || detalle.getPlato() != null) {
 					Insumo insumoP = new Insumo();
 					insumoP = insumoRepository.getOne(detalle.getInsumo().getId());
 					insumoP.setStockActual(insumoP.getStockActual() - detalle.getCantidad());

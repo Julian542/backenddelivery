@@ -312,42 +312,44 @@ public class PlatoService {
 		try {
 			for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(id)) {
 				Insumo insumo = new Insumo();
-				insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
-				if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
-						&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg"))
-						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))
-						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
-						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
-					if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
-						hayStock = false;
-						break;
-					}
+				if (!detPlato.getInsumo().getNombre().equals("Insumo Vacio") || detPlato.getInsumo() != null) {
+					insumo = insumoRepository.getOne(detPlato.getInsumo().getId());
+					if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
+							&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg"))
+							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))
+							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
+							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
+						if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
+							hayStock = false;
+							break;
+						}
 
-				} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
-						&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
-						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
-					if (((insumo.getStockActual() * 1000) - (detPlato.getCantidad() * cantidad) / 1000) < 0) {
-						hayStock = false;
-						break;
-					}
+					} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
+							&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
+							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
+						if (((insumo.getStockActual() * 1000) - (detPlato.getCantidad() * cantidad) / 1000) < 0) {
+							hayStock = false;
+							break;
+						}
 
-				} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
-						&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg"))
-						|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
-								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
-					if ((insumo.getStockActual() - ((detPlato.getCantidad() / 1000) * cantidad) * 1000) < 0) {
-						hayStock = false;
-						break;
-					}
+					} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
+							&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg"))
+							|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
+									&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
+						if ((insumo.getStockActual() - ((detPlato.getCantidad() / 1000) * cantidad) * 1000) < 0) {
+							hayStock = false;
+							break;
+						}
 
-				} else if (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
-					if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
-						hayStock = false;
-						break;
+					} else if (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
+						if ((insumo.getStockActual() - (detPlato.getCantidad() * cantidad)) < 0) {
+							hayStock = false;
+							break;
+						}
 					}
 				}
 			}
