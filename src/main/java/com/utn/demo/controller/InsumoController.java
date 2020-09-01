@@ -94,6 +94,17 @@ public class InsumoController {
 					.body("{\"message\": \"Error. Please try again later.\"}");
 		}
 	}
+	
+	@GetMapping("/stocksSinCategoria/")
+	@Transactional
+	public ResponseEntity<Object> getStocksSinCategoria() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(insumoService.getStocksSinCategoria());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("{\"message\": \"Error. Please try again later.\"}");
+		}
+	}
 
 	@PostMapping("/")
 	@Transactional

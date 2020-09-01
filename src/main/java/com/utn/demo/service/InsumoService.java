@@ -420,4 +420,39 @@ public class InsumoService {
 		}
 		return InsumoDTOs;
 	}
+	
+	public List<InsumoDTO> getStocksSinCategoria() {
+		List<InsumoDTO> InsumoDTOs = new ArrayList<>();
+		try {
+			for (Insumo insumo : insumoRepository.getInsumosWithLowStockSinCategoria()) {
+				InsumoDTO insumoDTO = new InsumoDTO();
+
+				insumoDTO.setDescripcion(insumo.getDescripcion());
+				insumoDTO.setEsInsumo(insumo.isEsInsumo());
+				insumoDTO.setId(insumo.getId());
+				insumoDTO.setImagen(insumo.getImagen());
+				insumoDTO.setNombre(insumo.getNombre());
+				insumoDTO.setPrecioCompra(insumo.getPrecioCompra());
+				insumoDTO.setPrecioVenta(insumo.getPrecioVenta());
+				insumoDTO.setStockActual(insumo.getStockActual());
+				insumoDTO.setStockMaximo(insumo.getStockMaximo());
+				insumoDTO.setStockMinimo(insumo.getStockMinimo());
+				insumoDTO.setEliminado(insumo.isEliminado());
+
+				UnidadMedidaDTO unidadMedidaDTO = new UnidadMedidaDTO();
+				unidadMedidaDTO.setId(insumo.getUnidadMedida().getId());
+				unidadMedidaDTO.setNombre(insumo.getUnidadMedida().getNombre());
+				insumoDTO.setUnidadMedida(unidadMedidaDTO);
+
+				InsumoCategoriaDTO insumoCategoria = new InsumoCategoriaDTO();
+				insumoCategoria.setId(insumo.getCategoria().getId());
+				insumoDTO.setCategoria(insumoCategoria);
+
+				InsumoDTOs.add(insumoDTO);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return InsumoDTOs;
+	}
 }
