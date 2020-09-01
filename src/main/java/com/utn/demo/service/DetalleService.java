@@ -641,7 +641,7 @@ public class DetalleService {
 			for (Detalle detalle : detalleRepository.buscarPorPedido(id)) {
 				if (detalle.getPlato() != null) {
 					Plato plato = platoRepository.getOne(detalle.getPlato().getId());
-					plato.setCantidadVendida(plato.getCantidadVendida() + 1);
+					plato.setCantidadVendida(plato.getCantidadVendida() + detalle.getCantidad());
 					platoRepository.save(plato);
 					for (DetallePlato detPlato : detallePlatoRepository.findAllPorPlato(detalle.getPlato().getId())) {
 						Insumo insumo = new Insumo();
@@ -655,19 +655,28 @@ public class DetalleService {
 								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
 										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))
 								|| insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("u")) {
-							insumo.setStockActual(insumo.getStockActual() - detPlato.getCantidad());
+							double number = Math.round(
+									(insumo.getStockActual() - (detPlato.getCantidad() * detalle.getCantidad())) * 100);
+							double temporal = number / 100;
+							insumo.setStockActual(temporal);
 
 						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("kg")
 								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("g"))
 								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("l")
 										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml"))) {
-							insumo.setStockActual(((insumo.getStockActual() * 1000) - detPlato.getCantidad()) / 1000);
+							double number = Math.round((((insumo.getStockActual() * 1000)
+									- (detPlato.getCantidad() * detalle.getCantidad())) / 1000) * 100);
+							double temporal = number / 100;
+							insumo.setStockActual(temporal);
 
 						} else if ((insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("g")
 								&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("k"))
 								|| (insumo.getUnidadMedida().getAbreviatura().toLowerCase().equals("ml")
 										&& detPlato.getUnidadMedida().getAbreviatura().toLowerCase().equals("l"))) {
-							insumo.setStockActual((insumo.getStockActual() - (detPlato.getCantidad() / 1000)) * 1000);
+							double number = Math.round(((insumo.getStockActual()
+									- ((detPlato.getCantidad() * detalle.getCantidad()) / 1000)) * 1000) * 100);
+							double temporal = number / 100;
+							insumo.setStockActual(temporal);
 
 						}
 						insumoRepository.save(insumo);
@@ -676,7 +685,9 @@ public class DetalleService {
 				if (detalle.getInsumo() != null) {
 					Insumo insumoP = new Insumo();
 					insumoP = insumoRepository.getOne(detalle.getInsumo().getId());
-					insumoP.setStockActual(insumoP.getStockActual() - detalle.getCantidad());
+					double number = Math.round((insumoP.getStockActual() - detalle.getCantidad()) * 100);
+					double temporal = number / 100;
+					insumoP.setStockActual(temporal);
 					insumoRepository.save(insumoP);
 				}
 
