@@ -302,32 +302,34 @@ public class FacturaService {
 		try {
 			List<Factura> facturas = facturaRepository.getFacturasByDate(fechaDesde, fechaHasta);
 			for (Factura factura : facturas) {
-				List<Detalle> detalles = detalleRepository.buscarPorPedidoFecha(factura.getPedido().getId(), fechaDesde,
-						fechaHasta);
-				boolean key = false;
-				for (Detalle detalleInternal : detalles) {
+				if (factura.getPedido().getEstado().getId() == 6) {
+					List<Detalle> detalles = detalleRepository.buscarPorPedidoFecha(factura.getPedido().getId(),
+							fechaDesde, fechaHasta);
+					boolean key = false;
+					for (Detalle detalleInternal : detalles) {
 
-					for (int plato : PlatoPopular) {
-						if (detalleInternal.getPlato().getId() == plato) {
-							key = true;
+						for (int plato : PlatoPopular) {
+							if (detalleInternal.getPlato().getId() == plato) {
+								key = true;
+							}
 						}
-					}
-					if (detalleInternal.getPlato() != null) {
-						if (key == false) {
-							PlatoPopular.add(detalleInternal.getPlato().getId());
-							Nombre.add(detalleInternal.getPlato().getNombre());
-							Cantidad.add(detalleInternal.getCantidad());
-						} else {
-							for (int i = 0; i < PlatoPopular.size(); i++) {
-								if (PlatoPopular.get(i) == detalleInternal.getPlato().getId()) {
-									Cantidad.set(i, Cantidad.get(i) + detalleInternal.getCantidad());
+						if (detalleInternal.getPlato() != null) {
+							if (key == false) {
+								PlatoPopular.add(detalleInternal.getPlato().getId());
+								Nombre.add(detalleInternal.getPlato().getNombre());
+								Cantidad.add(detalleInternal.getCantidad());
+							} else {
+								for (int i = 0; i < PlatoPopular.size(); i++) {
+									if (PlatoPopular.get(i) == detalleInternal.getPlato().getId()) {
+										Cantidad.set(i, Cantidad.get(i) + detalleInternal.getCantidad());
+									}
 								}
 							}
 						}
+
+						key = false;
+
 					}
-
-					key = false;
-
 				}
 			}
 			int i, j, aux, aux2;
