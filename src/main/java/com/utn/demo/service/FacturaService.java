@@ -93,13 +93,13 @@ public class FacturaService {
 		}
 		return result;
 	}
-	
+
 	@Transactional
 	public List<FacturaDTO> getAllEnLocal() {
 		List<FacturaDTO> result = new ArrayList<>();
 		try {
 			for (Factura object2 : facturaRepository.findAllMod()) {
-				if (object2.getPedido().getDomicilio().getId()==99) {
+				if (object2.getPedido().getDomicilio().getId() == 99) {
 					FacturaDTO object = new FacturaDTO();
 					object.setId(object2.getId());
 					object.setTipoFactura(object2.getTipoFactura());
@@ -304,67 +304,73 @@ public class FacturaService {
 			for (Factura factura : facturas) {
 				List<Detalle> detalles = detalleRepository.buscarPorPedidoFecha(factura.getPedido().getId(), fechaDesde,
 						fechaHasta);
+				boolean key = false;
 				for (Detalle detalleInternal : detalles) {
-					boolean key = false;
-					int i;
-					if (PlatoPopular.size() > 0 && detalleInternal.getPlato() != null) {
 
-						for (i = 0; i < PlatoPopular.size(); i++) {
-							if (PlatoPopular.get(i) == detalleInternal.getPlato().getId()) {
-
-								Cantidad.add(i, Cantidad.get(i) + 1);
-
-								key = true;
+					for (int plato : PlatoPopular) {
+						if (detalleInternal.getPlato().getId() == plato) {
+							key = true;
+						}
+					}
+					if (detalleInternal.getPlato() != null) {
+						if (key == false) {
+							PlatoPopular.add(detalleInternal.getPlato().getId());
+							Nombre.add(detalleInternal.getPlato().getNombre());
+							Cantidad.add(detalleInternal.getCantidad());
+						} else {
+							for (int i = 0; i < PlatoPopular.size(); i++) {
+								if (PlatoPopular.get(i) == detalleInternal.getPlato().getId()) {
+									Cantidad.set(i, Cantidad.get(i) + detalleInternal.getCantidad());
+								}
 							}
 						}
 					}
-					if (key == false && detalleInternal.getPlato() != null) {
-						PlatoPopular.add(detalleInternal.getPlato().getId());
-						Nombre.add(detalleInternal.getPlato().getNombre());
-						Cantidad.add(1);
-					}
+
 					key = false;
+
 				}
 			}
-
 			int i, j, aux, aux2;
-			for (i = 0; i < Cantidad.size(); i++) {
+			String aux3;
+			for (i = 0; i < Cantidad.size() - 1; i++) {
 				for (j = 0; j < Cantidad.size() - 1; j++) {
-					if (j + 1 >= Cantidad.size()) {
-						if (Cantidad.get(j + 1) < Cantidad.get(j)) {
-							aux = Cantidad.get(j + 1);
-							aux2 = PlatoPopular.get(j + 1);
-							Cantidad.set(j + 1, Cantidad.get(j));
-							PlatoPopular.set(j + 1, PlatoPopular.get(j));
-							Cantidad.set(j, aux);
-							PlatoPopular.set(j, aux2);
-						}
+
+					if (Cantidad.get(j) < Cantidad.get(j + 1)) {
+						aux = Cantidad.get(j);
+						aux2 = PlatoPopular.get(j);
+						aux3 = Nombre.get(j);
+						Cantidad.set(j, Cantidad.get(j + 1));
+						PlatoPopular.set(j, PlatoPopular.get(j + 1));
+						Nombre.set(j, Nombre.get(j + 1));
+						Cantidad.set(j + 1, aux);
+						PlatoPopular.set(j + 1, aux2);
+						Nombre.set(j + 1, aux3);
 					}
 				}
 			}
 
-			if (PlatoPopular.size() > 0) {
+			if (Cantidad.size() > 0) {
 				platosPopulares.setId_Plato1(PlatoPopular.get(0));
 				platosPopulares.setCantidad_Plato1(Cantidad.get(0));
 				platosPopulares.setNombre_Plato1(Nombre.get(0));
 			}
-			if (PlatoPopular.size() > 1) {
+			if (Cantidad.size() > 1) {
 				platosPopulares.setId_Plato2(PlatoPopular.get(1));
 				platosPopulares.setCantidad_Plato2(Cantidad.get(1));
 				platosPopulares.setNombre_Plato2(Nombre.get(1));
 
 			}
-			if (PlatoPopular.size() > 2) {
+			if (Cantidad.size() > 2) {
 				platosPopulares.setId_Plato3(PlatoPopular.get(2));
 				platosPopulares.setCantidad_Plato3(Cantidad.get(2));
 				platosPopulares.setNombre_Plato3(Nombre.get(2));
 			}
-			if (PlatoPopular.size() > 3) {
+			if (Cantidad.size() > 3) {
 				platosPopulares.setId_Plato4(PlatoPopular.get(3));
 				platosPopulares.setCantidad_Plato4(Cantidad.get(3));
 				platosPopulares.setNombre_Plato4(Nombre.get(3));
 			}
-			if (PlatoPopular.size() > 4) {
+			if (Cantidad.size() > 4) {
 				platosPopulares.setId_Plato5(PlatoPopular.get(4));
 				platosPopulares.setCantidad_Plato5(Cantidad.get(4));
 				platosPopulares.setNombre_Plato5(Nombre.get(4));
