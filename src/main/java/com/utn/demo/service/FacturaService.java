@@ -307,10 +307,11 @@ public class FacturaService {
 							fechaDesde, fechaHasta);
 					boolean key = false;
 					for (Detalle detalleInternal : detalles) {
-
 						for (int plato : PlatoPopular) {
-							if (detalleInternal.getPlato().getId() == plato) {
-								key = true;
+							if (detalleInternal.getPlato() != null) {
+								if (detalleInternal.getPlato().getId() == plato) {
+									key = true;
+								}
 							}
 						}
 						if (detalleInternal.getPlato() != null) {
@@ -351,28 +352,28 @@ public class FacturaService {
 				}
 			}
 
-			if (Cantidad.size() > 0) {
+			if (PlatoPopular.size() > 0) {
 				platosPopulares.setId_Plato1(PlatoPopular.get(0));
 				platosPopulares.setCantidad_Plato1(Cantidad.get(0));
 				platosPopulares.setNombre_Plato1(Nombre.get(0));
 			}
-			if (Cantidad.size() > 1) {
+			if (PlatoPopular.size() > 1) {
 				platosPopulares.setId_Plato2(PlatoPopular.get(1));
 				platosPopulares.setCantidad_Plato2(Cantidad.get(1));
 				platosPopulares.setNombre_Plato2(Nombre.get(1));
 
 			}
-			if (Cantidad.size() > 2) {
+			if (PlatoPopular.size() > 2) {
 				platosPopulares.setId_Plato3(PlatoPopular.get(2));
 				platosPopulares.setCantidad_Plato3(Cantidad.get(2));
 				platosPopulares.setNombre_Plato3(Nombre.get(2));
 			}
-			if (Cantidad.size() > 3) {
+			if (PlatoPopular.size() > 3) {
 				platosPopulares.setId_Plato4(PlatoPopular.get(3));
 				platosPopulares.setCantidad_Plato4(Cantidad.get(3));
 				platosPopulares.setNombre_Plato4(Nombre.get(3));
 			}
-			if (Cantidad.size() > 4) {
+			if (PlatoPopular.size() > 4) {
 				platosPopulares.setId_Plato5(PlatoPopular.get(4));
 				platosPopulares.setCantidad_Plato5(Cantidad.get(4));
 				platosPopulares.setNombre_Plato5(Nombre.get(4));
