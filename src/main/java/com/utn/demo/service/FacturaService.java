@@ -246,36 +246,36 @@ public class FacturaService {
 				for (Detalle detalle : detalleRepository.buscarPorPedido(factura.getPedido().getId())) {
 					if (pedido.isEnvioDelivery() == true) {
 						if (detalle.getPlato() == null) {
-							Ganancias += ((detalle.getInsumo().getPrecioVenta()) * factura.getMontoDescuento());
+							Ganancias += ((detalle.getInsumo().getPrecioVenta()) * factura.getMontoDescuento() * detalle.getCantidad());
 						} else {
 							if (detalle.getInsumo() == null) {
-								Ganancias += ((detalle.getPlato().getPrecioVenta()) * factura.getMontoDescuento());
+								Ganancias += ((detalle.getPlato().getPrecioVenta()) * factura.getMontoDescuento() * detalle.getCantidad());
 							} else {
 								Ganancias += ((detalle.getInsumo().getPrecioVenta()
-										+ detalle.getPlato().getPrecioVenta()) * factura.getMontoDescuento());
+										+ detalle.getPlato().getPrecioVenta()) * factura.getMontoDescuento() * detalle.getCantidad());
 							}
 						}
 					} else {
 						if (detalle.getInsumo() == null) {
-							Ganancias += (detalle.getPlato().getPrecioVenta());
+							Ganancias += (detalle.getPlato().getPrecioVenta() * detalle.getCantidad());
 						} else {
 
 							if (detalle.getPlato() == null) {
-								Ganancias += (detalle.getInsumo().getPrecioVenta());
+								Ganancias += (detalle.getInsumo().getPrecioVenta() * detalle.getCantidad());
 							} else {
 								Ganancias += (detalle.getInsumo().getPrecioVenta()
-										+ detalle.getInsumo().getPrecioVenta());
+										+ detalle.getInsumo().getPrecioVenta() * detalle.getCantidad());
 							}
 						}
 					}
 					if (detalle.getInsumo() == null) {
-						Gastos += (detalle.getPlato().getPrecioCosto());
+						Gastos += (detalle.getPlato().getPrecioCosto() * detalle.getCantidad());
 					} else {
 
 						if (detalle.getPlato() == null) {
-							Gastos += (detalle.getInsumo().getPrecioCompra());
+							Gastos += (detalle.getInsumo().getPrecioCompra() * detalle.getCantidad());
 						} else {
-							Gastos += (detalle.getInsumo().getPrecioCompra() + detalle.getPlato().getPrecioCosto());
+							Gastos += (detalle.getInsumo().getPrecioCompra() + detalle.getPlato().getPrecioCosto() * detalle.getCantidad());
 						}
 					}
 
